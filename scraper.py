@@ -215,7 +215,8 @@ def fetch_crossref_api():
         print(f"Fetching {source_name} via Crossref...")
 
         # Querying specific journal ISSN, filtering by publication date, fetching 50 rows
-        url = f"[https://api.crossref.org/journals/](https://api.crossref.org/journals/){issn}/works?filter=from-pub-date:{DATE_FILTER}&rows=50"
+        # url = f"[https://api.crossref.org/journals/](https://api.crossref.org/journals/){issn}/works?filter=from-pub-date:{DATE_FILTER}&rows=50"
+        url = f"https://api.crossref.org/journals/{issn}/works?filter=from-pub-date:{DATE_FILTER}&rows=50"
 
         try:
             response = requests.get(url, headers=headers)
