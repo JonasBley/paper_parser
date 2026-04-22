@@ -40,6 +40,26 @@ Output ONLY the JSON object. Do not include markdown formatting, preambles, or e
 
 # --- Database & LLM Logic ---
 
+def generate_markdown(papers):
+    if not papers:
+        return
+
+    date_str = NOW.strftime("%Y-%m-%d")
+    filename = f"digest_{date_str}.md"
+
+    content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} relevant papers.\n\n"
+    for idx, p in enumerate(papers, 1):
+        content += f"## {idx}. {p['title']}\n"
+        content += f"**Source:** {p['source']} | **Date:** {p['date']}\n"
+        content += f"**Tags:** {', '.join(p['tags'])}\n\n"
+        content += f"**Authors:** {p['authors']}\n\n"
+        content += f"**Abstract:** {p['abstract']}\n\n"
+        content += f"[Read Paper]({p['link']})\n\n"
+        content += "---\n\n"
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(content)
+
 def save_to_database(papers):
     if not papers:
         print("No new relevant papers to save.")
@@ -248,13 +268,12 @@ def fetch_crossref_api():
 if __name__ == "__main__":
     print(f"Starting pipeline execution for period since {DATE_FILTER}...")
 
-    # 1. Ingest
     arxiv_results = fetch_arxiv()
     crossref_results = fetch_crossref_api()
-
-    # 2. Aggregate
     all_relevant_papers = arxiv_results + crossref_results
 
-    # 3. Persist
+    # Save to database AND generate the readable file
     save_to_database(all_relevant_papers)
+    generate_markdown(all_relevant_papers)
+
     print("Pipeline execution complete.")
