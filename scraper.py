@@ -14,24 +14,42 @@ DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "your_email@example.com"
 
+# Target Journals by their unique ISSN (Print or Electronic)
 CROSSREF_JOURNALS = {
+    # --- Physics & Quantum Education ---
     "APS PRPER": "2469-9896",
     "American Journal of Physics": "1943-2909",
     "EPJ Quantum Technology": "2196-0763",
-    "CBE—Life Sciences Education": "1931-7913"
+    "European Journal of Physics": "1361-6404",
+
+    # --- General STEM & Science Education ---
+    "CBE—Life Sciences Education": "1931-7913",
+    "International Journal of STEM Education": "2196-7822",
+    "Journal of Research in Science Teaching": "1098-2736",
+    "Science Education": "1098-237X",
+    "International Journal of Science Education": "1464-5289",
+
+    # --- Educational Psychology & Cognitive Science ---
+    "Journal of Educational Psychology": "0022-0663",
+    "Learning and Instruction": "0959-4752",
+    "Cognition and Instruction": "1532-690X",
+    "Computers & Education": "0360-1315",
+
+    # --- Engineering & Tech Education ---
+    "IEEE Transactions on Education": "0018-9359",
+    "Journal of Engineering Education": "1069-4730"
 }
 
-SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these seven distinct criteria:
+SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these six distinct criteria:
 1. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
 2. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
-3. Visual Attention: Studies utilizing eye-tracking methodologies to assess learning, gaze patterns, or visual attention in STEM.
+3. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
 4. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
 5. Workforce: Quantum workforce development and competences.
-6. Epistemology: Epistemological perspectives on abstract mathematics (e.g., Galois theory).
-7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
+6. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
 
 Analyze the text and output a valid JSON object where the keys are the criteria names and the values are boolean (true/false) indicating a match.
-Example: {"Cognitive Frameworks": false, "Multimedia & Representations": true, "Visual Attention": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Epistemology": false, "Emerging Tech": false}
+Example: {"Cognitive Frameworks": false, "Multimedia & Representations": true, "STEM educational research methodology": true, "Visual Attention": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Emerging Tech": false}
 Output ONLY the JSON object. Do not include markdown formatting, preambles, or explanations."""
 
 
@@ -97,7 +115,7 @@ def save_to_database(papers):
         cursor.execute('''
                        INSERT
                        OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
                              tag_string))
 
@@ -156,7 +174,6 @@ def fetch_arxiv():
     papers = []
     query = "cat:physics.ed-ph OR cat:quant-ph"
 
-    # Workaround: Split protocol from domain to prevent UI auto-formatting
     protocol = "http" + "://"
     domain = "export.arxiv.org/api/query"
     url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
@@ -164,7 +181,7 @@ def fetch_arxiv():
     try:
         with urllib.request.urlopen(url) as response:
             root = ET.fromstring(response.read())
-            ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}  # Also split the XML namespace
+            ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
 
             for entry in root.findall('atom:entry', ns):
                 pub_date_str = entry.find('atom:published', ns).text
@@ -205,7 +222,6 @@ def fetch_crossref_api():
     }
 
     for source_name, issn in CROSSREF_JOURNALS.items():
-        # Workaround: Split protocol from domain to prevent UI auto-formatting
         protocol = "https" + "://"
         domain = f"api.crossref.org/journals/{issn}/works"
         url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows=50"
@@ -249,6 +265,7 @@ def fetch_crossref_api():
             print(f"Crossref API Error for {source_name}: {e}")
 
     return papers
+
 
 # --- Orchestration ---
 
