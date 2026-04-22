@@ -163,12 +163,16 @@ def fetch_arxiv():
     print("Fetching arXiv (physics.ed-ph, quant-ph)...")
     papers = []
     query = "cat:physics.ed-ph OR cat:quant-ph"
-    url = f"[http://export.arxiv.org/api/query?search_query=](http://export.arxiv.org/api/query?search_query=){urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
+
+    # FIX 1: Cleaned URL string
+    url = f"http://export.arxiv.org/api/query?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
 
     try:
         with urllib.request.urlopen(url) as response:
             root = ET.fromstring(response.read())
-            ns = {'atom': '[http://www.w3.org/2005/Atom](http://www.w3.org/2005/Atom)'}
+
+            # FIX 2: Cleaned XML namespace string
+            ns = {'atom': 'http://www.w3.org/2005/Atom'}
 
             for entry in root.findall('atom:entry', ns):
                 pub_date_str = entry.find('atom:published', ns).text
