@@ -1,6 +1,6 @@
 # Literature Digest (2026-04-22)
 
-Found 29 papers in this category.
+Found 82 papers in this category.
 
 ## 1. Magnetic coupling between nuclear motion and nuclear spins in molecules
 **Source:** arXiv | **Date:** 2026-04-21
@@ -38,31 +38,7 @@ Found 29 papers in this category.
 
 ---
 
-## 4. Volumetric Processing of Structured Light Integrated in Glass
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Technical / Pure Physics
-
-**Authors:** Oussama Korichi, Markus Hiekkamaki, Robert Fickler
-
-**Abstract:** Light with complex structures in polarization, phase and amplitude, has attracted a lot of attention in a broad range of applications and fundamental studies in classical and quantum optics. Along with the increased interest in structured light comes a need for efficient modulation platforms operating simultaneously for many modes. Multi plane light conversions (MPLC), i.e., multiple consecutive phase modulations in combination with free space propagation, have enabled such unitary transformations, which are usually built by bulky optical components, limited to scalar modulation, or rely on advanced nanofabrication techniques. Here, we demonstrate an efficient, monolithic MPLC architecture through direct laser writing in standard fused silica glass, resulting in a device with a compact form factor of only a few cubic millimeters. Our scheme is based on volumetric engineering of the glass's birefringence through laser-written nanogratings, which enables spatial control over full vectorial light structures. To showcase the approach's potential for integrated multimode-multipath optical networks, we demonstrate multi-mode unitary transformations, mode conversions, and complex beam-splitting for scalar light. We further extend the MPLC operation to vectorial light and implement various polarization-controlled spatial mode operations as well as the transformation of the topology of an optical Skyrmion. Finally, we highlight our scheme's promise for optical communications and implement a miniaturized multiplexer for spatial modes and polarization operating at telecom wavelength.
-
-[Read Paper](https://arxiv.org/abs/2604.18885v1)
-
----
-
-## 5. Benchmarking Quantum Kernel Support Vector Machines Against Classical Baselines on Tabular Data: A Rigorous Empirical Study with Hardware Validation
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Technical / Pure Physics
-
-**Authors:** Siavash Kakavand, Christoph Strohmeyer, Michael Schlotter
-
-**Abstract:** Quantum kernel methods have been proposed as a promising approach for leveraging near-term quantum computers for supervised learning, yet rigorous benchmarks against strong classical baselines remain scarce. We present a comprehensive empirical study of quantum kernel support vector machines (QSVMs) across nine binary classification datasets, four quantum feature maps, three classical kernels, and multiple noise models, totalling 970 experiments with strict nested cross-validation. Our analysis spans four phases: (i) statistical significance testing, revealing that none of 29 pairwise quantum-classical comparisons reach significance at $α= 0.05$; (ii) learning curve analysis over six training fractions, showing steeper quantum slopes on six of eight datasets that nonetheless fail to close the gap to the best classical baseline; (iii) hardware validation on IBM ibm_fez (Heron r2), demonstrating kernel fidelity $r \geq 0.976$ across six experiments; and (iv) seed sensitivity analysis confirming reproducibility (mean CV 1.4%). A Kruskal-Wallis factorial analysis reveals that dataset choice dominates performance variance ($\varepsilon^2 = 0.73$), while kernel type accounts for only 9%. Spectral analysis offers a mechanistic explanation: current quantum feature maps produce eigenspectra that are either too flat or too concentrated, missing the intermediate profile of the best classical kernel, the radial basis function (RBF). Quantum kernel training (QKT) via kernel-target alignment yields the single competitive result -- balanced accuracy 0.968 on breast cancer -- but with ~2,000x computational overhead. Our findings provide actionable guidelines for quantum kernel research. The complete benchmark suite is publicly available to facilitate reproduction and extension.
-
-[Read Paper](https://arxiv.org/abs/2604.18837v1)
-
----
-
-## 6. High-flux sub-Poissonian twin-beam generation from warm atomic vapor
+## 4. High-flux sub-Poissonian twin-beam generation from warm atomic vapor
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
@@ -74,27 +50,51 @@ Found 29 papers in this category.
 
 ---
 
-## 7. Harmoniq: Efficient Data Augmentation on a Quantum Computer Inspired by Harmonic Analysis
+## 5. A universal complementarity identity for polarized double-slit interferometry
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
-**Authors:** Kristina Kirova, Monika Doerfler, Franz Luef, Richard Kueng
+**Authors:** José J. Gil
 
-**Abstract:** Quantum machine learning has attracted significant interest in recent years. Most existing approaches, however, are variational in nature and require extensive parameter optimization subroutines. Here, we propose a conceptually distinct quantum machine learning approach that goes beyond the variational paradigm. Harmoniq takes a novel data augmentation technique from quantum harmonic analysis and approximates it as a stochastic mixture of n-qubit circuits with (at most) quadratic depth each. A key strength of Harmoniq is its modularity: viewed as a quantum process acting on density matrices, it can readily be combined with other quantum data processing and learning subroutines. A subsequent case study demonstrates this modularity by combining Harmoniq with stochastic amplitude encoding for the input density matrix and quantum PCA on the output density matrix. This results in a promising signal denoising pipeline that works particularly well in the small sample size regime.
+**Abstract:** We establish an exact identity among four dimensionless invariants accessible by standard polarimetric and interferometric measurements in a polarized double-slit experiment: the in-phase and quadrature components V_A and V_N of fringe visibility, the path predictability P, and the mixedness I of the path-reduced state satisfy V_A^2 + V_N^2 + P^2 + I^2 = 1. The identity is a universal algebraic consequence of the positivity of the reduced state and holds for every normalized path-polarization density matrix. It unifies the Englert-Greenberger-Yasin and Jakob-Bergou relations, separates the two operationally distinct components of visibility measurable by phase-shifted interferometry, and admits a natural interpretation within the Jaynes maximum-entropy framework: the three path invariants parametrize the minimal exponential family on the accessible algebra, while I^2 emerges as the residual mixedness that saturates the positivity bound. The separation V^2 = V_A^2 + V_N^2 identifies the antisymmetric sector of the coherence matrix rho = A + iN as the specific substrate of phase-sensitive information and permits a sector-resolved diagnosis of environmental coupling.
 
-[Read Paper](https://arxiv.org/abs/2604.18691v1)
+[Read Paper](https://arxiv.org/abs/2604.18760v1)
 
 ---
 
-## 8. Disorder-induced non-Gaussian states in large ensembles of cavity-coupled molecules
+## 6. Exponentially-improved effective descriptions of physical bosonic systems
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
-**Authors:** R. Schwengelbeck, M. Pandini, R. Daraban, J. Schachenmayer
+**Authors:** Varun Upreti, Nicolás Quesada, Ulysse Chabaud
 
-**Abstract:** We analyze vibrational dynamics in a toy model for polaritonic chemistry under collective electronic strong coupling. In a Holstein-Tavis-Cummings model, incoherently excited by a photon, we show that disorder leads to non-Gaussian states of vibrational modes on short time scales at the single-molecule level. Using exact matrix product state simulations, we demonstrate that this effect can remain robust for larger molecule numbers, implying that nuclear wave packets cannot be effectively described by thermal states. Furthermore, we compare simulations of the exact quantum dynamics with semiclassical approximations. We find that the Ehrenfest approximation can only well reproduce ensemble-averaged observables for very large system sizes. Also simulations in the truncated Wigner approximation fail to capture the non-Gaussian effects. Our work highlights the importance of disorder and genuine quantum effects in cavity-modified nuclear dynamics in polaritonic chemistry.
+**Abstract:** The effective description of a bosonic quantum system identifies the minimum finite dimension required to capture its essential dynamics. This effective dimension plays an important role in the complexity of classical and quantum algorithms for learning and simulating bosonic systems. While generic bosonic states require a dimension scaling as $1/ε^2$ for a precision of approximation $ε$, here we identify a natural energy condition which allows us to improve this scaling exponentially to $\log(1/ε)$. We then prove that most bosonic quantum states satisfy this condition, and in particular those produced by combining Gaussian dynamics with generic energy-preserving dynamics, which include the output states of universal bosonic quantum circuits. We apply this finding to enhance learning algorithms for bosonic quantum states and we further obtain new classical simulation algorithms for a large class of bosonic systems. Finally, using efficient decompositions of Kerr gates as sums of Gaussian gates, we significantly refine these classical simulation algorithms for universal bosonic quantum circuits. Our results demonstrate that physical bosonic systems are significantly more well-behaved than previously assumed, allowing for efficient descriptions even at high precision.
 
-[Read Paper](https://arxiv.org/abs/2604.18456v1)
+[Read Paper](https://arxiv.org/abs/2604.18720v1)
+
+---
+
+## 7. Synchronization in a dissipative quantum many-body system
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Technical / Pure Physics
+
+**Authors:** B. Çakmak, K. Sümer, S. Campbell, G. Karpat
+
+**Abstract:** We study synchronization in the XX qubit chain subject to local or multi-local amplitude-damping noise. Analyzing the decoherence-free subspace (DFS) structure of the model, we show that it is completely determined by a simple number-theoretic function involving the noise sites and the chain length. We derive a closed-form expression for local qubit observables restricted to the DFS and prove that stable synchronization of the edge qubits for arbitrary initial states occurs \textit{if and only if} the DFS supports exactly one single-excitation eigenstate. We further show that this same condition also guarantees constant asymptotic entanglement between the edge qubits, so that generic stable synchronization and constant asymptotic entanglement necessarily coexist. By contrast, when the DFS supports multiple single-excitation eigenstates, synchronization becomes initial state dependent and may be entirely absent, even though stable oscillatory entanglement can persist indefinitely.
+
+[Read Paper](https://arxiv.org/abs/2604.18707v1)
+
+---
+
+## 8. Classical counterparts of shortcuts to adiabaticity in nonlinear dissipative Lagrangian systems
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Technical / Pure Physics
+
+**Authors:** Jincheng Shi, Yicheng Pan, Yue Ban, Xi Chen
+
+**Abstract:** Shortcuts to adiabaticity (STA) were first developed in quantum dynamics to realize rapid transformations with suppressed residual excitations. Here we show how the same idea can be implemented in classical nonlinear dissipative Lagrangian systems. Using a coupled $r$-$θ$ manipulator as an illustrative model, we perform inverse engineering on the Euler-Lagrange equations with Rayleigh dissipation by prescribing endpoint-stationary trajectories, obtaining the corresponding force and torque profiles and quantifying how geometric coupling amplifies errors and residual energy. We further compare smooth STA protocols with actuator-bounded time-optimal solutions and with proportional-integral-derivative tracking, which highlights a trade-off among smoothness, speed, and robustness. Finally, we introduce a single-shot correction based on one mid-course measurement to reduce the effect of early deviations while keeping the inputs nearly smooth. These results provide a practical bridge between quantum STA concepts and their classical counterparts.
+
+[Read Paper](https://arxiv.org/abs/2604.18439v1)
 
 ---
 
@@ -110,7 +110,31 @@ Found 29 papers in this category.
 
 ---
 
-## 10. Shannon and Rényi entropies of molecular densities: insights into extensivity and the incomplete description of electron correlation
+## 10. Momentum Stability and Adaptive Control in Stochastic Reconfiguration
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Technical / Pure Physics
+
+**Authors:** Yuyang Wang, Xin Liu
+
+**Abstract:** Variational Monte Carlo (VMC) combined with expressive neural network wavefunctions has become a powerful route to high-accuracy ground-state calculations, yet its practical success hinges on efficient and stable wavefunction optimization. While stochastic reconfiguration (SR) provides a geometry-aware preconditioner motivated by imaginary-time evolution, its Kaczmarz-inspired variant, subsampled projected-increment natural gradient descent (SPRING), achieves state-of-the-art empirical performance. However, the effectiveness of SPRING is highly sensitive to the choice of a momentum-like parameter $μ$. The original sensitivity of $μ$ and the instability observed at $μ=1$, have remained unclear. In this work, we clarify the distinct mechanisms governing the regimes $μ<1$ and $μ=1$. We establish convergence guarantees for $0\leμ<1$ under mild assumptions, and construct counterexamples showing that $μ=1$ can induce divergence via uncontrolled growth along kernel-related directions when the step-size is not summable. Motivated by these theoretical insights and numerical observations, we further propose \textit{Principal Range Informed MomEntum SR} (PRIME-SR), a tuning-free momentum-adaptive SR method based on effective spectral dimension and subspace overlap. PRIME-SR achieves performance comparable to optimally tuned SPRING while significantly improving robustness in VMC optimization.
+
+[Read Paper](https://arxiv.org/abs/2604.18357v1)
+
+---
+
+## 11. Quantum many-body scars in random unitary circuits
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Technical / Pure Physics
+
+**Authors:** Luca Capizzi, Benoît Ferté
+
+**Abstract:** Quantum many-body scars are rare exceptions to thermalization: they sustain non-thermal stationary states without the protection of any local conservation law, and are generally expected to be fragile. Here we construct an analytically tractable random unitary circuit hosting a single scar, and derive from first principles the thermalization mechanism governing perturbations thereof - described by a picture of fluctuating interfaces. Surprisingly, despite being thermodynamically irrelevant for local observables, the scar leaves a sharp fingerprint in the entanglement dynamics, driving a transition as a function of perturbation strength that is not probed by any local measurement.
+
+[Read Paper](https://arxiv.org/abs/2604.18244v1)
+
+---
+
+## 12. Shannon and Rényi entropies of molecular densities: insights into extensivity and the incomplete description of electron correlation
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
@@ -122,19 +146,19 @@ Found 29 papers in this category.
 
 ---
 
-## 11. Unidirectional Inter-Axial Coupling and Spontaneous Cooling in a~Non-Hermitian Dynamics of a~Levitated Particle
+## 13. Implosive Dynamics from Topological Quenches in Bose-Einstein Condensates
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
-**Authors:** Tereza Zemánková, Martin Šarbort, Petr Jákl, Jan Ježek, Martin Šiler, Stephen H. Simpson, Pavel Zemánek, Oto Brzobohatý
+**Authors:** Marios Kokmotos, Dimitri M. Gangardt, Giovanni Barontini
 
-**Abstract:** Non-Hermitian dynamics in open systems can give rise to a variety of fascinating non-equilibrium phenomena, ranging from symmetry-breaking transitions to directional energy flow. Parity-time (PT) symmetry breaking determines the occurrence of dynamical instabilities, while non-reciprocal interactions enable asymmetric energy transfer between modes. Here, we present a versatile optomechanical platform based on a vacuum-levitated nanoparticle that allows full control over the coupling of its mechanical modes, including non-reciprocal and non-conservative interactions. By engineering the spatial ellipticity and polarization of the trapping beam, we continuously tune the system from a reciprocal to a strongly non-reciprocal regime. This allows us to observe PT-symmetry phase transitions and to isolate a unidirectional regime in which one mode remains effectively decoupled while driving the other. We demonstrate that elliptical polarisation of the trapping beam spanning unidirectional and reciprocal regimes induces asymmetric intermodal energy transfer. This results in the spontaneous cooling of one mechanical mode without external feedback. Both modes share identical mass, size, charge, and optical environment, providing a clean and robust setting for exploring non-Hermitian dynamics, exceptional-point physics, and energy redistribution in minimal systems. Combined with recent advances in ground-state cooling, our results provide a direct route to realising non-Hermitian phenomena in the quantum regime.
+**Abstract:** We show numerically that a repulsive Bose-Einstein condensate can be driven into implosive dynamics by a direct topological quench. We first realize giant vortices by quasi-adiabatic phase imprinting, and then perform a sudden anti-imprint that cancels the accumulated winding in a single step, abruptly switching the condensate from a highly charged vortex state to the trivial sector. The resulting phase-density mismatch launches a rapid inward radial flow and produces a strong central density buildup, despite the repulsive interactions. We find a clear threshold in the initial winding for the onset of this focusing. After the first implosion, the dynamics evolves into circular nonlinear wave fronts that subsequently undergo breaking of azimuthal symmetry (axisymmetry) down to a polygonal one, whose shape is determined by the way the giant vortex is built. These results establish topological engineering as a new tool for studying implosive dynamics and symmetry-breaking instabilities in quantum fluids.
 
-[Read Paper](https://arxiv.org/abs/2604.17985v1)
+[Read Paper](https://arxiv.org/abs/2604.17932v1)
 
 ---
 
-## 12. Crossed-Product von Neumann Algebras for Incompressible Navier--Stokes Flows and Spectral Complexity Indicators
+## 14. Crossed-Product von Neumann Algebras for Incompressible Navier--Stokes Flows and Spectral Complexity Indicators
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
@@ -146,7 +170,7 @@ Found 29 papers in this category.
 
 ---
 
-## 13. Frequency upconversion of infrared signals via molecular optomechanical cavities
+## 15. Frequency upconversion of infrared signals via molecular optomechanical cavities
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
@@ -158,31 +182,31 @@ Found 29 papers in this category.
 
 ---
 
-## 14. Electromagnetic Wightman functions and vacuum densities for a brane intersecting the AdS boundary
-**Source:** arXiv | **Date:** 2026-04-19
+## 16. Semiclassical resonances under local magnetic fields
+**Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
-**Authors:** A. A. Saharian, R. M. Avagyan, V. F. Manukyan
+**Authors:** Pavel Exner, Ayman Kachmar
 
-**Abstract:** We investigate the combined effects of a brane intersecting the AdS boundary and background gravitational field on the local characteristics of the electromagnetic vacuum. Two types of boundary conditions on the brane are considered, which are higher-dimensional generalizations of the perfect electric (PEC) and perfect magnetic (PMC) boundary conditions in Maxwell's electrodynamics. The brane-induced contributions to the Wightman functions of the vector potential and field tensor are explicitly extracted. Simple expressions in terms of elementary functions are provided. The behavior of the vacuum expectation values (VEVs) is mimicked by a scalar field with a negative effective mass squared determined by the radius of the AdS spacetime. The expectation values of the electric and magnetic fields squares and of the energy-momentum tensor are investigated as local characteristics of the vacuum state. The brane-induced contributions to these VEVs have opposite signs for the PEC and PMC conditions. For the PMC condition, this contribution is negative for the electric field squared and positive for the magnetic field squared. The VEV of the energy-momentum tensor has a nonzero off-diagonal component. The brane-induced vacuum energy density is positive for PMC condition, whereas the normal and parallel stresses change sign as functions of the distance from the brane. Unlike the problem involving a planar boundary in the Minkowski bulk, the vacuum energy-momentum tensor does not vanish in (3+1)-dimensional AdS spacetime.
+**Abstract:** We study resonances for the semiclassical magnetic Laplacian in the full plane with a compactly supported magnetic field in the framework of semiclassical complex scaling and black box scattering theory. Assuming that the magnetic field is locally constant, we prove the existence of semiclassical resonances near the Landau levels with exponentially small imaginary parts. We also prove that resonances emerge from a magnetic step discontinuity along a curved interface or a non-degenerate magnetic well, and in the vicinity of anharmonic Landau levels if the field has an isolated zero.
 
-[Read Paper](https://arxiv.org/abs/2604.17583v1)
+[Read Paper](https://arxiv.org/abs/2604.17854v1)
 
 ---
 
-## 15. A Novel Quantum Augmented Framework to Improve Microgrid Cybersecurity
-**Source:** arXiv | **Date:** 2026-04-19
+## 17. Poling-free Spontaneous Parametric Down Conversion without for Silicon Carbide and Lithium Niobate photonics
+**Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Technical / Pure Physics
 
-**Authors:** Nitin Jha, Prateek Paudel, Abhishek Parakh, Mahadevan Subramaniam
+**Authors:** Tim F. Weiss, Hamed Arianfard, Yang Yang, Alberto Peruzzo
 
-**Abstract:** Small modular nuclear reactors (SMRs) are redefining the energy generation landscape by enabling the deployment of modular, scalable, and pre-built power units that can be used to build distributed autonomous microgrids for critical infrastructure and burgeoning AI factories. Often, these microgrids are linked together to provide a resilient, decentralized power generation infrastructure. Consequently, the cybersecurity of microgrids is of critical importance. In this work, we propose a quantum augmented network framework for resilient microgrids. We integrate the ideas of secure quantum networking, quantum anonymous notification, and quantum random number generation to strengthen the integrity, confidentiality, and privacy of microgrid networks. To substantiate the possible benefits of using quantum augmented microgrids, we simulate a practical high-impact classical attack: a traffic analysis and priority-action spoofing campaign that can (1) deanonymize the anonymous notification for a high-priority action, (2) force excessive key usage, and (3) induce harmful allow/block operations at the control level. We quantify how these attacks affect information leakage, spoof acceptance, key sufficiency, and operational outcomes such as latency, deadline misses, unserved energy, etc. This quantum augmented microgrid (QuAM) framework lets us evaluate trade-offs between privacy, availability, and the operational cost of mitigation (cover traffic, verification delays, and key-rotation policies), further paving the path for the study of more nuanced attacks that arise due to the use of quantum-classical integrated frameworks.
+**Abstract:** State-of-the-art photon sources based on spontaneous parametric down-conversion (SPDC) currently rely on artificial structuring of the material nonlinearity to satisfy phase-matching conditions. This technique, known as periodic poling, is available only in a limited number of material platforms and introduces additional fabrication steps and errors, which are detrimental to up-scaling efforts. Here, we present a device architecture that enables SPDC of a wide range of frequencies without the need for periodic poling. We present explicit designs and calculations for 4H Silicon Carbide on-insulator, in which SPDC photon generation is so far unavailable, and thin-film Lithium Niobate on-insulator, a state-of-the-art quantum photonics platform. Our design, based on mode conversion and subsequent modal phase-matched SPDC, facilitates a CMOS compatible $χ^{(2)}$ platform, and simplifies photon sources by removing the requirement of periodic poling and the associated additional fabrication complexity.
 
-[Read Paper](https://arxiv.org/abs/2604.17481v1)
+[Read Paper](https://arxiv.org/abs/2604.17723v1)
 
 ---
 
-## 16. G-type antiferromagnetic structure in Rb1-xV2Te2O
+## 18. G-type antiferromagnetic structure in Rb1-xV2Te2O
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Technical / Pure Physics
 
@@ -194,7 +218,7 @@ Found 29 papers in this category.
 
 ---
 
-## 17. Heteronuclear Polarization Transfers Between Spin-locked and Anti-Longitudinal Spin States in the NMR of Liquids and Spinning Solids
+## 19. Heteronuclear Polarization Transfers Between Spin-locked and Anti-Longitudinal Spin States in the NMR of Liquids and Spinning Solids
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Technical / Pure Physics
 
@@ -206,7 +230,7 @@ Found 29 papers in this category.
 
 ---
 
-## 18. Ultrafast nonadiabatic dynamics of tetraphenylsubstituted nitrogen-based heterocycles
+## 20. Ultrafast nonadiabatic dynamics of tetraphenylsubstituted nitrogen-based heterocycles
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Technical / Pure Physics
 
@@ -218,7 +242,7 @@ Found 29 papers in this category.
 
 ---
 
-## 19. Simultaneous cooling of degenerate mechanical modes in unresolved sideband regime via optical and mechanical nonlinearities
+## 21. Simultaneous cooling of degenerate mechanical modes in unresolved sideband regime via optical and mechanical nonlinearities
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Technical / Pure Physics
 
@@ -230,19 +254,19 @@ Found 29 papers in this category.
 
 ---
 
-## 20. Anisotropic spin-valley coupling in SiMOS and Si/SiGe quantum dots
-**Source:** arXiv | **Date:** 2026-04-17
+## 22. Complex Quaternionic Formulations of Dirac, Electrodynamic, and Electroweak Fields and Interactions
+**Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Technical / Pure Physics
 
-**Authors:** N. Tobias Jacobson, Natalie D. Foster, Ryan M. Jock, Andrew M. Mounce, Daniel R. Ward, Malcolm S. Carroll, Dwight R. Luhman
+**Authors:** James Henry Atwater, David Lambert, Yuri Rostovtsev
 
-**Abstract:** While bulk silicon has long been understood to exhibit relatively weak spin-orbit coupling (SOC), confinement of electrons to quantum dots (QDs) at a silicon heterointerface results in significantly larger SOC. This is a concern for electron spin qubit performance, as intravalley and intervalley SOC can significantly perturb the operation of electron spin qubits. While these interactions can be harnessed to drive coherent rotations in a singlet-triplet qubit, coupling to low-lying excited valley states can lead to undesirable spin relaxation when valley splitting is on resonance with the Zeeman energy. In this work, we measure the angular dependence of the interfacial spin-orbit interaction as a function of the direction and magnitude of an applied external magnetic field in SiMOS and Si/SiGe heterostructures, two common material platforms for silicon spin qubits. We construct a physical model that accurately infers intra- and inter-valley SOC physics from fits to the data, allowing for a direct comparison between these two material systems. For the devices measured we find that, while the $g$-factor differences are comparable, the SiMOS QDs exhibit an order of magnitude larger spin-valley coupling than for Si/SiGe. Moreover, we find that the angular dependence of the spin-valley coupling is similar for both devices, with similar magnetic field orientations minimizing the spin-valley coupling. Our work points towards operational schemes for optimizing spin-valley coupling to avoid or exploit this mechanism for qubit operation.
+**Abstract:** A simple translation between a standard representation of $\mathfrak{sl}_2\mathbb{C}$ and the complex-quaternions ($\mathbb{H}\otimes_\mathbb{R}\mathbb{C}$) is established and exploited to construct a novel hyper-complex description of the Dirac theory, electrodynamics, and ultimately the electroweak sector of the standard model. We find that coupling the constructed Dirac spinors to electromagnetism yields the correct magnetic moment for charged spin-1/2 particles. Extending electrodynamics to electroweak theory necessitates an algebraic distinction between the structures of the leptonic and Higgs fields not present in the standard model. The conditions of spontaneous symmetry breaking are explored using an alternative representation of weak isospin and hypercharge equivalent to an irreducible representation of $\mathfrak{su}(2)\oplus\mathfrak{u}(1)$ on $\mathbb{C}^4$. This alternative representation disagrees with the standard model on the overall signs of weak neutral currents.
 
-[Read Paper](https://arxiv.org/abs/2604.16713v1)
+[Read Paper](https://arxiv.org/abs/2604.16766v1)
 
 ---
 
-## 21. Continuous-wave nuclear laser absorption spectroscopy of Thorium-229
+## 23. Continuous-wave nuclear laser absorption spectroscopy of Thorium-229
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Technical / Pure Physics
 
@@ -254,7 +278,7 @@ Found 29 papers in this category.
 
 ---
 
-## 22. Entropy Moduli and BKM Coercivity for Rank-Deficient Non-Commutative Markov Semigroups
+## 24. Entropy Moduli and BKM Coercivity for Rank-Deficient Non-Commutative Markov Semigroups
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Technical / Pure Physics
 
@@ -266,7 +290,31 @@ Found 29 papers in this category.
 
 ---
 
-## 23. Young women’s longitudinal identity negotiations in physics and mathematics throughout upper secondary education
+## 25. Preparation and detection of quasiparticles for quantum simulations of scattering
+**Source:** arXiv | **Date:** 2026-04-17
+**Tags:** Technical / Pure Physics
+
+**Authors:** Mattia Morgavi, Peter Majcen, Marco Rigobello, Simone Montangero, Pietro Silvi
+
+**Abstract:** We introduce a method for the selective preparation and detection of quasiparticle wave packets, based on creation operators that generate dressed, localized excitations on top of interacting vacua of (quasi-)one-dimensional quantum lattice theories. This method exploits maximally localized Wannier functions (MLWFs) constructed from quasiparticle bands at intermediate system sizes, enabling the construction of unitary local dressed creation operators. The algorithm allows for species-resolved wave-packet preparation and detection, enabling the separation of known quasiparticle contributions from unknown resonances. We test this approach with matrix product states (MPS) on pure hardcore Hamiltonian QCD on a ladder lattice, detecting scattering outputs and mass resonances.
+
+[Read Paper](https://arxiv.org/abs/2604.16210v1)
+
+---
+
+## 26. Gravitationally induced wave-function collapse from dynamical bifurcation
+**Source:** arXiv | **Date:** 2026-04-17
+**Tags:** Technical / Pure Physics
+
+**Authors:** C. A. S. Almeida
+
+**Abstract:** We propose an effective non-relativistic framework in which wave-function collapse emerges as a deterministic dynamical instability induced by gravitational self-interaction and regulated by short-distance repulsion. The dynamics is described by a nonlinear Schrödinger equation supplemented by a phenomenological repulsive sector ensuring regularity at high densities. Using a variational Gaussian ansatz, we derive an explicit effective energy functional and show that extended quantum states lose stability beyond a critical mass scale. This loss of stability is associated with a bifurcation in the reduced dynamical system governing the wave-function width, leading to the emergence of stable localized configurations. Within this picture, collapse corresponds to the dynamical selection of one of these localized attractors, driven by infinitesimal asymmetries in the initial state and occurring without stochastic noise or environmental coupling. The mechanism provides a controlled and quantitative realization of gravity-induced localization, extending Schrödinger--Newton-type models while avoiding their pathological short-distance behavior. Possible implications for mesoscopic systems probing the quantum-to-classical transition are briefly discussed.
+
+[Read Paper](https://arxiv.org/abs/2604.16144v1)
+
+---
+
+## 27. Young women’s longitudinal identity negotiations in physics and mathematics throughout upper secondary education
 **Source:** APS PRPER | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -278,7 +326,7 @@ Found 29 papers in this category.
 
 ---
 
-## 24. Efficient Gate Reordering for Distributed Quantum Compiling in Data Centers
+## 28. Efficient Gate Reordering for Distributed Quantum Compiling in Data Centers
 **Source:** EPJ Quantum Technology | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -290,7 +338,7 @@ Found 29 papers in this category.
 
 ---
 
-## 25. HCQNSC: a hybrid classical-quantum neural network for text sentiment classification
+## 29. HCQNSC: a hybrid classical-quantum neural network for text sentiment classification
 **Source:** EPJ Quantum Technology | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -302,7 +350,67 @@ Found 29 papers in this category.
 
 ---
 
-## 26. Instructor Talk and Student Belonging in Introductory Biology: Not all Talk Matters and Relationships Vary by Student Identity
+## 30. Variable-mass dynamics made explicit: A rotating falling-chain test case
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Metin Gürgöze, Atakan Altınkaynak
+
+**Abstract:** Abstract Classical variational formulations are typically presented for systems of constant total mass, which can obscure how to treat problems where a convenient subsystem gains or loses mass. We consider a guided ``falling chain'' variant in which a uniform chain of length L interacts with a horizontal disc rotating at constant angular speed ω. A single generalized coordinate r(t) describes the chain length on the disc while the remaining length L-r(t) hangs vertically. We derive the same equation of motion using fixed-mass Lagrangian, D’Alembert, variable-mass and Lagrange-multiplier formulations, thus comparing energy-based, force-based, subsystem-based and constraint-based viewpoints within a single problem. A compact nondimensional form shows that the dynamics depends on a single parameter β = ω2L/(2g), yields a closed-form equilibrium relation for the on-disc fraction, and allows a simple local analysis showing that this equilibrium is linearly unstable in the present idealized model. The example is intended as a short worked comparison problem for advanced analytical mechanics teaching, illustrating how subsystem choice, generalized forces, constraint reactions, and interface momentum flux must be handled in order for fixed-mass and variable-mass descriptions to remain consistent.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae614f)
+
+---
+
+## 31. Coffee Brewing as a Context for Teaching Porous Media Flow and Mass Transfer Principles
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Syahril Siregar
+
+**Abstract:** Abstract Everyday systems provide valuable opportunities for introducing fundamental concepts in physics through accessible and engaging examples. In this work, we present a simplified physical model of gravity-driven pour-over coffee brewing, treating the system as unsteady flow through a porous medium with a conical geometry. The model combines Darcy's law, mass conservation, and a phenomenological extraction equation to describe the coupled evolution of water height, flow rate, and solute concentration. Unlike models assuming a constant cross-sectional area, the conical geometry introduces a nonlinear dependence of the storage volume on water height, leading to characteristic cubic scaling of the outflow rate. Numerical simulations illustrate how hydrodynamics govern extraction dynamics and how changes in bed permeability affect brew time and extraction efficiency. The model requires no new experimental input beyond literature values for physical properties and is suitable for use as a teaching example in undergraduate courses on fluid mechanics, transport phenomena, or computational physics.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae614b)
+
+---
+
+## 32. Design and research of a sensitivity-adjustable Young's modulus measuring instrument based on Mach-Zehnder interference
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Dezhi Huang, Yao Wu, Siyi Chen, Haocheng Zhang, Yunhang Zhou, Hai Liu, XInyan Jia, Daihe Fan
+
+**Abstract:** Abstract Young's modulus is a key parameter for evaluating the mechanical properties of materials and holds significant reference value in engineering material selection. Its measurement is also a classic experimental project in university physics courses. Based on the Mach-Zehnder interference principle, this paper designs and fabricates a sensitivity-adjustable Young's modulus measuring instrument by introducing two pairs of triangular wedges with adjustable apex angles and fillable media into the two interference optical paths. This enables the measurement of materials with Young's moduli spanning several orders of magnitude on a single device. The paper first presents the structural design schematic of the instrument and clarifies the definition and adjustment mechanism of sensitivity through analysis of the interference optical path. Subsequently, actual measurements were conducted on materials with significantly different moduli, such as steel wire, aluminum wire, and nylon rope, using the instrument. The relative errors of the experimental results were all below 1.6%, demonstrating the good robustness of the designed instrument. The design concept and experimental methodology presented in this study can provide a reference for the instructional design of experiments related to micro-displacement measurement in university physics laboratory teaching.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae62bb)
+
+---
+
+## 33. Do electromagnetic waves (such as light) really slow down in dielectrics?
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Bernhard Jakoby, Kurt Hingerl
+
+**Abstract:** Abstract Electromagnetic waves and light in particular slow down when they travel through dielectric media such as water and glass - this is commonly taught at different levels of physics education and often accepted without any further consideration. However, some students perceive this as paradox, particularly when considering the model that the light (or the electromagnetic waves) traveling in dielectrics represents a superposition of an incident wave and many partial waves emitted by oscillating polarized molecules. All these waves travel at the vacuum speed of light, yet their superposition apparently does not.&amp;#xD;We review the underlying theory a bit more in depth and remind the reader to Ewald-Oseen’s extinction theorem mathematically describing the underlying mechanisms. In particular it is discussed in detail that the simplified picture of a “slowed-down” wave strictly only holds for idealized and thus fictitious non-dispersive media, while in real and thus dispersive media, an wavefront incident on a dielectric region will lead to forerunners which indeed propagate at speeds up to the vacuum speed of light as has been shown by Sommerfeld and Brillouin more than hundred years ago.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae60b5)
+
+---
+
+## 34. Fluid mechanics with an enjoyable experiment: zigzagging air bubbles in a low viscosity fluid
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Débora Cristine Menon, Eduardo do Carmo, Marcelo G Honnicke
+
+**Abstract:** Abstract Capturing the students’ attention in any physics subject is always a challenge. Herein we propose an experiment to explore different concepts of fluid mechanics to be used in undergraduate physics classes. The experiment presented here utilizes the camera of a cellular phone to capture movies of air bubbles flowing in warm water (a low viscosity fluid). By fitting the projection of the bubble movement in a plane parallel to the rising bubbles zigzag movement, it is possible to determine the vectorial movement equations of the entire bubble movement as well as its drag coefficient (C D ). Finally, the energy dissipation of the bubble´s movement can also be analyzed and reduced to the traditional form of the work-kinetic energy theorem.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae614d)
+
+---
+
+## 35. Instructor Talk and Student Belonging in Introductory Biology: Not all Talk Matters and Relationships Vary by Student Identity
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -314,7 +422,7 @@ Found 29 papers in this category.
 
 ---
 
-## 27. Resource Use in Introductory Biology: Evaluating Latent Patterns, Demographic Covariates, and Effects on Final Course Grade
+## 36. Resource Use in Introductory Biology: Evaluating Latent Patterns, Demographic Covariates, and Effects on Final Course Grade
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -326,7 +434,7 @@ Found 29 papers in this category.
 
 ---
 
-## 28. Equitable Group Work in Undergraduate Biology Courses: Leveraging a Complex Instruction Framework to Identify Pedagogical Strategies
+## 37. Equitable Group Work in Undergraduate Biology Courses: Leveraging a Complex Instruction Framework to Identify Pedagogical Strategies
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -338,7 +446,7 @@ Found 29 papers in this category.
 
 ---
 
-## 29. Racism, sexism, and classism: The uneven terrain of student belonging in introductory biology classrooms
+## 38. Racism, sexism, and classism: The uneven terrain of student belonging in introductory biology classrooms
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Technical / Pure Physics
 
@@ -347,6 +455,536 @@ Found 29 papers in this category.
 **Abstract:** Sense of belonging supports student success in science, technology, engineering, and mathematics (STEM), yet prior research indicates that systemic inequities shape who feels included in college classrooms. Racism, sexism, and classism can shape students’ belonging, which then can impact their outcomes. We studied students’ sense of belonging in 56 large introductory biology courses that used active learning, reaching more than 4900 students. We used a QuantCrit methodological framework and hierarchical linear models to examine how the intersection of racism and sexism, and racism and classism, related to three components of students’ belonging. Racism impacted groups differently, and its impact varied across intersecting identities and components of belonging. Sexism undermined women's comfort sharing ideas in class and seeking instructor help across racial/ethnic groups. Women in some racial/ethnic groups experienced greater connectedness to classmates than men. Classism diminished students’ sense of belonging across most racial/ethnic groups. Disaggregating students into more racial/ethnic groups revealed important differences in the experiences of Native American, Latiné, Black/African, and two groups of Asian students. These findings demonstrate that within the same classroom, students can have profoundly different experiences and challenge us to recognize the influence of intersecting forms of oppression on our students.
 
 [Read Paper](https://doi.org/10.1187/cbe.25-08-0178)
+
+---
+
+## 39. Trends of high impact educational research in scientific disciplines
+**Source:** International Journal of STEM Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Yeping Li
+
+**Abstract:** Abstract Educational research in scientific disciplines has gained increasing importance as a source of scholarly support for evidence-based improvements in science teaching and learning. Trends in this area can be examined not only through individual publications on specific topics over time, but also through the broader development of science-based education journals. To capture these trends, this study examines the inclusion and impact of education-focused journals indexed in Clarivate’s Science Citation Index Expanded over time. The findings suggest that the nature and scope of educational scholarship in scientific disciplines have gradually evolved, characterized by the increasing visibility and impact of multidisciplinary and interdisciplinary research in STEM and STEMM education.
+
+[Read Paper](https://doi.org/10.1186/s40594-026-00607-0)
+
+---
+
+## 40. Advancing Science Education Research Together (2020–2025): A Final
+                    <scp>JRST</scp>
+                    Editorial
+**Source:** Journal of Research in Science Teaching | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Troy D. Sadler, Felicia Moore Mensah, Li Ke
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1002/tea.70051)
+
+---
+
+## 41. Science Educators and Researchers Must Uphold the Human Rights of Trans, Nonbinary, and Intersex Persons
+**Source:** Science Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Quentin C. Sedlacek, A. M. Aramati Casper, Katherine Doerr, Sophia Jeong, Nelly K. M. Marosi, K. Rende Mendoza, Marco Reggiani, Shersingh Joseph Tumber‐Dávila, Jennifer D. Adams, Andrew P. Anderson, Lucy Avraamidou, Charlie K. Blake, Tina Cheuk, Sara J. Dozier, Sarah L. Eddy, Alexander Eden, Rebecka Fingalsson, Michelle Friend, Agustín Fuentes, Heather Haeger, Kathryn L. Kirchgasler, Rishi Krishnamoorthy, Catherine Lemmi, Jeffrey Maloy, Dax Ovid, Kathryn Ribay, Ronan O. Rock, Tatiane Russo‐Tait, Sara Tolbert, Brie Tripp, Maria Varelas
+
+**Abstract:** Abstract Trans, nonbinary, and intersex persons are—and have always been—an integral part of humankind. However, these communities are under attack. We live in a time of growing state repression and the normalization of political violence against trans, nonbinary, and intersex persons throughout much of the world, and we have a responsibility to understand these conditions and consider their implications for science education. In this commentary, we briefly outline the growing state repression of trans, nonbinary, and intersex persons, illustrating this repression with examples primarily drawn from the U.S. context, while acknowledging similar forms of repression happening in many countries. We discuss the ways that scientific discourses and ideologies are being co‐opted to rationalize these attacks, explain the responsibility this creates for science educators, and examine the important work that has already been done to understand and dismantle oppression and to celebrate the lives and accomplishments of these communities within and beyond science education. Finally, we offer recommendations for specific actions that science educators and researchers can take to uphold the human rights of trans, nonbinary, and intersex persons and communities.
+
+[Read Paper](https://doi.org/10.1002/sce.70069)
+
+---
+
+## 42. Unknown Title
+**Source:** Science Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1002/sce.v110.3)
+
+---
+
+## 43. Tracking college student's learning gains using EEG hyperscanning: An interpersonal neuroscience approach development and validation
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Haiqing Yu, Leijin Shu, Yongzhi Huang, Tzyy-Ping Jung, Minpeng Xu, Dong Ming
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102323)
+
+---
+
+## 44. From heartbeats to actions: Multimodal learning analytics of cognitive and behavior engagement in real classrooms
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Enqi Fan, Matt Bower, Jens Siemon
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102325)
+
+---
+
+## 45. The learning crisis: Three years after COVID-19
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Tomasz Gajderowicz, Maciej Jakubowski, Alec I. Kennedy, Christian Christrup Kjeldsen, Harry Anthony Patrinos, Rolf Strietholt
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102373)
+
+---
+
+## 46. Discipline gaps in German schools? A video study on teacher-based discrimination [Registered report - stage I]
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Sophie Harms, Sarah Gentrup, Kristin Schotte, Sebastian Weirich, Hanna Dumont, Aileen Edele
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102362)
+
+---
+
+## 47. Unlearning to learn in simulation-based learning
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** María Laura Angelini
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102376)
+
+---
+
+## 48. Spatial skills in early childhood education
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Katarzyna Bobrowicz, Angélica Mendes
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102308)
+
+---
+
+## 49. Exploring the impact of students' interaction willingness on learning outcomes: An empirical study of cooperative learning in vocational education
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Zhennan Sun, Mingyong Pang, Yanping Wang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102337)
+
+---
+
+## 50. Bridging the digital divide? Effects of analog and digital reading interventions in German elementary schools
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Jana Heinz, Franz Neuberger, Laura Eras, Uta Hauck-Thum
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102324)
+
+---
+
+## 51. Editorial Board
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0959-4752(26)00036-8)
+
+---
+
+## 52. Improving writing through evidence-based teaching
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Vera Busse, Yucheng Cao, Johanne Marie Kischnick, Pia Sieveke, Steve Graham
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102361)
+
+---
+
+## 53. Developing pre-service teachers’ instruction-giving practices through an explicit training intervention: Evidence from primary CLIL classrooms
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Tomáš Kos, Grit Bergner
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102357)
+
+---
+
+## 54. Cloud platforms for global collaborative vocal masterclasses and mutual learning
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Zhuming Qin
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102358)
+
+---
+
+## 55. “Beyond professional competence”: Intercultural communicative competence development in an EMI medical program
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Hung Thanh Nguyen, Lap Quoc Trinh, Tho Doan Vo
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102355)
+
+---
+
+## 56. Empowering teachers by integrating inter- and intrapersonal attributional perspectives: How teachers’ attributions and responsibility shape their emotions and classroom interventions
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Fani Lauermann, Daria K. Benden
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102342)
+
+---
+
+## 57. Training rational thinking: Improvements without transfer to argument evaluation
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Johanna Grimm, Tobias Richter
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102359)
+
+---
+
+## 58. Evaluating and diversifying philosophy education
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Friso Timmenga, Indira van der Zande
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102369)
+
+---
+
+## 59. A domain-specific perspective on adaptivity
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Anselm Strohmaier, Fien Depaepe, Michael Nickl, Andreas Obersteiner
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102364)
+
+---
+
+## 60. Regarding caveats on reliability evidence
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Steffen Zitzmann
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102314)
+
+---
+
+## 61. Student perceptions of teacher messages about the value of science in the classroom
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** David W. Putwain, Andrea Mallaburn, Hanna Gaspard
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102365)
+
+---
+
+## 62. Mechanisms linking epistemic curiosity and learning performance: The multifaceted role of mind wandering from trait and state analysis
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Merbiya Emin, Yang Liu, Qin Yao, Yadan Li
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102336)
+
+---
+
+## 63. International perspectives on incorporating climate change into forest school training programs
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Moriya Netzer, Dafna Gan, Ofira Ayalon
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102339)
+
+---
+
+## 64. Serious games based on scripted mystery role-playing: Exploring tensions between legal and social ethical awareness through game-based pedagogy
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Ziyi Xie, Zhizhuang Duan
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102374)
+
+---
+
+## 65. Purpose instructions and task models in multiple-text reading
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Bailing Lyu, Zheng Yao, Matthew T. McCrudden
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102347)
+
+---
+
+## 66. Editorial Board
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0360-1315(26)00006-0)
+
+---
+
+## 67. Profiles of academic performance and perceived digital distraction in secondary classrooms
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Chenyang Li, Fu Chen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105623)
+
+---
+
+## 68. Editorial Board
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0360-1315(26)00067-9)
+
+---
+
+## 69. Navigating learning disruptions: The role of digital learning platforms in student motivation, feedback and emotion
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Negar Monazam-Tabrizi, Yusuf Kurt, William il-Kuk Kang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105534)
+
+---
+
+## 70. Editorial Board
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0360-1315(26)00021-7)
+
+---
+
+## 71. Pixels and pedagogy: MISTT's insights into evolving teacher identities when technology comes to play
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Ottavia Trevisan, Filippo Marcato, Rhonda Christensen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105601)
+
+---
+
+## 72. The double-edged sword of technology: Investigating technostress and techno-eustress in academic burnout through digital literacy, internet self-efficacy, and cognitive flexibility
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Mehmet Avcı
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105540)
+
+---
+
+## 73. Exploring online feedback: Semantic and behavioral insights from a large-scale blended course in higher education
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Jingjing Zhang, Han Jiang, Yicheng Huang, Ning Ma
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105622)
+
+---
+
+## 74. Understanding MOOC dropout through learner intentions: A persona-based survival analysis
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Robert L. Moore, Chuang Wang, Sophia Soomin Lee
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105636)
+
+---
+
+## 75. The indirect role of children’s screen time and the moderating role of problematic parental screen use on the relationships between different parental mediation strategies and preschoolers’ developmental outcomes
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Siyu Wu, Xiaodan Yu, Wei Wei
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105552)
+
+---
+
+## 76. A critical examination of blockchain in education: A hybrid bibliometric and content analysis of sociotechnical imaginaries and pedagogical marginality
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Ye Zhang, Runze Li, Haochuan Wang, Yu Ge
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105613)
+
+---
+
+## 77. Factors related to student engagement in blended learning in higher education: A narrative synthesis based on a systematic review
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Linyuan Wang, Roeland van der Rijst, Admiraal Wilfried, Mario de Jonge
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105625)
+
+---
+
+## 78. Structured flexibility in microcredentials: A temporal analysis of self-regulated achievement pathways
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Ji Hyun Yu, Fengjiao Tu, Kamini Suresh Yelamar
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105624)
+
+---
+
+## 79. Editorial Board
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0360-1315(26)00036-9)
+
+---
+
+## 80. Gaining tolerance of immigrants through simulating migratory experiences: Quasi-experimental evidence from secondary school classrooms
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Markus Al-Afifi, Thomas Nygren
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105603)
+
+---
+
+## 81. Social inequality in digital competencies among students in Germany: A trend analysis using ICILS data 2013-2023
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Markus Lörz, Birgit Becker, Jan Niemann, Kerstin Drossel, Birgit Eickelmann
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105637)
+
+---
+
+## 82. Editorial Board
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Technical / Pure Physics
+
+**Authors:** Unknown Authors
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/s0360-1315(26)00045-x)
 
 ---
 

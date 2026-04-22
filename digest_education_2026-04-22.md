@@ -1,6 +1,6 @@
 # Literature Digest (2026-04-22)
 
-Found 184 papers in this category.
+Found 236 papers in this category.
 
 ## 1. Architecting Early Fault Tolerant Neutral Atoms Systems with Quantum Advantage
 **Source:** arXiv | **Date:** 2026-04-21
@@ -328,7 +328,7 @@ Found 184 papers in this category.
 
 ## 28. Towards Automated Selection of Quantum Encoding Circuits via Meta-Learning
 **Source:** arXiv | **Date:** 2026-04-21
-**Tags:** Quantum/Modern Curriculum, Emerging Tech
+**Tags:** Quantum/Modern Curriculum
 
 **Authors:** Dao Duy Tung, Nguyen Quoc Chuong, Vu Tuan Hai, Le Bin Ho, Lan Nguyen Tran
 
@@ -482,7 +482,19 @@ Found 184 papers in this category.
 
 ---
 
-## 41. Understanding Quantum Instruments
+## 41. Volumetric Processing of Structured Light Integrated in Glass
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Oussama Korichi, Markus Hiekkamaki, Robert Fickler
+
+**Abstract:** Light with complex structures in polarization, phase and amplitude, has attracted a lot of attention in a broad range of applications and fundamental studies in classical and quantum optics. Along with the increased interest in structured light comes a need for efficient modulation platforms operating simultaneously for many modes. Multi plane light conversions (MPLC), i.e., multiple consecutive phase modulations in combination with free space propagation, have enabled such unitary transformations, which are usually built by bulky optical components, limited to scalar modulation, or rely on advanced nanofabrication techniques. Here, we demonstrate an efficient, monolithic MPLC architecture through direct laser writing in standard fused silica glass, resulting in a device with a compact form factor of only a few cubic millimeters. Our scheme is based on volumetric engineering of the glass's birefringence through laser-written nanogratings, which enables spatial control over full vectorial light structures. To showcase the approach's potential for integrated multimode-multipath optical networks, we demonstrate multi-mode unitary transformations, mode conversions, and complex beam-splitting for scalar light. We further extend the MPLC operation to vectorial light and implement various polarization-controlled spatial mode operations as well as the transformation of the topology of an optical Skyrmion. Finally, we highlight our scheme's promise for optical communications and implement a miniaturized multiplexer for spatial modes and polarization operating at telecom wavelength.
+
+[Read Paper](https://arxiv.org/abs/2604.18885v1)
+
+---
+
+## 42. Understanding Quantum Instruments
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -494,7 +506,7 @@ Found 184 papers in this category.
 
 ---
 
-## 42. Trainability Beyond Linearity in Variational Quantum Objectives
+## 43. Trainability Beyond Linearity in Variational Quantum Objectives
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -506,7 +518,7 @@ Found 184 papers in this category.
 
 ---
 
-## 43. QuIC: A Training-Free Quantum Graph Embedding from Ideal Analysis to Practical Hardware Evaluation
+## 44. QuIC: A Training-Free Quantum Graph Embedding from Ideal Analysis to Practical Hardware Evaluation
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -518,7 +530,7 @@ Found 184 papers in this category.
 
 ---
 
-## 44. Quantum inspired qubit qutrit neural networks for real time financial forecasting
+## 45. Quantum inspired qubit qutrit neural networks for real time financial forecasting
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Emerging Tech
 
@@ -530,7 +542,19 @@ Found 184 papers in this category.
 
 ---
 
-## 45. Bargmann Scenarios
+## 46. Benchmarking Quantum Kernel Support Vector Machines Against Classical Baselines on Tabular Data: A Rigorous Empirical Study with Hardware Validation
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Siavash Kakavand, Christoph Strohmeyer, Michael Schlotter
+
+**Abstract:** Quantum kernel methods have been proposed as a promising approach for leveraging near-term quantum computers for supervised learning, yet rigorous benchmarks against strong classical baselines remain scarce. We present a comprehensive empirical study of quantum kernel support vector machines (QSVMs) across nine binary classification datasets, four quantum feature maps, three classical kernels, and multiple noise models, totalling 970 experiments with strict nested cross-validation. Our analysis spans four phases: (i) statistical significance testing, revealing that none of 29 pairwise quantum-classical comparisons reach significance at $α= 0.05$; (ii) learning curve analysis over six training fractions, showing steeper quantum slopes on six of eight datasets that nonetheless fail to close the gap to the best classical baseline; (iii) hardware validation on IBM ibm_fez (Heron r2), demonstrating kernel fidelity $r \geq 0.976$ across six experiments; and (iv) seed sensitivity analysis confirming reproducibility (mean CV 1.4%). A Kruskal-Wallis factorial analysis reveals that dataset choice dominates performance variance ($\varepsilon^2 = 0.73$), while kernel type accounts for only 9%. Spectral analysis offers a mechanistic explanation: current quantum feature maps produce eigenspectra that are either too flat or too concentrated, missing the intermediate profile of the best classical kernel, the radial basis function (RBF). Quantum kernel training (QKT) via kernel-target alignment yields the single competitive result -- balanced accuracy 0.968 on breast cancer -- but with ~2,000x computational overhead. Our findings provide actionable guidelines for quantum kernel research. The complete benchmark suite is publicly available to facilitate reproduction and extension.
+
+[Read Paper](https://arxiv.org/abs/2604.18837v1)
+
+---
+
+## 47. Bargmann Scenarios
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -542,7 +566,7 @@ Found 184 papers in this category.
 
 ---
 
-## 46. Spontaneous emission from driven polar quantum systems
+## 48. Spontaneous emission from driven polar quantum systems
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -554,19 +578,7 @@ Found 184 papers in this category.
 
 ---
 
-## 47. A universal complementarity identity for polarized double-slit interferometry
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** José J. Gil
-
-**Abstract:** We establish an exact identity among four dimensionless invariants accessible by standard polarimetric and interferometric measurements in a polarized double-slit experiment: the in-phase and quadrature components V_A and V_N of fringe visibility, the path predictability P, and the mixedness I of the path-reduced state satisfy V_A^2 + V_N^2 + P^2 + I^2 = 1. The identity is a universal algebraic consequence of the positivity of the reduced state and holds for every normalized path-polarization density matrix. It unifies the Englert-Greenberger-Yasin and Jakob-Bergou relations, separates the two operationally distinct components of visibility measurable by phase-shifted interferometry, and admits a natural interpretation within the Jaynes maximum-entropy framework: the three path invariants parametrize the minimal exponential family on the accessible algebra, while I^2 emerges as the residual mixedness that saturates the positivity bound. The separation V^2 = V_A^2 + V_N^2 identifies the antisymmetric sector of the coherence matrix rho = A + iN as the specific substrate of phase-sensitive information and permits a sector-resolved diagnosis of environmental coupling.
-
-[Read Paper](https://arxiv.org/abs/2604.18760v1)
-
----
-
-## 48. Quantum embedding of graphs for subgraph counting
+## 49. Quantum embedding of graphs for subgraph counting
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -578,7 +590,7 @@ Found 184 papers in this category.
 
 ---
 
-## 49. Operational Discriminability and Bell-Contextual Correlations
+## 50. Operational Discriminability and Bell-Contextual Correlations
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -590,7 +602,7 @@ Found 184 papers in this category.
 
 ---
 
-## 50. Learning error suppression strategies for dynamic quantum circuits
+## 51. Learning error suppression strategies for dynamic quantum circuits
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -599,18 +611,6 @@ Found 184 papers in this category.
 **Abstract:** Dynamic quantum circuits integrate unitary evolution with mid-circuit measurement and feedforward, enabling conditional operations essential for efficient quantum algorithms and foundational for fault-tolerant quantum computation. However, such operations introduce measurement-induced errors and control constraints that are not addressed by conventional error-suppression techniques. Here, we introduce an empirical learning framework that optimizes dynamical decoupling (DD) sequences for dynamic circuits at the level of circuit subintervals and qubit subregisters. Applying empirically learned DD sequences, we achieve a three-fold reduction in average dynamic circuit error rates as measured via randomized benchmarking. We apply the learned strategies to the dynamic circuit implementation of the quantum Fourier transform with measurement (QFT+M), demonstrating nontrivial process fidelity on connected chains of up to 20 qubits. Applying the resulting enhancement, we perform a high signal-to-noise QFT immediately following the preparation of a 10-qubit entangled state. Our results demonstrate that empirically optimized DD systematically outperforms theoretically derived sequences for dynamic circuits, establishing it as an efficient approach for error suppression in dynamic quantum circuits, with direct relevance to applications requiring measurement and feedback such as quantum error correction.
 
 [Read Paper](https://arxiv.org/abs/2604.18734v1)
-
----
-
-## 51. Exponentially-improved effective descriptions of physical bosonic systems
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Varun Upreti, Nicolás Quesada, Ulysse Chabaud
-
-**Abstract:** The effective description of a bosonic quantum system identifies the minimum finite dimension required to capture its essential dynamics. This effective dimension plays an important role in the complexity of classical and quantum algorithms for learning and simulating bosonic systems. While generic bosonic states require a dimension scaling as $1/ε^2$ for a precision of approximation $ε$, here we identify a natural energy condition which allows us to improve this scaling exponentially to $\log(1/ε)$. We then prove that most bosonic quantum states satisfy this condition, and in particular those produced by combining Gaussian dynamics with generic energy-preserving dynamics, which include the output states of universal bosonic quantum circuits. We apply this finding to enhance learning algorithms for bosonic quantum states and we further obtain new classical simulation algorithms for a large class of bosonic systems. Finally, using efficient decompositions of Kerr gates as sums of Gaussian gates, we significantly refine these classical simulation algorithms for universal bosonic quantum circuits. Our results demonstrate that physical bosonic systems are significantly more well-behaved than previously assumed, allowing for efficient descriptions even at high precision.
-
-[Read Paper](https://arxiv.org/abs/2604.18720v1)
 
 ---
 
@@ -626,19 +626,7 @@ Found 184 papers in this category.
 
 ---
 
-## 53. Synchronization in a dissipative quantum many-body system
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** B. Çakmak, K. Sümer, S. Campbell, G. Karpat
-
-**Abstract:** We study synchronization in the XX qubit chain subject to local or multi-local amplitude-damping noise. Analyzing the decoherence-free subspace (DFS) structure of the model, we show that it is completely determined by a simple number-theoretic function involving the noise sites and the chain length. We derive a closed-form expression for local qubit observables restricted to the DFS and prove that stable synchronization of the edge qubits for arbitrary initial states occurs \textit{if and only if} the DFS supports exactly one single-excitation eigenstate. We further show that this same condition also guarantees constant asymptotic entanglement between the edge qubits, so that generic stable synchronization and constant asymptotic entanglement necessarily coexist. By contrast, when the DFS supports multiple single-excitation eigenstates, synchronization becomes initial state dependent and may be entirely absent, even though stable oscillatory entanglement can persist indefinitely.
-
-[Read Paper](https://arxiv.org/abs/2604.18707v1)
-
----
-
-## 54. Obstructions to universality in globally controlled qubit graphs
+## 53. Obstructions to universality in globally controlled qubit graphs
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -650,7 +638,7 @@ Found 184 papers in this category.
 
 ---
 
-## 55. Exploring Entropic Orders: High Temperature Continuous Symmetry Breaking, Chiral Topological States and Local Commuting Projector Models
+## 54. Exploring Entropic Orders: High Temperature Continuous Symmetry Breaking, Chiral Topological States and Local Commuting Projector Models
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -659,6 +647,18 @@ Found 184 papers in this category.
 **Abstract:** High temperature is usually expected to destroy order: as the Gibbs state approaches the infinite-temperature limit, it becomes an equal-weight ensemble over all states and the system is generically disordered. Recent works showed that entropic order can violate this expectation through coupling to bosons in classical lattice models and quantum field theories, where the ordered states have higher entropy. Here we present new analytic methods for constructing quantum lattice models that exhibit entropic orders. In particular, we construct quantum lattice models with continuous symmetry breaking at high temperature in 1+1 dimensions and clarify how entropic order can evade the Hohenberg-Mermin-Wagner theorems. We also construct high-temperature entropic $p+ip$ chiral topological superconducting states in 2+1 dimensions with temperature-independent anyon correlation functions. In addition, we obtain a broad family of high-temperature entropic non-chiral topological orders. We show that the entropic topological orders have strong higher form symmetries at high temperature unlike the conventional topological orders, and the symmetry is spontaneously broken. These results follow from two general constructions that couple a given lattice model with a low-temperature ordered phase either to ordered bosons or, for local commuting-projector Hamiltonians, to more general bosonic degrees of freedom.
 
 [Read Paper](https://arxiv.org/abs/2604.18694v1)
+
+---
+
+## 55. Harmoniq: Efficient Data Augmentation on a Quantum Computer Inspired by Harmonic Analysis
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Kristina Kirova, Monika Doerfler, Franz Luef, Richard Kueng
+
+**Abstract:** Quantum machine learning has attracted significant interest in recent years. Most existing approaches, however, are variational in nature and require extensive parameter optimization subroutines. Here, we propose a conceptually distinct quantum machine learning approach that goes beyond the variational paradigm. Harmoniq takes a novel data augmentation technique from quantum harmonic analysis and approximates it as a stochastic mixture of n-qubit circuits with (at most) quadratic depth each. A key strength of Harmoniq is its modularity: viewed as a quantum process acting on density matrices, it can readily be combined with other quantum data processing and learning subroutines. A subsequent case study demonstrates this modularity by combining Harmoniq with stochastic amplitude encoding for the input density matrix and quantum PCA on the output density matrix. This results in a promising signal denoising pipeline that works particularly well in the small sample size regime.
+
+[Read Paper](https://arxiv.org/abs/2604.18691v1)
 
 ---
 
@@ -748,7 +748,7 @@ Found 184 papers in this category.
 
 ## 63. Scaling of Quantum Resources for Simulating a Long-Range System
 **Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum, Emerging Tech
+**Tags:** Quantum/Modern Curriculum
 
 **Authors:** Tanya Keshari, Debasis Sadhukhan
 
@@ -770,7 +770,19 @@ Found 184 papers in this category.
 
 ---
 
-## 65. Recurrence analysis of quantum many-body dynamics
+## 65. Disorder-induced non-Gaussian states in large ensembles of cavity-coupled molecules
+**Source:** arXiv | **Date:** 2026-04-20
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** R. Schwengelbeck, M. Pandini, R. Daraban, J. Schachenmayer
+
+**Abstract:** We analyze vibrational dynamics in a toy model for polaritonic chemistry under collective electronic strong coupling. In a Holstein-Tavis-Cummings model, incoherently excited by a photon, we show that disorder leads to non-Gaussian states of vibrational modes on short time scales at the single-molecule level. Using exact matrix product state simulations, we demonstrate that this effect can remain robust for larger molecule numbers, implying that nuclear wave packets cannot be effectively described by thermal states. Furthermore, we compare simulations of the exact quantum dynamics with semiclassical approximations. We find that the Ehrenfest approximation can only well reproduce ensemble-averaged observables for very large system sizes. Also simulations in the truncated Wigner approximation fail to capture the non-Gaussian effects. Our work highlights the importance of disorder and genuine quantum effects in cavity-modified nuclear dynamics in polaritonic chemistry.
+
+[Read Paper](https://arxiv.org/abs/2604.18456v1)
+
+---
+
+## 66. Recurrence analysis of quantum many-body dynamics
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -779,18 +791,6 @@ Found 184 papers in this category.
 **Abstract:** Observables of out-of-equilibrium quantum many-body systems display complex temporal behavior that encodes the underlying physical mechanisms but typically resists straightforward interpretations. We introduce recurrence analysis - a nonlinear time-series analysis framework long established for classical dynamical systems - to investigate correlated quantum many-body dynamics. Recurrence plots provide a qualitative fingerprint of simulated or experimental data, while recurrence quantification analysis extracts corresponding numerical descriptors. Applying this framework to quenches from the paramagnetic ground state in the one-dimensional transverse-field Ising model, we observe a clear progression in the recurrence plots of two-site correlations: nearly periodic patterns in the deeply ferromagnetic phase give way to multiscale temporal structures at criticality. Recurrence quantifiers further recover the critical field strength without prior knowledge of the model, establishing recurrence analysis as a versatile tool for characterizing quantum many-body dynamics, including unsupervised detection of quantum phase transitions.
 
 [Read Paper](https://arxiv.org/abs/2604.18446v1)
-
----
-
-## 66. Classical counterparts of shortcuts to adiabaticity in nonlinear dissipative Lagrangian systems
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Jincheng Shi, Yicheng Pan, Yue Ban, Xi Chen
-
-**Abstract:** Shortcuts to adiabaticity (STA) were first developed in quantum dynamics to realize rapid transformations with suppressed residual excitations. Here we show how the same idea can be implemented in classical nonlinear dissipative Lagrangian systems. Using a coupled $r$-$θ$ manipulator as an illustrative model, we perform inverse engineering on the Euler-Lagrange equations with Rayleigh dissipation by prescribing endpoint-stationary trajectories, obtaining the corresponding force and torque profiles and quantifying how geometric coupling amplifies errors and residual energy. We further compare smooth STA protocols with actuator-bounded time-optimal solutions and with proportional-integral-derivative tracking, which highlights a trade-off among smoothness, speed, and robustness. Finally, we introduce a single-shot correction based on one mid-course measurement to reduce the effect of early deviations while keeping the inputs nearly smooth. These results provide a practical bridge between quantum STA concepts and their classical counterparts.
-
-[Read Paper](https://arxiv.org/abs/2604.18439v1)
 
 ---
 
@@ -842,19 +842,7 @@ Found 184 papers in this category.
 
 ---
 
-## 71. Momentum Stability and Adaptive Control in Stochastic Reconfiguration
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Yuyang Wang, Xin Liu
-
-**Abstract:** Variational Monte Carlo (VMC) combined with expressive neural network wavefunctions has become a powerful route to high-accuracy ground-state calculations, yet its practical success hinges on efficient and stable wavefunction optimization. While stochastic reconfiguration (SR) provides a geometry-aware preconditioner motivated by imaginary-time evolution, its Kaczmarz-inspired variant, subsampled projected-increment natural gradient descent (SPRING), achieves state-of-the-art empirical performance. However, the effectiveness of SPRING is highly sensitive to the choice of a momentum-like parameter $μ$. The original sensitivity of $μ$ and the instability observed at $μ=1$, have remained unclear. In this work, we clarify the distinct mechanisms governing the regimes $μ<1$ and $μ=1$. We establish convergence guarantees for $0\leμ<1$ under mild assumptions, and construct counterexamples showing that $μ=1$ can induce divergence via uncontrolled growth along kernel-related directions when the step-size is not summable. Motivated by these theoretical insights and numerical observations, we further propose \textit{Principal Range Informed MomEntum SR} (PRIME-SR), a tuning-free momentum-adaptive SR method based on effective spectral dimension and subspace overlap. PRIME-SR achieves performance comparable to optimally tuned SPRING while significantly improving robustness in VMC optimization.
-
-[Read Paper](https://arxiv.org/abs/2604.18357v1)
-
----
-
-## 72. Perfect quantum strategies for quantum magic rectangular games: a complete structural characterization
+## 71. Perfect quantum strategies for quantum magic rectangular games: a complete structural characterization
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -866,7 +854,7 @@ Found 184 papers in this category.
 
 ---
 
-## 73. Quantum theory for phonon lasing and non-classical state generation in mixed-species and single trapped ions
+## 72. Quantum theory for phonon lasing and non-classical state generation in mixed-species and single trapped ions
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -878,7 +866,7 @@ Found 184 papers in this category.
 
 ---
 
-## 74. EQE-QAOA: An Equivalence-Preserving Qubit Efficient Framework for Combinatorial Optimization
+## 73. EQE-QAOA: An Equivalence-Preserving Qubit Efficient Framework for Combinatorial Optimization
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -890,7 +878,7 @@ Found 184 papers in this category.
 
 ---
 
-## 75. On quantum functionals for higher-order tensors
+## 74. On quantum functionals for higher-order tensors
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -902,7 +890,7 @@ Found 184 papers in this category.
 
 ---
 
-## 76. Block-encodings as programming abstractions: The Eclipse Qrisp BlockEncoding Interface
+## 75. Block-encodings as programming abstractions: The Eclipse Qrisp BlockEncoding Interface
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -914,19 +902,7 @@ Found 184 papers in this category.
 
 ---
 
-## 77. Quantum many-body scars in random unitary circuits
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Luca Capizzi, Benoît Ferté
-
-**Abstract:** Quantum many-body scars are rare exceptions to thermalization: they sustain non-thermal stationary states without the protection of any local conservation law, and are generally expected to be fragile. Here we construct an analytically tractable random unitary circuit hosting a single scar, and derive from first principles the thermalization mechanism governing perturbations thereof - described by a picture of fluctuating interfaces. Surprisingly, despite being thermodynamically irrelevant for local observables, the scar leaves a sharp fingerprint in the entanglement dynamics, driving a transition as a function of perturbation strength that is not probed by any local measurement.
-
-[Read Paper](https://arxiv.org/abs/2604.18244v1)
-
----
-
-## 78. Equivalence of Local Dynamical Hidden-Variable Models to Static Bell Locality
+## 76. Equivalence of Local Dynamical Hidden-Variable Models to Static Bell Locality
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -938,7 +914,7 @@ Found 184 papers in this category.
 
 ---
 
-## 79. Quantangle-SAT: A Quantum SAT Solver Based on Entanglement and Equivalence Checking
+## 77. Quantangle-SAT: A Quantum SAT Solver Based on Entanglement and Equivalence Checking
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -950,9 +926,9 @@ Found 184 papers in this category.
 
 ---
 
-## 80. Davies-Morris-Shore Framework for Multilevel Quantum Batteries: Dark and Funnel States in Interacting Qutrit Systems
+## 78. Davies-Morris-Shore Framework for Multilevel Quantum Batteries: Dark and Funnel States in Interacting Qutrit Systems
 **Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
+**Tags:** Quantum/Modern Curriculum, Workforce
 
 **Authors:** Yiğit Perçin, Özgür E. Müstecaplıoğlu
 
@@ -962,7 +938,7 @@ Found 184 papers in this category.
 
 ---
 
-## 81. Fundamentals and Applications of Hybrid Electroand Opto-mechanical system coupled to Superconducting Qubit: A Short Review
+## 79. Fundamentals and Applications of Hybrid Electroand Opto-mechanical system coupled to Superconducting Qubit: A Short Review
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -974,7 +950,7 @@ Found 184 papers in this category.
 
 ---
 
-## 82. QuantumQA: Enhancing Scientific Reasoning via Physics-Consistent Dataset and Verification-Aware Reinforcement Learning
+## 80. QuantumQA: Enhancing Scientific Reasoning via Physics-Consistent Dataset and Verification-Aware Reinforcement Learning
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum, Emerging Tech
 
@@ -986,7 +962,7 @@ Found 184 papers in this category.
 
 ---
 
-## 83. Coherence-gated quantum devices via real-time weak measurement
+## 81. Coherence-gated quantum devices via real-time weak measurement
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -998,7 +974,7 @@ Found 184 papers in this category.
 
 ---
 
-## 84. A Slow-Time Receiver Interface for Turbulent Free-Space Quantum Polarization Links
+## 82. A Slow-Time Receiver Interface for Turbulent Free-Space Quantum Polarization Links
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1010,7 +986,7 @@ Found 184 papers in this category.
 
 ---
 
-## 85. Dissipative dynamics and superradiant countinuous time crystal in a Rydberg-dressed Dicke system
+## 83. Dissipative dynamics and superradiant countinuous time crystal in a Rydberg-dressed Dicke system
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1022,7 +998,7 @@ Found 184 papers in this category.
 
 ---
 
-## 86. Generation of energy-time entangled triphotons in a six-level cold atomic system
+## 84. Generation of energy-time entangled triphotons in a six-level cold atomic system
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1034,7 +1010,7 @@ Found 184 papers in this category.
 
 ---
 
-## 87. Decoherence in Waveguide Quantum Electrodynamics using Matrix Product States
+## 85. Decoherence in Waveguide Quantum Electrodynamics using Matrix Product States
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1046,7 +1022,7 @@ Found 184 papers in this category.
 
 ---
 
-## 88. Exponential quantum space advantage for Shannon entropy estimation in data streams
+## 86. Exponential quantum space advantage for Shannon entropy estimation in data streams
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1058,19 +1034,19 @@ Found 184 papers in this category.
 
 ---
 
-## 89. Implosive Dynamics from Topological Quenches in Bose-Einstein Condensates
+## 87. Unidirectional Inter-Axial Coupling and Spontaneous Cooling in a~Non-Hermitian Dynamics of a~Levitated Particle
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
-**Authors:** Marios Kokmotos, Dimitri M. Gangardt, Giovanni Barontini
+**Authors:** Tereza Zemánková, Martin Šarbort, Petr Jákl, Jan Ježek, Martin Šiler, Stephen H. Simpson, Pavel Zemánek, Oto Brzobohatý
 
-**Abstract:** We show numerically that a repulsive Bose-Einstein condensate can be driven into implosive dynamics by a direct topological quench. We first realize giant vortices by quasi-adiabatic phase imprinting, and then perform a sudden anti-imprint that cancels the accumulated winding in a single step, abruptly switching the condensate from a highly charged vortex state to the trivial sector. The resulting phase-density mismatch launches a rapid inward radial flow and produces a strong central density buildup, despite the repulsive interactions. We find a clear threshold in the initial winding for the onset of this focusing. After the first implosion, the dynamics evolves into circular nonlinear wave fronts that subsequently undergo breaking of azimuthal symmetry (axisymmetry) down to a polygonal one, whose shape is determined by the way the giant vortex is built. These results establish topological engineering as a new tool for studying implosive dynamics and symmetry-breaking instabilities in quantum fluids.
+**Abstract:** Non-Hermitian dynamics in open systems can give rise to a variety of fascinating non-equilibrium phenomena, ranging from symmetry-breaking transitions to directional energy flow. Parity-time (PT) symmetry breaking determines the occurrence of dynamical instabilities, while non-reciprocal interactions enable asymmetric energy transfer between modes. Here, we present a versatile optomechanical platform based on a vacuum-levitated nanoparticle that allows full control over the coupling of its mechanical modes, including non-reciprocal and non-conservative interactions. By engineering the spatial ellipticity and polarization of the trapping beam, we continuously tune the system from a reciprocal to a strongly non-reciprocal regime. This allows us to observe PT-symmetry phase transitions and to isolate a unidirectional regime in which one mode remains effectively decoupled while driving the other. We demonstrate that elliptical polarisation of the trapping beam spanning unidirectional and reciprocal regimes induces asymmetric intermodal energy transfer. This results in the spontaneous cooling of one mechanical mode without external feedback. Both modes share identical mass, size, charge, and optical environment, providing a clean and robust setting for exploring non-Hermitian dynamics, exceptional-point physics, and energy redistribution in minimal systems. Combined with recent advances in ground-state cooling, our results provide a direct route to realising non-Hermitian phenomena in the quantum regime.
 
-[Read Paper](https://arxiv.org/abs/2604.17932v1)
+[Read Paper](https://arxiv.org/abs/2604.17985v1)
 
 ---
 
-## 90. State-Averaged Quantum Algorithms for Multiconfigurational Surface Chemistry: A Benchmark on Rh@TiO2(110)
+## 88. State-Averaged Quantum Algorithms for Multiconfigurational Surface Chemistry: A Benchmark on Rh@TiO2(110)
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum, Emerging Tech
 
@@ -1082,7 +1058,7 @@ Found 184 papers in this category.
 
 ---
 
-## 91. Bound entanglement detection in $4 \otimes 4$ systems via generalized Choi maps
+## 89. Bound entanglement detection in $4 \otimes 4$ systems via generalized Choi maps
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1094,7 +1070,7 @@ Found 184 papers in this category.
 
 ---
 
-## 92. Numerical simulation methods for quantum sensing at parametric criticality
+## 90. Numerical simulation methods for quantum sensing at parametric criticality
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1106,7 +1082,7 @@ Found 184 papers in this category.
 
 ---
 
-## 93. Ground state preparation in two-dimensional pure $\mathbb{Z}_2$ lattice gauge theory via deterministic quantum imaginary time evolution
+## 91. Ground state preparation in two-dimensional pure $\mathbb{Z}_2$ lattice gauge theory via deterministic quantum imaginary time evolution
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1118,7 +1094,7 @@ Found 184 papers in this category.
 
 ---
 
-## 94. Tight Trade-off Between Internal, Assisted, and External Entanglement
+## 92. Tight Trade-off Between Internal, Assisted, and External Entanglement
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1130,19 +1106,7 @@ Found 184 papers in this category.
 
 ---
 
-## 95. Semiclassical resonances under local magnetic fields
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Pavel Exner, Ayman Kachmar
-
-**Abstract:** We study resonances for the semiclassical magnetic Laplacian in the full plane with a compactly supported magnetic field in the framework of semiclassical complex scaling and black box scattering theory. Assuming that the magnetic field is locally constant, we prove the existence of semiclassical resonances near the Landau levels with exponentially small imaginary parts. We also prove that resonances emerge from a magnetic step discontinuity along a curved interface or a non-degenerate magnetic well, and in the vicinity of anharmonic Landau levels if the field has an isolated zero.
-
-[Read Paper](https://arxiv.org/abs/2604.17854v1)
-
----
-
-## 96. What Do Black Holes Teach Us About Wigner's Friend?
+## 93. What Do Black Holes Teach Us About Wigner's Friend?
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1154,7 +1118,7 @@ Found 184 papers in this category.
 
 ---
 
-## 97. Current-State Opacity in Safe Partially Observed Quantum Petri Nets: True-Concurrency Semantics and Exact Symbolic Verification
+## 94. Current-State Opacity in Safe Partially Observed Quantum Petri Nets: True-Concurrency Semantics and Exact Symbolic Verification
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1166,7 +1130,7 @@ Found 184 papers in this category.
 
 ---
 
-## 98. Measurement-defined control of single-particle interference
+## 95. Measurement-defined control of single-particle interference
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1178,7 +1142,7 @@ Found 184 papers in this category.
 
 ---
 
-## 99. Mutually-commuting von Neumann algebra models of quantum networks and violation of Bell-type inequalities
+## 96. Mutually-commuting von Neumann algebra models of quantum networks and violation of Bell-type inequalities
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1190,7 +1154,7 @@ Found 184 papers in this category.
 
 ---
 
-## 100. Polarization, Maximal Concurrence, and Pure States in High-Energy Collisions
+## 97. Polarization, Maximal Concurrence, and Pure States in High-Energy Collisions
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1202,7 +1166,7 @@ Found 184 papers in this category.
 
 ---
 
-## 101. Toward quantum interconnects featuring nanometer-to-picometer bandwidth compression and THz-range quantum frequency conversion
+## 98. Toward quantum interconnects featuring nanometer-to-picometer bandwidth compression and THz-range quantum frequency conversion
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1214,19 +1178,7 @@ Found 184 papers in this category.
 
 ---
 
-## 102. Poling-free Spontaneous Parametric Down Conversion without for Silicon Carbide and Lithium Niobate photonics
-**Source:** arXiv | **Date:** 2026-04-20
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Tim F. Weiss, Hamed Arianfard, Yang Yang, Alberto Peruzzo
-
-**Abstract:** State-of-the-art photon sources based on spontaneous parametric down-conversion (SPDC) currently rely on artificial structuring of the material nonlinearity to satisfy phase-matching conditions. This technique, known as periodic poling, is available only in a limited number of material platforms and introduces additional fabrication steps and errors, which are detrimental to up-scaling efforts. Here, we present a device architecture that enables SPDC of a wide range of frequencies without the need for periodic poling. We present explicit designs and calculations for 4H Silicon Carbide on-insulator, in which SPDC photon generation is so far unavailable, and thin-film Lithium Niobate on-insulator, a state-of-the-art quantum photonics platform. Our design, based on mode conversion and subsequent modal phase-matched SPDC, facilitates a CMOS compatible $χ^{(2)}$ platform, and simplifies photon sources by removing the requirement of periodic poling and the associated additional fabrication complexity.
-
-[Read Paper](https://arxiv.org/abs/2604.17723v1)
-
----
-
-## 103. Repeated weak measurements: watching quantum correlations evolve
+## 99. Repeated weak measurements: watching quantum correlations evolve
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1238,7 +1190,7 @@ Found 184 papers in this category.
 
 ---
 
-## 104. Quantum Spectroscopy with Undetected Photons for Biomolecular Sensing in the Mid-Infrared
+## 100. Quantum Spectroscopy with Undetected Photons for Biomolecular Sensing in the Mid-Infrared
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1250,7 +1202,7 @@ Found 184 papers in this category.
 
 ---
 
-## 105. Dynamical spin-nematic order in a transverse field Ising chain with non-Hermitian Gamma interaction
+## 101. Dynamical spin-nematic order in a transverse field Ising chain with non-Hermitian Gamma interaction
 **Source:** arXiv | **Date:** 2026-04-20
 **Tags:** Quantum/Modern Curriculum
 
@@ -1262,7 +1214,7 @@ Found 184 papers in this category.
 
 ---
 
-## 106. Randomized Subsystem Descent for Fermion-to-Qubit Mapping
+## 102. Randomized Subsystem Descent for Fermion-to-Qubit Mapping
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1274,7 +1226,7 @@ Found 184 papers in this category.
 
 ---
 
-## 107. From Flat-Optics Concept to Qualified Hardware: Skills Map for the Meta-Optics and Diffractive Optics Workforce
+## 103. From Flat-Optics Concept to Qualified Hardware: Skills Map for the Meta-Optics and Diffractive Optics Workforce
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Workforce
 
@@ -1286,7 +1238,7 @@ Found 184 papers in this category.
 
 ---
 
-## 108. Quantum-Like Models of Cognition and Decision Making: Open-Systems and Gorini--Kossakowski--Sudarshan--Lindblad Dynamics
+## 104. Quantum-Like Models of Cognition and Decision Making: Open-Systems and Gorini--Kossakowski--Sudarshan--Lindblad Dynamics
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Cognitive Frameworks
 
@@ -1298,7 +1250,19 @@ Found 184 papers in this category.
 
 ---
 
-## 109. Surpassing thermal-state limit in thermometry via non-completely positive quantum encoding
+## 105. Electromagnetic Wightman functions and vacuum densities for a brane intersecting the AdS boundary
+**Source:** arXiv | **Date:** 2026-04-19
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** A. A. Saharian, R. M. Avagyan, V. F. Manukyan
+
+**Abstract:** We investigate the combined effects of a brane intersecting the AdS boundary and background gravitational field on the local characteristics of the electromagnetic vacuum. Two types of boundary conditions on the brane are considered, which are higher-dimensional generalizations of the perfect electric (PEC) and perfect magnetic (PMC) boundary conditions in Maxwell's electrodynamics. The brane-induced contributions to the Wightman functions of the vector potential and field tensor are explicitly extracted. Simple expressions in terms of elementary functions are provided. The behavior of the vacuum expectation values (VEVs) is mimicked by a scalar field with a negative effective mass squared determined by the radius of the AdS spacetime. The expectation values of the electric and magnetic fields squares and of the energy-momentum tensor are investigated as local characteristics of the vacuum state. The brane-induced contributions to these VEVs have opposite signs for the PEC and PMC conditions. For the PMC condition, this contribution is negative for the electric field squared and positive for the magnetic field squared. The VEV of the energy-momentum tensor has a nonzero off-diagonal component. The brane-induced vacuum energy density is positive for PMC condition, whereas the normal and parallel stresses change sign as functions of the distance from the brane. Unlike the problem involving a planar boundary in the Minkowski bulk, the vacuum energy-momentum tensor does not vanish in (3+1)-dimensional AdS spacetime.
+
+[Read Paper](https://arxiv.org/abs/2604.17583v1)
+
+---
+
+## 106. Surpassing thermal-state limit in thermometry via non-completely positive quantum encoding
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1310,7 +1274,7 @@ Found 184 papers in this category.
 
 ---
 
-## 110. Thermal vapor quantum battery based on collective atomic spins
+## 107. Thermal vapor quantum battery based on collective atomic spins
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1322,7 +1286,7 @@ Found 184 papers in this category.
 
 ---
 
-## 111. Robustness Evaluation of Hybrid Quantum Neural Networks under Noise Models via System-Level Error Mitigation
+## 108. Robustness Evaluation of Hybrid Quantum Neural Networks under Noise Models via System-Level Error Mitigation
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1334,7 +1298,7 @@ Found 184 papers in this category.
 
 ---
 
-## 112. Arrival-time distributions as a probe of the preferred foliation in relativistic Bohmian mechanics
+## 109. Arrival-time distributions as a probe of the preferred foliation in relativistic Bohmian mechanics
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1346,7 +1310,7 @@ Found 184 papers in this category.
 
 ---
 
-## 113. Approximate Hamiltonian Simulation Algorithm for Efficient Fluid Quantum Simulations
+## 110. Approximate Hamiltonian Simulation Algorithm for Efficient Fluid Quantum Simulations
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1358,9 +1322,9 @@ Found 184 papers in this category.
 
 ---
 
-## 114. Continuous-time quantum-walk centrality for protein residue interaction networks
+## 111. Continuous-time quantum-walk centrality for protein residue interaction networks
 **Source:** arXiv | **Date:** 2026-04-19
-**Tags:** Quantum/Modern Curriculum, Emerging Tech
+**Tags:** Quantum/Modern Curriculum
 
 **Authors:** Shah Ishmam Mohtashim, Manas Sajjan, Sabre Kais
 
@@ -1370,7 +1334,19 @@ Found 184 papers in this category.
 
 ---
 
-## 115. Low-dimensional platforms for single photon detection
+## 112. A Novel Quantum Augmented Framework to Improve Microgrid Cybersecurity
+**Source:** arXiv | **Date:** 2026-04-19
+**Tags:** Emerging Tech
+
+**Authors:** Nitin Jha, Prateek Paudel, Abhishek Parakh, Mahadevan Subramaniam
+
+**Abstract:** Small modular nuclear reactors (SMRs) are redefining the energy generation landscape by enabling the deployment of modular, scalable, and pre-built power units that can be used to build distributed autonomous microgrids for critical infrastructure and burgeoning AI factories. Often, these microgrids are linked together to provide a resilient, decentralized power generation infrastructure. Consequently, the cybersecurity of microgrids is of critical importance. In this work, we propose a quantum augmented network framework for resilient microgrids. We integrate the ideas of secure quantum networking, quantum anonymous notification, and quantum random number generation to strengthen the integrity, confidentiality, and privacy of microgrid networks. To substantiate the possible benefits of using quantum augmented microgrids, we simulate a practical high-impact classical attack: a traffic analysis and priority-action spoofing campaign that can (1) deanonymize the anonymous notification for a high-priority action, (2) force excessive key usage, and (3) induce harmful allow/block operations at the control level. We quantify how these attacks affect information leakage, spoof acceptance, key sufficiency, and operational outcomes such as latency, deadline misses, unserved energy, etc. This quantum augmented microgrid (QuAM) framework lets us evaluate trade-offs between privacy, availability, and the operational cost of mitigation (cover traffic, verification delays, and key-rotation policies), further paving the path for the study of more nuanced attacks that arise due to the use of quantum-classical integrated frameworks.
+
+[Read Paper](https://arxiv.org/abs/2604.17481v1)
+
+---
+
+## 113. Low-dimensional platforms for single photon detection
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1382,7 +1358,7 @@ Found 184 papers in this category.
 
 ---
 
-## 116. Theory of Quantum Imaginary-Time Mpemba Effect
+## 114. Theory of Quantum Imaginary-Time Mpemba Effect
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1394,7 +1370,7 @@ Found 184 papers in this category.
 
 ---
 
-## 117. Quantum channel tomography: optimal bounds and a Heisenberg-to-classical phase transition
+## 115. Quantum channel tomography: optimal bounds and a Heisenberg-to-classical phase transition
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1406,7 +1382,7 @@ Found 184 papers in this category.
 
 ---
 
-## 118. Fault-Tolerant Cut-Cat State Syndrome Extraction for Quantum Codes
+## 116. Fault-Tolerant Cut-Cat State Syndrome Extraction for Quantum Codes
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1418,7 +1394,7 @@ Found 184 papers in this category.
 
 ---
 
-## 119. Hierarchical Progressive Pauli Noise Modeling with Residual Compensation for Multi-Qubit Quantum Circuits
+## 117. Hierarchical Progressive Pauli Noise Modeling with Residual Compensation for Multi-Qubit Quantum Circuits
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1430,7 +1406,7 @@ Found 184 papers in this category.
 
 ---
 
-## 120. Unified adiabatic and diabatic excited-state description via the ensemble-variational quantum eigensolver
+## 118. Unified adiabatic and diabatic excited-state description via the ensemble-variational quantum eigensolver
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum, Emerging Tech
 
@@ -1442,7 +1418,7 @@ Found 184 papers in this category.
 
 ---
 
-## 121. Efficient characterization of general Gottesman-Kitaev-Preskill qubits
+## 119. Efficient characterization of general Gottesman-Kitaev-Preskill qubits
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1454,7 +1430,7 @@ Found 184 papers in this category.
 
 ---
 
-## 122. Classically Forbidden Signatures of Quantum Coherence in the Mesoscopic Lipkin-Meshkov-Glick Model
+## 120. Classically Forbidden Signatures of Quantum Coherence in the Mesoscopic Lipkin-Meshkov-Glick Model
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1466,7 +1442,7 @@ Found 184 papers in this category.
 
 ---
 
-## 123. Exponentially-enhanced Weak-field Sensing with Quantum Stark Localization
+## 121. Exponentially-enhanced Weak-field Sensing with Quantum Stark Localization
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1478,7 +1454,7 @@ Found 184 papers in this category.
 
 ---
 
-## 124. Unraveling the significance of Raman modes, Gruneisen parameters and phonon lifetimes in the hexagonal allotropes of Silicon and Germanium compounds
+## 122. Unraveling the significance of Raman modes, Gruneisen parameters and phonon lifetimes in the hexagonal allotropes of Silicon and Germanium compounds
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1490,7 +1466,7 @@ Found 184 papers in this category.
 
 ---
 
-## 125. Double Descent in Quantum Kernel Ridge Regression
+## 123. Double Descent in Quantum Kernel Ridge Regression
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1502,7 +1478,7 @@ Found 184 papers in this category.
 
 ---
 
-## 126. Coherence Transfer in Quantum Networks
+## 124. Coherence Transfer in Quantum Networks
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1514,7 +1490,7 @@ Found 184 papers in this category.
 
 ---
 
-## 127. Map-Dependent Quantum Characteristic Functions and CP-Divisibility in Non-Markovian Quantum Dynamics
+## 125. Map-Dependent Quantum Characteristic Functions and CP-Divisibility in Non-Markovian Quantum Dynamics
 **Source:** arXiv | **Date:** 2026-04-19
 **Tags:** Quantum/Modern Curriculum
 
@@ -1526,7 +1502,7 @@ Found 184 papers in this category.
 
 ---
 
-## 128. Entanglement and Quantum Coherence in Coupled Double Quantum Dots under Markovian and Non-Markovian Noisy Channels
+## 126. Entanglement and Quantum Coherence in Coupled Double Quantum Dots under Markovian and Non-Markovian Noisy Channels
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1538,7 +1514,7 @@ Found 184 papers in this category.
 
 ---
 
-## 129. Dynamic locking of an interacting spin system via periodic driving
+## 127. Dynamic locking of an interacting spin system via periodic driving
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum, Emerging Tech
 
@@ -1550,7 +1526,7 @@ Found 184 papers in this category.
 
 ---
 
-## 130. Thermodynamics of Coherence-Selective Quantum Reset Protocols
+## 128. Thermodynamics of Coherence-Selective Quantum Reset Protocols
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1562,7 +1538,7 @@ Found 184 papers in this category.
 
 ---
 
-## 131. Time evolution of quantum gates and the necessity of complex numbers
+## 129. Time evolution of quantum gates and the necessity of complex numbers
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1574,7 +1550,7 @@ Found 184 papers in this category.
 
 ---
 
-## 132. Kramers-Kronig Relations for Vector-Valued Hardy Spaces in Non-Markovian Open Quantum Dynamics
+## 130. Kramers-Kronig Relations for Vector-Valued Hardy Spaces in Non-Markovian Open Quantum Dynamics
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1586,7 +1562,7 @@ Found 184 papers in this category.
 
 ---
 
-## 133. The origin and promise of transition metal dichalcogenide hosted single photon emitters for quantum technologies
+## 131. The origin and promise of transition metal dichalcogenide hosted single photon emitters for quantum technologies
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1598,7 +1574,7 @@ Found 184 papers in this category.
 
 ---
 
-## 134. Effective theory of quantum phases in the dipolar planar rotor chain
+## 132. Effective theory of quantum phases in the dipolar planar rotor chain
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1610,7 +1586,7 @@ Found 184 papers in this category.
 
 ---
 
-## 135. Fundamental Limits of Eavesdropper Detection and Localization in Optical Fiber via Stimulated Brillouin Scattering
+## 133. Fundamental Limits of Eavesdropper Detection and Localization in Optical Fiber via Stimulated Brillouin Scattering
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1622,7 +1598,7 @@ Found 184 papers in this category.
 
 ---
 
-## 136. Hybrid Quantum Neural Networks for Enhanced Breast Cancer Thermographic Classification: A Novel Quantum-Classical Integration Approach
+## 134. Hybrid Quantum Neural Networks for Enhanced Breast Cancer Thermographic Classification: A Novel Quantum-Classical Integration Approach
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Emerging Tech
 
@@ -1634,7 +1610,7 @@ Found 184 papers in this category.
 
 ---
 
-## 137. Anomalous nonlocality of information masked in quantum correlations
+## 135. Anomalous nonlocality of information masked in quantum correlations
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1646,7 +1622,7 @@ Found 184 papers in this category.
 
 ---
 
-## 138. Correlation-Converged Virtual Orbitals for Accurate and Efficient Quantum Molecular Simulations
+## 136. Correlation-Converged Virtual Orbitals for Accurate and Efficient Quantum Molecular Simulations
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1658,7 +1634,7 @@ Found 184 papers in this category.
 
 ---
 
-## 139. PAPUS: Pauli-Space-Based Multiclass Quantum Classification
+## 137. PAPUS: Pauli-Space-Based Multiclass Quantum Classification
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1670,7 +1646,7 @@ Found 184 papers in this category.
 
 ---
 
-## 140. Nonnormality and Dissipation in Markovian Quantum Dynamics: Implications for Quantum Simulation
+## 138. Nonnormality and Dissipation in Markovian Quantum Dynamics: Implications for Quantum Simulation
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1682,7 +1658,7 @@ Found 184 papers in this category.
 
 ---
 
-## 141. Universal Quartic Scaling Law for Kerr-Type Interactions: Projection-Law Factorization Across Nonlinear Quantum Platforms
+## 139. Universal Quartic Scaling Law for Kerr-Type Interactions: Projection-Law Factorization Across Nonlinear Quantum Platforms
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1694,7 +1670,7 @@ Found 184 papers in this category.
 
 ---
 
-## 142. Scalable Quantum Error Mitigation with Physically Informed Graph Neural Networks
+## 140. Scalable Quantum Error Mitigation with Physically Informed Graph Neural Networks
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1706,7 +1682,7 @@ Found 184 papers in this category.
 
 ---
 
-## 143. Entanglement Dynamics with a Stochastic Non-Hermitian Hamiltonian away from Exceptional Points
+## 141. Entanglement Dynamics with a Stochastic Non-Hermitian Hamiltonian away from Exceptional Points
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1718,7 +1694,7 @@ Found 184 papers in this category.
 
 ---
 
-## 144. Engineering magnetically insensitive qubits in metastable electronic D-states of trapped ions
+## 142. Engineering magnetically insensitive qubits in metastable electronic D-states of trapped ions
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1730,7 +1706,7 @@ Found 184 papers in this category.
 
 ---
 
-## 145. Learning Non-Markovian Noise via Ensemble Optimal Control
+## 143. Learning Non-Markovian Noise via Ensemble Optimal Control
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum, Emerging Tech
 
@@ -1742,7 +1718,7 @@ Found 184 papers in this category.
 
 ---
 
-## 146. Q-SINDy: Quantum-Kernel Sparse Identification of Nonlinear Dynamics with Provable Coefficient Debiasing
+## 144. Q-SINDy: Quantum-Kernel Sparse Identification of Nonlinear Dynamics with Provable Coefficient Debiasing
 **Source:** arXiv | **Date:** 2026-04-18
 **Tags:** Quantum/Modern Curriculum
 
@@ -1754,19 +1730,7 @@ Found 184 papers in this category.
 
 ---
 
-## 147. Complex Quaternionic Formulations of Dirac, Electrodynamic, and Electroweak Fields and Interactions
-**Source:** arXiv | **Date:** 2026-04-18
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** James Henry Atwater, David Lambert, Yuri Rostovtsev
-
-**Abstract:** A simple translation between a standard representation of $\mathfrak{sl}_2\mathbb{C}$ and the complex-quaternions ($\mathbb{H}\otimes_\mathbb{R}\mathbb{C}$) is established and exploited to construct a novel hyper-complex description of the Dirac theory, electrodynamics, and ultimately the electroweak sector of the standard model. We find that coupling the constructed Dirac spinors to electromagnetism yields the correct magnetic moment for charged spin-1/2 particles. Extending electrodynamics to electroweak theory necessitates an algebraic distinction between the structures of the leptonic and Higgs fields not present in the standard model. The conditions of spontaneous symmetry breaking are explored using an alternative representation of weak isospin and hypercharge equivalent to an irreducible representation of $\mathfrak{su}(2)\oplus\mathfrak{u}(1)$ on $\mathbb{C}^4$. This alternative representation disagrees with the standard model on the overall signs of weak neutral currents.
-
-[Read Paper](https://arxiv.org/abs/2604.16766v1)
-
----
-
-## 148. Enhance Quantum Teleportation with Multi-Axis Measurement
+## 145. Enhance Quantum Teleportation with Multi-Axis Measurement
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1778,7 +1742,7 @@ Found 184 papers in this category.
 
 ---
 
-## 149. Quantum many-body operator cascade as a route to chaos
+## 146. Quantum many-body operator cascade as a route to chaos
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1790,7 +1754,19 @@ Found 184 papers in this category.
 
 ---
 
-## 150. Continuum honeycomb Schrödinger operators with incommensurate line defects
+## 147. Anisotropic spin-valley coupling in SiMOS and Si/SiGe quantum dots
+**Source:** arXiv | **Date:** 2026-04-17
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** N. Tobias Jacobson, Natalie D. Foster, Ryan M. Jock, Andrew M. Mounce, Daniel R. Ward, Malcolm S. Carroll, Dwight R. Luhman
+
+**Abstract:** While bulk silicon has long been understood to exhibit relatively weak spin-orbit coupling (SOC), confinement of electrons to quantum dots (QDs) at a silicon heterointerface results in significantly larger SOC. This is a concern for electron spin qubit performance, as intravalley and intervalley SOC can significantly perturb the operation of electron spin qubits. While these interactions can be harnessed to drive coherent rotations in a singlet-triplet qubit, coupling to low-lying excited valley states can lead to undesirable spin relaxation when valley splitting is on resonance with the Zeeman energy. In this work, we measure the angular dependence of the interfacial spin-orbit interaction as a function of the direction and magnitude of an applied external magnetic field in SiMOS and Si/SiGe heterostructures, two common material platforms for silicon spin qubits. We construct a physical model that accurately infers intra- and inter-valley SOC physics from fits to the data, allowing for a direct comparison between these two material systems. For the devices measured we find that, while the $g$-factor differences are comparable, the SiMOS QDs exhibit an order of magnitude larger spin-valley coupling than for Si/SiGe. Moreover, we find that the angular dependence of the spin-valley coupling is similar for both devices, with similar magnetic field orientations minimizing the spin-valley coupling. Our work points towards operational schemes for optimizing spin-valley coupling to avoid or exploit this mechanism for qubit operation.
+
+[Read Paper](https://arxiv.org/abs/2604.16713v1)
+
+---
+
+## 148. Continuum honeycomb Schrödinger operators with incommensurate line defects
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1802,7 +1778,7 @@ Found 184 papers in this category.
 
 ---
 
-## 151. Adversarial quantum teleportation
+## 149. Adversarial quantum teleportation
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1814,7 +1790,7 @@ Found 184 papers in this category.
 
 ---
 
-## 152. Enabling Lie-Algebraic Classical Simulation beyond Free Fermions
+## 150. Enabling Lie-Algebraic Classical Simulation beyond Free Fermions
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1826,7 +1802,7 @@ Found 184 papers in this category.
 
 ---
 
-## 153. Gigahertz-rate thin-film lithium niobate receiver for time-bin quantum communication
+## 151. Gigahertz-rate thin-film lithium niobate receiver for time-bin quantum communication
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1838,7 +1814,7 @@ Found 184 papers in this category.
 
 ---
 
-## 154. Effective Trace Framework for Self-Similar Casimir Systems
+## 152. Effective Trace Framework for Self-Similar Casimir Systems
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1850,7 +1826,7 @@ Found 184 papers in this category.
 
 ---
 
-## 155. Resource-Efficient Quantum-Enhanced Compressive Imaging via Quantum Classical co-Design
+## 153. Resource-Efficient Quantum-Enhanced Compressive Imaging via Quantum Classical co-Design
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1862,7 +1838,7 @@ Found 184 papers in this category.
 
 ---
 
-## 156. Quantum Reference Frames and Correlation Geometry
+## 154. Quantum Reference Frames and Correlation Geometry
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1874,7 +1850,7 @@ Found 184 papers in this category.
 
 ---
 
-## 157. Non-Associativity Induced Modifications of Open-System Quantum Dynamics: General Master Equation and a Two-Qubit Ising Case Study
+## 155. Non-Associativity Induced Modifications of Open-System Quantum Dynamics: General Master Equation and a Two-Qubit Ising Case Study
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1886,7 +1862,7 @@ Found 184 papers in this category.
 
 ---
 
-## 158. Can a CNOT Gate Affect the Control Qubit? Student Resources for Understanding CNOT and Entanglement
+## 156. Can a CNOT Gate Affect the Control Qubit? Student Resources for Understanding CNOT and Entanglement
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Cognitive Frameworks, Quantum/Modern Curriculum
 
@@ -1898,7 +1874,7 @@ Found 184 papers in this category.
 
 ---
 
-## 159. GreenPeas: Unlocking Adaptive Quantum Error Correction with Just-in-Time Decoding Hypergraphs
+## 157. GreenPeas: Unlocking Adaptive Quantum Error Correction with Just-in-Time Decoding Hypergraphs
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1910,7 +1886,7 @@ Found 184 papers in this category.
 
 ---
 
-## 160. Fast, High-Fidelity Erasure Detection of Dual-Rail Qubits with Symmetrically Coupled Readout
+## 158. Fast, High-Fidelity Erasure Detection of Dual-Rail Qubits with Symmetrically Coupled Readout
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1922,7 +1898,7 @@ Found 184 papers in this category.
 
 ---
 
-## 161. Renormalised thermodynamics for Bose gases from low to critical temperatures
+## 159. Renormalised thermodynamics for Bose gases from low to critical temperatures
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1934,7 +1910,7 @@ Found 184 papers in this category.
 
 ---
 
-## 162. How to unitarily map between any two pure states with a single closed-form exponential
+## 160. How to unitarily map between any two pure states with a single closed-form exponential
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1946,7 +1922,7 @@ Found 184 papers in this category.
 
 ---
 
-## 163. Boson correlations are spurious for classical states
+## 161. Boson correlations are spurious for classical states
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1958,7 +1934,7 @@ Found 184 papers in this category.
 
 ---
 
-## 164. Aziz and Howl's Gravity-Induced Entanglement Channel is Essentially Classical Mechanics
+## 162. Aziz and Howl's Gravity-Induced Entanglement Channel is Essentially Classical Mechanics
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1970,7 +1946,7 @@ Found 184 papers in this category.
 
 ---
 
-## 165. Yttrium ion as a platform for quantum information processing
+## 163. Yttrium ion as a platform for quantum information processing
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1982,7 +1958,7 @@ Found 184 papers in this category.
 
 ---
 
-## 166. Long-term Performance Analysis of a Commercial QKD Device Under Real-world Deployment Conditions
+## 164. Long-term Performance Analysis of a Commercial QKD Device Under Real-world Deployment Conditions
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -1994,7 +1970,7 @@ Found 184 papers in this category.
 
 ---
 
-## 167. Quantum Tomography and Entanglement in Semi-Leptonic $h\to VV^*$ Decays at Higher Orders
+## 165. Quantum Tomography and Entanglement in Semi-Leptonic $h\to VV^*$ Decays at Higher Orders
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2006,7 +1982,7 @@ Found 184 papers in this category.
 
 ---
 
-## 168. A digitally controlled silicon quantum processing unit
+## 166. A digitally controlled silicon quantum processing unit
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2018,19 +1994,7 @@ Found 184 papers in this category.
 
 ---
 
-## 169. Preparation and detection of quasiparticles for quantum simulations of scattering
-**Source:** arXiv | **Date:** 2026-04-17
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** Mattia Morgavi, Peter Majcen, Marco Rigobello, Simone Montangero, Pietro Silvi
-
-**Abstract:** We introduce a method for the selective preparation and detection of quasiparticle wave packets, based on creation operators that generate dressed, localized excitations on top of interacting vacua of (quasi-)one-dimensional quantum lattice theories. This method exploits maximally localized Wannier functions (MLWFs) constructed from quasiparticle bands at intermediate system sizes, enabling the construction of unitary local dressed creation operators. The algorithm allows for species-resolved wave-packet preparation and detection, enabling the separation of known quasiparticle contributions from unknown resonances. We test this approach with matrix product states (MPS) on pure hardcore Hamiltonian QCD on a ladder lattice, detecting scattering outputs and mass resonances.
-
-[Read Paper](https://arxiv.org/abs/2604.16210v1)
-
----
-
-## 170. Towards Ultra-High-Rate Quantum Error Correction with Reconfigurable Atom Arrays
+## 167. Towards Ultra-High-Rate Quantum Error Correction with Reconfigurable Atom Arrays
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2042,7 +2006,7 @@ Found 184 papers in this category.
 
 ---
 
-## 171. Squeezing and measurement of a mechanical quadrature via PID feedback
+## 168. Squeezing and measurement of a mechanical quadrature via PID feedback
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2054,7 +2018,7 @@ Found 184 papers in this category.
 
 ---
 
-## 172. Strain-induced modification of spin-optical dynamics in silicon vacancy centers for integrated quantum technologies
+## 169. Strain-induced modification of spin-optical dynamics in silicon vacancy centers for integrated quantum technologies
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2066,7 +2030,7 @@ Found 184 papers in this category.
 
 ---
 
-## 173. Coherence dynamics in Simon's quantum algorithm
+## 170. Coherence dynamics in Simon's quantum algorithm
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2078,7 +2042,7 @@ Found 184 papers in this category.
 
 ---
 
-## 174. Quantum-Inspired Simulation of 2D Turbulent Rayleigh-Bénard Convection
+## 171. Quantum-Inspired Simulation of 2D Turbulent Rayleigh-Bénard Convection
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Emerging Tech
 
@@ -2090,7 +2054,7 @@ Found 184 papers in this category.
 
 ---
 
-## 175. All-photonic quantum key distribution beyond the single-repeater bound
+## 172. All-photonic quantum key distribution beyond the single-repeater bound
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2102,7 +2066,7 @@ Found 184 papers in this category.
 
 ---
 
-## 176. Single-Satellite Quantum Repeater Performance Analysis
+## 173. Single-Satellite Quantum Repeater Performance Analysis
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2114,7 +2078,7 @@ Found 184 papers in this category.
 
 ---
 
-## 177. A unified framework for efficient quantum simulation of nonlinear spectroscopy
+## 174. A unified framework for efficient quantum simulation of nonlinear spectroscopy
 **Source:** arXiv | **Date:** 2026-04-17
 **Tags:** Quantum/Modern Curriculum
 
@@ -2126,21 +2090,9 @@ Found 184 papers in this category.
 
 ---
 
-## 178. Gravitationally induced wave-function collapse from dynamical bifurcation
-**Source:** arXiv | **Date:** 2026-04-17
-**Tags:** Quantum/Modern Curriculum
-
-**Authors:** C. A. S. Almeida
-
-**Abstract:** We propose an effective non-relativistic framework in which wave-function collapse emerges as a deterministic dynamical instability induced by gravitational self-interaction and regulated by short-distance repulsion. The dynamics is described by a nonlinear Schrödinger equation supplemented by a phenomenological repulsive sector ensuring regularity at high densities. Using a variational Gaussian ansatz, we derive an explicit effective energy functional and show that extended quantum states lose stability beyond a critical mass scale. This loss of stability is associated with a bifurcation in the reduced dynamical system governing the wave-function width, leading to the emergence of stable localized configurations. Within this picture, collapse corresponds to the dynamical selection of one of these localized attractors, driven by infinitesimal asymmetries in the initial state and occurring without stochastic noise or environmental coupling. The mechanism provides a controlled and quantitative realization of gravity-induced localization, extending Schrödinger--Newton-type models while avoiding their pathological short-distance behavior. Possible implications for mesoscopic systems probing the quantum-to-classical transition are briefly discussed.
-
-[Read Paper](https://arxiv.org/abs/2604.16144v1)
-
----
-
-## 179. Nature of heat inventory: Assessing student understanding of thermal processes in kinetic molecular terms
+## 175. Nature of heat inventory: Assessing student understanding of thermal processes in kinetic molecular terms
 **Source:** APS PRPER | **Date:** 2026-04-22
-**Tags:** Multimedia & Representations
+**Tags:** Cognitive Frameworks
 
 **Authors:** Anonymous
 
@@ -2150,7 +2102,7 @@ Found 184 papers in this category.
 
 ---
 
-## 180. HAQA: a hardware-guided and fidelity-aware strategy for efficient qubit mapping optimization
+## 176. HAQA: a hardware-guided and fidelity-aware strategy for efficient qubit mapping optimization
 **Source:** EPJ Quantum Technology | **Date:** 2026-04-22
 **Tags:** Quantum/Modern Curriculum
 
@@ -2162,7 +2114,7 @@ Found 184 papers in this category.
 
 ---
 
-## 181. Cryogenic high-Q passive hanger type drive-line notch filtering for leakage-resilient qubit control
+## 177. Cryogenic high-Q passive hanger type drive-line notch filtering for leakage-resilient qubit control
 **Source:** EPJ Quantum Technology | **Date:** 2026-04-22
 **Tags:** Quantum/Modern Curriculum
 
@@ -2174,9 +2126,9 @@ Found 184 papers in this category.
 
 ---
 
-## 182. A Hybrid Quantum–Classical Machine Learning Framework for Black Carbon Forecasting
+## 178. A Hybrid Quantum–Classical Machine Learning Framework for Black Carbon Forecasting
 **Source:** EPJ Quantum Technology | **Date:** 2026-04-22
-**Tags:** Workforce, Emerging Tech
+**Tags:** Emerging Tech
 
 **Authors:** Isaac Oliva-González, Lucy T. González, Oscar D. Lara-Montaño, Aldo I. Ramirez, Alberto Mendoza, Ilse María Hernández-Romero
 
@@ -2186,7 +2138,43 @@ Found 184 papers in this category.
 
 ---
 
-## 183. What Drives Change? Characterizing Scientific Self-Efficacy Development in Undergraduate Research Experiences
+## 179. Bifurcation and spontaneous symmetry breaking in a rotating pendulum: A classical analogy to the Higgs mechanism
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Ricardo Garés Alía, Adrián González Rodríguez, Ivan Brihuega
+
+**Abstract:** Abstract The Higgs mechanism provides mass to fundamental particles through spontaneous symmetry breaking. A simple classical system, a rotating pendulum, exhibits closely related behaviour when its steady equilibria are studied as a function of the imposed angular speed Ω. In our experiment, a physical pendulum is driven at a fixed rotation rate Ω; as a result, its equilibrium angle undergoes a pitchfork bifurcation as Ω is varied. While the analogy with the zero-temperature Higgs potential is well known in the pedagogical literature, here we extend it by discussing the high-temperature effective Higgs potential, where symmetry-breaking odd terms appear. Depending on the pendulum’s configuration, the bifurcation becomes imperfect, providing a clear classical analogue of the asymmetry present in the high-temperature Higgs scenario. This analogy may serve as an introductory motivation for an undergraduate-level course on nonlinear dynamics or Lagrangian mechanics. By analysing and measuring this tabletop system, students can develop intuition for bifurcations and spontaneous symmetry breaking in a concrete and experimentally accessible setting.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae6207)
+
+---
+
+## 180. Chukchi Myths perspective on Special Relativity
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Z K Silagadze
+
+**Abstract:** Abstract The teaching of special relativity still follows Einstein's original two-postulate approach and thus recreates the relativistic revolution in the minds of students again and again, with all its attendant shocking and mysterious aspects. As Hermann Bondi long ago noted, such an approach, which emphasizes the revolutionary aspects of a theory rather than its continuity with earlier thought, "is hardly conducive to easy teaching and good understanding". But what could be a better alternative? In 1923, the distinguished Russian ethnographer, linguist, and anthropologist Tan-Bogoraz described the striking similarities between the special theory of relativity and the mythology of Chukchi shamans. Inspired by this surprising observation, I assume that the basic concepts of relativity are not at all alien to our innate perception of time and space, and I propose an approach to the foundations of relativity that emphasizes absolute concepts such as proper time and causal cones rather than relative ones.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae614e)
+
+---
+
+## 181. Does a Confined Charged Particle Radiate? A Classical-Quantum Contrast in a One-Dimensional Box
+**Source:** European Journal of Physics | **Date:** 2026-04-22
+**Tags:** Quantum/Modern Curriculum
+
+**Authors:** Mohammad Altamash
+
+**Abstract:** Abstract A common intuition in introductory physics is that confinement of a charged particle necessarily implies acceleration and hence electromagnetic radiation. In this paper, we examine this intuition by directly comparing the radiative behavior of a charged particle confined to a one-dimensional box within classical and quantum frameworks. While classical electrodynamics predicts unavoidable radiation due to impulsive accelerations at rigid boundaries, quantum mechanics yields a strikingly different result: a charged particle prepared in a stationary energy eigenstate does not radiate. By analyzing expectation values, dipole moments, and Ehrenfest's theorem, we show that identical boundary conditions lead to qualitatively different physical predictions. A quantitative extension involving superposition states demonstrates how radiation reappears when observables become time dependent. The classical-quantum contrast provides a clear pedagogical illustration of the limits of classical intuition and correspondence in confined systems.
+
+[Read Paper](https://doi.org/10.1088/1361-6404/ae614c)
+
+---
+
+## 182. What Drives Change? Characterizing Scientific Self-Efficacy Development in Undergraduate Research Experiences
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Cognitive Frameworks
 
@@ -2198,7 +2186,7 @@ Found 184 papers in this category.
 
 ---
 
-## 184. Pedagogical Knowledge Among Early-Career Undergraduate Instructors: Qualitative Variation, Longitudinal Development, and Influences on Teaching
+## 183. Pedagogical Knowledge Among Early-Career Undergraduate Instructors: Qualitative Variation, Longitudinal Development, and Influences on Teaching
 **Source:** CBE—Life Sciences Education | **Date:** 2026-04-22
 **Tags:** Cognitive Frameworks
 
@@ -2207,6 +2195,642 @@ Found 184 papers in this category.
 **Abstract:** Active learning can enhance student outcomes in STEM higher education, but its effectiveness varies with implementation. A key contributor to this variation is the pedagogical knowledge held by instructors. However, little is known about instructors’ pedagogical knowledge of how people learn, how these ideas develop over time, and how knowledge development influences active-learning implementation. This longitudinal qualitative study examined variation, development, and instructional implications of pedagogical knowledge among 11 early-career undergraduate life sciences instructors in the context of their active-learning instruction. We conducted semistructured interviews, including stimulated recall, capturing pedagogical knowledge used to plan, implement, and reflect on a lesson, repeating this process across multiple semesters. We used qualitative content analysis and an analytical framework to identify distinct pedagogical ideas about how people learn used by instructors and their alignment with passive, active, and generative cognitive engagement in the ICAP framework. Longitudinal comparisons revealed that participants did not consistently develop ideas aligned with generative cognitive engagement, indicating that teaching experience is necessary but insufficient to foster development of crucial pedagogical knowledge for effective active learning. Case studies illustrated how knowledge development can influence nuances of active-learning design and implementation. We discuss potential mechanisms of knowledge development and instructional implications.
 
 [Read Paper](https://doi.org/10.1187/cbe.25-09-0196)
+
+---
+
+## 184. Teachers' Pedagogical Reasoning and Students' Three‐Dimensional Learning
+**Source:** Science Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Christie Morrison Thomas, Beth A. Covitt, Qinyun Lin, Stefanie L. Marshall, James B. Hancock, Charles W. Anderson
+
+**Abstract:** ABSTRACT This article reports analyses of data from a design‐based implementation project focused on middle‐ and high‐school science teaching. Drawing on teacher interviews and surveys as well as student learning evidence, we examined the relationships between teachers' pedagogical reasoning and their students' three‐dimensional learning. Most teachers were similar in their reasoning about the importance of facilitating students in active learning—what we call active‐learning pedagogies. There were also important differences between two groups of teachers, though. Teachers of lower learning‐gains classrooms reasoned that they should use investigations and hands‐on experiences as means to engage students in a variety of interesting activities. Teachers of higher learning‐gains classrooms reasoned that they should engage students in science learning activities including asking questions, carrying out practice‐driven investigations, and constructing explanations to support students' sustained scientific engagement with phenomena—what we call three‐dimensional pedagogies. The findings suggest the potential benefits of enacting professional learning that attends to and engages with teachers' reasoning about their purposes, their students, and their instructional practices. For example, teachers may benefit from reasoning collectively about how to simultaneously satisfy both commitments to meeting expectations of students, parents, and administrators (which privilege active‐learning pedagogies) and commitments to supporting students' sustained scientific engagement (which privilege three‐dimensional pedagogies).
+
+[Read Paper](https://doi.org/10.1002/sce.70070)
+
+---
+
+## 185. Deliberate errors vs. induced errors: How best to structure students’ error generation to promote learning?
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Xing Li, Han Bai, Xinran Feng, Zheng Liang, Shi Chen, Qingbai Zhao
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102356)
+
+---
+
+## 186. Mixed effects of retrieval practice on the acquisition of procedural knowledge in verb spelling education
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Fieke H.A. Ophuis-Cox, Leen Catrysse, Gino Camp
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102377)
+
+---
+
+## 187. Analyzing embodied learning in classroom settings: A human-in-the-loop AI approach for multimodal learning analytics
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Joyce Horn Fonteles, Clayton Cohn, Efrat Ayalon, Mengxi Zhou, Ashwin T.S., Eduardo Davalos, Zhijian Li, Surya Rayala, Divya Mereddy, Austin Coursey, Shruti Jain, Yike Zhang, Noel Enyedy, Joshua Danish, Gautam Biswas
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102274)
+
+---
+
+## 188. How knowledge structures transform into scientific creative thinking in the science education context: Behavioral and neural evidence
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, STEM educational research methodology
+
+**Authors:** Chaoqun Ye, Senqing Qi, Yuhong Lin, Yangping Li, Weiping Hu
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102322)
+
+---
+
+## 189. The differential impacts of primary mathematics teachers’ multimodal behaviors on student engagement: A deep learning-driven relational matrix network analysis
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, Emerging Tech
+
+**Authors:** Qingtang Liu, Ruyi Jiang, Qi Xu, Xinxin Zheng, Xinyu Jiang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102354)
+
+---
+
+## 190. Pointing-tracing effect in computer-based multimedia learning: A potential explanation from the perspective of text-picture integration
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Multimedia & Representations, STEM educational research methodology
+
+**Authors:** Heping Xie, Paul Ginns, Xiaobin Liu, Shiyu Sun, Fuxing Wang, Chen Chen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102372)
+
+---
+
+## 191. Investigating preservice teachers’ emotions and dialogic teaching practices in simulation-based learning with artificial intelligence-powered virtual student agents
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Chih-Pu Dai, Fengfeng Ke, Nuodi Zhang, Alex Barrett, Luke West, Saptarshi Bhowmik, Sherry A. Southerland, Xin Yuan
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102381)
+
+---
+
+## 192. The mind, not the pen: Deep notetaking instruction enhances lecture understanding by mitigating overestimation bias
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Mengsi Liu, Yuri Uesaka
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102360)
+
+---
+
+## 193. Multimodal perspectives on affective dynamics in an intelligent tutoring system
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, Emerging Tech
+
+**Authors:** Anja Henke, Jason M. Harley, Negar Matin, Johann Chevalère, Verena V. Hafner, Niels Pinkwart, Rebecca Lazarides
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102310)
+
+---
+
+## 194. Performance and learning differences inside and outside Immersive virtual learning (IVR): Investigating the CAMIL model for chemistry lab skill development in high school students
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, Emerging Tech
+
+**Authors:** Megan D. Wiedbusch, Daryn A. Dever, Saerok Park, Sarah Romero, Romina Jannotti, David Garcia-Gali, Roger Azevedo
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102344)
+
+---
+
+## 195. Implementing multimodal learning analytics in authentic settings: A roadmap for ecological impact
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, Emerging Tech
+
+**Authors:** Bertrand Schneider, Roberto Martínez-Maldonado, Marcelo Worsley, Gautam Biswas
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102341)
+
+---
+
+## 196. Negative feedback is fine, but don’t mix your messages! simultaneous social- and temporal-comparative feedback and task performance
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** K. Skylar Powell, Panagiotis Rentzelas, Maria Kambouri
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102368)
+
+---
+
+## 197. From scaffolding to transfer: The impact of AI-powered support on children’s narrative skills
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Emerging Tech
+
+**Authors:** Na Zhang, Jinghan Xu, Ran Wei, Yifang Wang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102345)
+
+---
+
+## 198. Macro- and micro-level developmental changes in mathematics strategy use in higher education physics courses
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Multimedia & Representations
+
+**Authors:** Daniel L. Dinsmore, W. Brian Lane, J. Caleb Speirs, Charles J. Fitzsimmons
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102335)
+
+---
+
+## 199. Using real-time process data of domain-specific learning processes to provide adaptive support for learning and instruction: Challenges and opportunities
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Emerging Tech
+
+**Authors:** Roger Azevedo
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102363)
+
+---
+
+## 200. Connecting joint visual attention, community belonging, and self-efficacy in makerspace environments using high frequency data
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** STEM educational research methodology
+
+**Authors:** Bertrand Schneider, Edwin Chng
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102315)
+
+---
+
+## 201. Weaving the tapestry of student annotations on perusall: Uncovering annotation types, syntactic patterns, and their role in learning
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Multimedia & Representations
+
+**Authors:** Jieting Jerry Xin, Nicole Judith Tavares
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102346)
+
+---
+
+## 202. Play, regulate, retain: The mediating role of self-regulation in playfulness and motor learning among kindergarteners
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Rafat Ghanamah, Hazar Eghbaria-Ghanamah
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2026.102367)
+
+---
+
+## 203. Judgments of learning in the wild: Establishing ecological validity with an intelligent tutoring system in a field study
+**Source:** Learning and Instruction | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Marc Philipp Janson, Samuel Wissel, Franziska Ingendahl, Monika Undorf
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.learninstruc.2025.102293)
+
+---
+
+## 204. Innovating diagnostic learning: How generative AI explanation styles influence cognitive load and confidence calibration in medical students
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, STEM educational research methodology, Emerging Tech
+
+**Authors:** Fang Tang, Feng Yao, Minghe Zhou
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105619)
+
+---
+
+## 205. AI assistance in peer feedback provision: Pedagogically sound, but minimally adopted
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Stanislav Pozdniakov, Jonathan Brazil, Seyyed Kazem Banihashem, Omid Noroozi, Dragan Gašević, Shazia Sadiq, Hassan Khosravi
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105591)
+
+---
+
+## 206. A systematic review of multimodal learning analytics in computer-supported collaborative learning
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations
+
+**Authors:** Fan Ouyang, Xianping Bai
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105574)
+
+---
+
+## 207. Measuring different types and domains of AI knowledge: Developing and validating a performance-based scale
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Inbal Klein-Avraham, Rut Ston, Osnat Atias, Ido Roll, Ayelet Baram-Tsabari
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105573)
+
+---
+
+## 208. The alignment of knowledge focus during teaching preparation and AI-powered learning-by-teaching and their effects on mathematics learning outcomes in the context of high-stakes state assessments
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Mingjia Hu, Rui Guo, Hai Li, Chenglu Li
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105642)
+
+---
+
+## 209. Generative artificial intelligence augments social interactivity and learning outcomes: Advancing the framework of a scaffolded human–GenAI shared agency
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Yi-Chen Juan, Yuan-Hsuan Lee, Jiun-Yu Wu
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105564)
+
+---
+
+## 210. Investigating L2 listening comprehension and experience in immersive and interactive virtual reality: An experimental study
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Yanting Liang, Guangwei Hu
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105593)
+
+---
+
+## 211. Fostering preservice teachers’ design thinking by integrating generative AI and analytics-supported reflective assessment in a collaborative inquiry environment
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Yuqin Yang, Linbaiyu Chen, Daner Sun, Wangda Zhu, Shiyan Pang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105602)
+
+---
+
+## 212. Expressions of learner agency in virtual inquiry: Linking agency and evidence-centered game design
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Jillianne Code, Kieran Forde, Rachel Moylan, Aimee Lutrin, Zahira Tasabehji, Rachel Ralph, Aashay Mehta, Nick Zap, Nesrine El Banna
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105590)
+
+---
+
+## 213. Generative AI: A double-edged sword for creative thinking learning — Evidence from facial expressions and fNIRS
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** STEM educational research methodology, Emerging Tech
+
+**Authors:** Xinheng Song, Yue Zhang, Zhaolin Lu, Linci Xu, Hengheng Shen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105578)
+
+---
+
+## 214. From automation to thinking: The role of AGI in discourse analysis of computer-supported collaborative learning based on computational grounded theory
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Tien-Chih Chang, Alice R.P. Li, Chia-Yu Wang, John J.H. Lin
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105579)
+
+---
+
+## 215. Adding pedagogical agents who point or trace to children's instructional videos
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, STEM educational research methodology, Emerging Tech
+
+**Authors:** Meixia Cheng, Peihua Qiao, Heng Ni, Heping Xie, Richard E. Mayer, Fuxing Wang
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105618)
+
+---
+
+## 216. Differential effects of student and parental mobile phone use on academic procrastination trajectories: Machine learning evidence
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Jiabin Liu, Ru-De Liu, Wei Hong, Jingmin Lin
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105551)
+
+---
+
+## 217. Timing matters! Using delayed signaling to improve experiential learning in procedural VR training
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Jonas De Bruyne, Charlotte Larmuseau, Lieven De Marez, Durk Talsma, Klaas Bombeke
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105553)
+
+---
+
+## 218. Longitudinal effects of learning analytics support for study planning and monitoring: Role of self-efficacy and data literacy
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Anceli Kaveri, Ismail Celik, Egle Gedrimiene, Anni Silvola, Hanni Muukkonen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105532)
+
+---
+
+## 219. How explanatory features of AI and time frame reshape adolescents’ decision-making
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Zhuo Shen, Yinghe Chen, Jingyi Zhang, Hengrun Chen
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105563)
+
+---
+
+## 220. Teaching with AI: A dual qualitative study of parents’ intention to use generative AI for tutoring in China and the West
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Zhenya Robin Tang, Seongjin Kim, Houcai Wang, Botong Xue, Yang Zhou
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105592)
+
+---
+
+## 221. Sailing through media multitasking waters: Does text messaging disrupt video-based learning in lower-secondary school students?
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations
+
+**Authors:** Angelica Ronconi, Lucia Mason
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105634)
+
+---
+
+## 222. Latent profile analysis of primary students’ computational thinking concepts: Stability and mobility of profile membership after one year of study
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks
+
+**Authors:** Siu Cheung Kong, Ming Lai
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105620)
+
+---
+
+## 223. The Interplay of Self-regulation, Cognitive Load and Learner Resources: Implications for Learning Outcomes in Virtual Reality
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Multimedia & Representations, Emerging Tech
+
+**Authors:** Nina R. Peltzer, Jochen Kuhn, Matthias Stadler, Raphael Cera, Christoph Hoyer, Salome Flegr, Martin R. Fischer, Constanze Richters
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105612)
+
+---
+
+## 224. Enhancing a large language model with a chain-of-metacognitive reasoning approach increases argumentative writing evaluation accuracy, student writing outcomes, and mental effort
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Emerging Tech
+
+**Authors:** Sikai Wang, Khe Foon Hew
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105621)
+
+---
+
+## 225. Interacting and reflecting together in VR-mediated group learning: Immersive and observational experiences in shared mixed reality
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Tingting Yang, Ikseon Choi, Heng Luo
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105644)
+
+---
+
+## 226. The effects of GAI-enhanced pedagogical agents in the metaverse (GPAiM) on elementary school students’ conceptual understanding and cognitive engagement patterns
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Tinghui Wu, Xuesong Zhai, Yanjie Song
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105555)
+
+---
+
+## 227. The impact of the testing environment on gender differences in mental rotation performance: Does virtual reality make a difference?
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** STEM educational research methodology, Emerging Tech
+
+**Authors:** Kozlova Zoya, Cera Raphael, Hoyer Christoph, Flegr Salome, Kuhn Jochen, I. Hofer Sarah
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105577)
+
+---
+
+## 228. Virtual reality serious games for promoting environmental systems thinking and pro-environmental policy support
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Multimedia & Representations, Emerging Tech
+
+**Authors:** Joseph G. Guerriero, Pejman Sajjadi, Janet K. Swim, Alexander Klippel, Jamie DeCoster, Mahda M. Bagher
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105575)
+
+---
+
+## 229. Feedback practices with teacher dashboards in primary education: Exploring dashboard-prompted feedback across lesson phases
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Manel van Kessel, C.A.N. Knoop-van Campen, Mario de Jonge, Inge Molenaar, Nadira Saab
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105615)
+
+---
+
+## 230. Assessing mindset states of Hong Kong secondary students using machine learning in real-world online learning environment
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Elly Cheng Wang, Xin Guan, Xiaolong Chen, Tai Kai Ng
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105554)
+
+---
+
+## 231. Mitigating cognitive biases in higher education contexts through a brief video-based intervention: A randomized controlled trial
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Multimedia & Representations
+
+**Authors:** Lemi Baruh, Zeynep Cemalcilar, Andy Stoycheff
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105535)
+
+---
+
+## 232. Teachers’ doings in the AI era: From transmission to relation
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Miguel Nussbaum, Zvi Bekerman, Leanna Archambault, Maria Ranieri, Ramazan Yilmaz, Jiun-Yu Wu, Johan van Braak, Di Zou, Chin-Chung Tsai
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105617)
+
+---
+
+## 233. Tracing scientific reasoning as process: A trait-behavior-performance model with learning analytics in simulated environments
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, STEM educational research methodology, Emerging Tech
+
+**Authors:** Chia-Mei Lu
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2025.105556)
+
+---
+
+## 234. The effects of critical thinking intervention on reliance behaviors, problem-solving quality, and creativity during human-Generative AI collaborative learning
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Cognitive Frameworks, Emerging Tech
+
+**Authors:** Chenyu Hou, Gaoxia Zhu, Yanzhi Liu, Vidya Sudarshan, Josephine Leng Leng Chong, Fannie Yifan Zhang, Michael Yong Heng Tan, Yew Soon Ong
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105576)
+
+---
+
+## 235. A comparative study of expert, AI, and no external feedback on mathematics teacher learning outcomes in reflective practice
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Yimin Ning, Wee Tiong Seah, Jihe Chen, Jinhai Liu, Peifen Tan
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105572)
+
+---
+
+## 236. Trusting AI to detect AI? A systematic evaluation of the reliability and robustness of current AIGC detection tools for student academic work
+**Source:** Computers & Education | **Date:** 2026-04-22
+**Tags:** Emerging Tech
+
+**Authors:** Yicheng Sun, Yihan Liao, Xiaoxue Ma
+
+**Abstract:** Abstract not deposited with Crossref.
+
+[Read Paper](https://doi.org/10.1016/j.compedu.2026.105616)
 
 ---
 
