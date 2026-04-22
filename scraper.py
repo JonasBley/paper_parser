@@ -10,7 +10,7 @@ import re
 # --- Configuration ---
 # Temporal bound: last 7 days
 NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=30)
+SEVEN_DAYS_AGO = NOW - timedelta(days=7)
 DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
 # Crossref Polite Pool Requirement - Replace with your actual email
