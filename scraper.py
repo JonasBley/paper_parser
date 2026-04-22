@@ -156,13 +156,15 @@ def fetch_arxiv():
     papers = []
     query = "cat:physics.ed-ph OR cat:quant-ph"
 
-    # Strictly formatted URL string without markdown wrappers
-    url = f"[http://export.arxiv.org/api/query?search_query=](http://export.arxiv.org/api/query?search_query=){urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
+    # Workaround: Split protocol from domain to prevent UI auto-formatting
+    protocol = "http" + "://"
+    domain = "export.arxiv.org/api/query"
+    url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
 
     try:
         with urllib.request.urlopen(url) as response:
             root = ET.fromstring(response.read())
-            ns = {'atom': '[http://www.w3.org/2005/Atom](http://www.w3.org/2005/Atom)'}
+            ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}  # Also split the XML namespace
 
             for entry in root.findall('atom:entry', ns):
                 pub_date_str = entry.find('atom:published', ns).text
@@ -203,8 +205,10 @@ def fetch_crossref_api():
     }
 
     for source_name, issn in CROSSREF_JOURNALS.items():
-        # Strictly formatted URL string without markdown wrappers
-        url = f"[https://api.crossref.org/journals/](https://api.crossref.org/journals/){issn}/works?filter=from-pub-date:{DATE_FILTER}&rows=50"
+        # Workaround: Split protocol from domain to prevent UI auto-formatting
+        protocol = "https" + "://"
+        domain = f"api.crossref.org/journals/{issn}/works"
+        url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows=50"
 
         try:
             response = requests.get(url, headers=headers)
@@ -245,7 +249,6 @@ def fetch_crossref_api():
             print(f"Crossref API Error for {source_name}: {e}")
 
     return papers
-
 
 # --- Orchestration ---
 
