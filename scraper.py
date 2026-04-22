@@ -10,7 +10,7 @@ import re
 # --- Configuration ---
 # Temporal bound: last 7 days
 NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=7)
+SEVEN_DAYS_AGO = NOW - timedelta(days=30)
 DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
 # Crossref Polite Pool Requirement - Replace with your actual email
@@ -28,7 +28,7 @@ SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the follow
 1. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
 2. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
 3. Visual Attention: Studies utilizing eye-tracking methodologies to assess learning, gaze patterns, or visual attention in STEM.
-4. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics education at the secondary/tertiary level.
+4. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
 5. Workforce: Quantum workforce development and competences.
 6. Epistemology: Epistemological perspectives on abstract mathematics (e.g., Galois theory).
 7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
