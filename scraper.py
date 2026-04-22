@@ -1,136 +1,107 @@
-import urllib.request
-import urllib.parse
+import requests
 import json
-import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta, timezone
-import re
-import os
-
-# --- Configuration ---
-# Target keywords using regular expressions for flexible matching
-TARGET_PATTERNS = [
-    r"quantum\s+education",
-    r"physics\s+education",
-    r"generative\s+ai",
-    r"llm\b",
-    r"large\s+language\s+model",
-    r"stem\s+education"
-]
-
-# Temporal bound: strictly 7 days from execution time
-NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=7)
+# Conceptual SQLite Implementation
+import sqlite3
 
 
-def is_relevant(text):
-    """Evaluates if the text contains any of the target patterns."""
-    if not text:
-        return False
-    text = text.lower()
-    return any(re.search(pattern, text) for pattern in TARGET_PATTERNS)
+def save_to_database(papers):
+    conn = sqlite3.connect('literature_archive.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+                   CREATE TABLE IF NOT EXISTS papers
+                   (
+                       id
+                       TEXT
+                       PRIMARY
+                       KEY,
+                       title
+                       TEXT,
+                       authors
+                       TEXT,
+                       abstract
+                       TEXT,
+                       url
+                       TEXT,
+                       date_published
+                       TEXT,
+                       tags
+                       TEXT
+                   )
+                   ''')
+
+    for p in papers:
+        # Join the list of tags into a comma-separated string for storage
+        tag_string = ", ".join(p['tags'])
+        cursor.execute('''
+                       INSERT
+                       OR IGNORE INTO papers (id, title, authors, abstract, url, date_published, tags)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+                       ''', (p['link'], p['title'], p['authors'], p['abstract'], p['link'], p['date'], tag_string))
+
+    conn.commit()
+    conn.close()
+    
+
+# Define the ideal cognitive framework as the system prompt
+SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these seven distinct criteria:
+1. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
+2. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
+3. Visual Attention: Studies utilizing eye-tracking methodologies to assess learning, gaze patterns, or visual attention in STEM.
+4. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics education at the secondary/tertiary level.
+5. Workforce: Quantum workforce development and competences.
+6. Epistemology: Epistemological perspectives on abstract mathematics (e.g., Galois theory).
+7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
+
+Analyze the text and output a valid JSON object where the keys are the criteria names and the values are boolean (true/false) indicating a match.
+Example: {"Cognitive Frameworks": false, "Multimedia & Representations": true, "Visual Attention": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Epistemology": false, "Emerging Tech": false}
+Output ONLY the JSON object. Do not include markdown formatting, preambles, or explanations."""
 
 
-def fetch_arxiv():
-    """Queries the arXiv API for recent physics education and quantum papers."""
-    print("Fetching data from arXiv...")
-    papers = []
+def extract_categories_with_llm(abstract):
+    """
+    Passes the abstract to the local LLM and extracts matching categories.
+    Returns a list of matched category strings, or an empty list if none match or an error occurs.
+    """
+    if not abstract or len(abstract) < 50:
+        return []
 
-    # Query physics.ed-ph and quant-ph categories
-    query = "cat:physics.ed-ph OR cat:quant-ph"
-    url = f"http://export.arxiv.org/api/query?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=100"
+    url = "http://localhost:11434/api/generate"
+
+    payload = {
+        "model": "gemma4:e4b",  # Or llama3, depending on your deployment
+        "prompt": abstract,
+        "system": SYSTEM_PROMPT_JSON,
+        "stream": False,
+        "options": {
+            "temperature": 0.0
+        }
+    }
 
     try:
-        with urllib.request.urlopen(url) as response:
-            data = response.read()
-            root = ET.fromstring(data)
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        raw_output = response.json().get('response', '').strip()
 
-            # XML Namespace for arXiv
-            ns = {'atom': 'http://www.w3.org/2005/Atom'}
+        # Sanitize output: Strip markdown code blocks if the model generates them
+        if raw_output.startswith('```json'):
+            raw_output = raw_output[7:]
+        if raw_output.startswith('```'):
+            raw_output = raw_output[3:]
+        if raw_output.endswith('```'):
+            raw_output = raw_output[:-3]
 
-            for entry in root.findall('atom:entry', ns):
-                published_str = entry.find('atom:published', ns).text
-                published_date = datetime.strptime(published_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        data = json.loads(raw_output.strip())
 
-                if published_date < SEVEN_DAYS_AGO:
-                    continue  # Skip papers older than 7 days
+        # Isolate and return only the criteria marked as True
+        matched_tags = [key for key, value in data.items() if value is True]
+        return matched_tags
 
-                title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
-                summary = entry.find('atom:summary', ns).text.replace('\n', ' ').strip()
-                link = entry.find("atom:link[@rel='alternate']", ns).attrib['href']
-                authors = [author.find('atom:name', ns).text for author in entry.findall('atom:author', ns)]
+    except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
+        print(f"LLM Processing Error: {e}")
+        return []
 
-                if is_relevant(title) or is_relevant(summary):
-                    papers.append({
-                        'source': 'arXiv',
-                        'title': title,
-                        'authors': ", ".join(authors),
-                        'link': link,
-                        'abstract': summary,
-                        'date': published_date.strftime("%Y-%m-%d")
-                    })
-    except Exception as e:
-        print(f"Error fetching arXiv: {e}")
-
-    return papers
-
-
-def fetch_prper_rss():
-    """Fetches the RSS feed for APS PRPER."""
-    print("Fetching data from PRPER RSS...")
-    papers = []
-    url = "http://feeds.aps.org/rss/recent/prper.xml"
-
-    try:
-        with urllib.request.urlopen(url) as response:
-            data = response.read()
-            root = ET.fromstring(data)
-
-            for item in root.findall('.//item'):
-                # RSS uses pubDate (e.g., Tue, 14 Apr 2026 04:00:00 EDT)
-                # Parsing standard RSS dates can be complex due to timezones;
-                # using a simplified heuristic assuming feed contains only recent papers.
-                title = item.find('title').text
-                link = item.find('link').text
-                description = item.find('description').text or ""
-
-                if is_relevant(title) or is_relevant(description):
-                    papers.append({
-                        'source': 'APS PRPER',
-                        'title': title,
-                        'authors': 'See link for authors',  # RSS doesn't always split authors cleanly
-                        'link': link,
-                        'abstract': description.strip()[:500] + "...",  # Truncate long HTML descriptions
-                        'date': 'Recent'
-                    })
-    except Exception as e:
-        print(f"Error fetching PRPER: {e}")
-
-    return papers
-
-
-def generate_markdown(papers):
-    """Compiles the extracted data into a Markdown report."""
-    date_str = NOW.strftime("%Y-%m-%d")
-    filename = f"digest_{date_str}.md"
-
-    if not papers:
-        content = f"# Literature Digest ({date_str})\n\nNo new papers matched the criteria this week.\n"
-    else:
-        content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} relevant papers.\n\n"
-        for idx, p in enumerate(papers, 1):
-            content += f"## {idx}. {p['title']}\n"
-            content += f"**Source:** {p['source']} | **Date:** {p['date']}\n\n"
-            content += f"**Authors:** {p['authors']}\n\n"
-            content += f"**Abstract:** {p['abstract']}\n\n"
-            content += f"[Read Paper]({p['link']})\n\n"
-            content += "---\n\n"
-
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-    print(f"Successfully generated {filename}")
-
-
-if __name__ == "__main__":
-    all_papers = fetch_arxiv() + fetch_prper_rss()
-    generate_markdown(all_papers)
+# In your fetch_arxiv() and fetch_prper_rss() functions, replace:
+# if is_relevant(title) or is_relevant(summary):
+# With:
+# if evaluate_abstract_with_llm(summary):

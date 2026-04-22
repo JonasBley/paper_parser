@@ -1,29 +1,27 @@
-name: Weekly Literature Scraper
+name: Weekly Literature Scraper (LLM Evaluator)
 
 on:
   schedule:
-    # Executes at 08:00 UTC every Monday
     - cron: '0 8 * * 1'
   workflow_dispatch:
-    # Allows you to trigger the script manually from the GitHub UI for testing
 
 permissions:
   contents: write
 
 jobs:
   scrape-and-commit:
-    runs-on: ubuntu-latest
+    # CRITICAL CHANGE: Target your local machine
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      # Note: 'setup-python' is often unnecessary on a self-hosted runner
+      # if Python is already installed globally on your machine.
+      # You may need to run `pip install requests feedparser` locally once.
 
-      - name: Run Scraper Script
+      - name: Run Scraper Script with Local LLM
         run: python scraper.py
 
       - name: Commit and Push Changes
@@ -31,6 +29,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add digest_*.md
-          # Only commit if a new file was actually generated
-          git diff-index --quiet HEAD || git commit -m "Add weekly literature digest"
+          git diff-index --quiet HEAD || git commit -m "Add weekly LLM-filtered literature digest"
           git push
