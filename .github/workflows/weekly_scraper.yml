@@ -28,6 +28,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add digest_*.md
-          git diff-index --quiet HEAD || git commit -m "Add weekly LLM-filtered literature digest"
+          # Change this line to track the database
+          git add literature_archive.db 
+          git diff-index --quiet HEAD || git commit -m "Update literature database"
           git push
