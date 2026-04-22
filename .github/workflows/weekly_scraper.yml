@@ -25,16 +25,10 @@ jobs:
         run: python scraper.py
 
       - name: Commit and Push Changes
-        shell: bash
+        shell: cmd
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add literature_archive.db
-          
-          # Native PowerShell logic to check for changes instead of using '||'
-          if (git status --porcelain) {
-              git commit -m "Update literature database"
-              git push
-          } else {
-              Write-Host "No new papers found; nothing to commit."
-          }
+          git diff-index --quiet HEAD || git commit -m "Update literature database"
+          git push
