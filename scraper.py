@@ -9,26 +9,6 @@ import re
 from sentence_transformers import SentenceTransformer, util
 import torch
 
-# Initialize the embedding model globally so it only loads into VRAM once
-print("Loading embedding model...")
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
-
-# The profile defining your group's exact research focus
-ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
-
-# Pre-calculate the anchor vector
-ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
-
-
-def calculate_relevance(abstract):
-    """Calculates cosine similarity between the abstract and the group's research anchor."""
-    if not abstract:
-        return 0.0
-
-    abstract_vector = embedder.encode(abstract, convert_to_tensor=True)
-    score = util.cos_sim(ANCHOR_VECTOR, abstract_vector).item()
-    return round(score, 3)
-
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
 SEVEN_DAYS_AGO = NOW - timedelta(days=7)
@@ -38,46 +18,56 @@ CONTACT_EMAIL = "your_email@example.com"
 
 # Target Journals by their unique ISSN (Print or Electronic)
 CROSSREF_JOURNALS = {
-    # --- Physics & Quantum Education ---
     "APS PRPER": "2469-9896",
     "American Journal of Physics": "1943-2909",
     "EPJ Quantum Technology": "2196-0763",
     "European Journal of Physics": "1361-6404",
-
-    # --- General STEM & Science Education ---
     "CBE—Life Sciences Education": "1931-7913",
     "International Journal of STEM Education": "2196-7822",
     "Journal of Research in Science Teaching": "1098-2736",
     "Science Education": "1098-237X",
     "International Journal of Science Education": "1464-5289",
-
-    # --- Educational Psychology & Cognitive Science ---
     "Journal of Educational Psychology": "0022-0663",
     "Learning and Instruction": "0959-4752",
     "Cognition and Instruction": "1532-690X",
     "Computers & Education": "0360-1315",
-
-    # --- Engineering & Tech Education ---
     "IEEE Transactions on Education": "0018-9359",
     "Journal of Engineering Education": "1069-4730"
 }
 
-SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these distinct criteria.
+SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
 
-CRITICAL GATING CRITERION:
-1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy? (If the paper is purely technical/scientific physics research with no focus on education, this MUST be false).
+CRITICAL INSTRUCTION: You must first evaluate if the paper is educational. Pure physics/technical research without pedagogical application MUST be rejected.
 
-SPECIFIC SUB-CRITERIA (Only evaluate as true if 'Educational Focus' is also true):
-2. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
-3. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
-4. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
-5. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
-6. Workforce: Quantum workforce development and competences.
-7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
+Output a valid JSON object with the following exact structure:
+{
+  "reasoning": "Write one sentence explaining if this paper focuses on teaching/learning/students or if it is purely technical physics.",
+  "Educational Focus": false,
+  "Cognitive Frameworks": false,
+  "Multimedia & Representations": false,
+  "STEM educational research methodology": false,
+  "Quantum/Modern Curriculum": false,
+  "Workforce": false,
+  "Emerging Tech": false
+}
 
-Analyze the text and output a valid JSON object where the keys are the criteria names and the values are boolean (true/false) indicating a match.
-Example: {"Educational Focus": true, "Cognitive Frameworks": false, "Multimedia & Representations": true, "STEM educational research methodology": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Emerging Tech": false}
-Output ONLY the JSON object. Do not include markdown formatting, preambles, or explanations."""
+Output ONLY the JSON object. Do not include markdown formatting like ```json or explanations outside the JSON."""
+
+# --- Semantic Ranking Setup ---
+print("Loading embedding model...")
+embedder = SentenceTransformer('all-MiniLM-L6-v2')
+
+ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
+
+ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
+
+
+def calculate_relevance(abstract):
+    if not abstract:
+        return 0.0
+    abstract_vector = embedder.encode(abstract, convert_to_tensor=True)
+    score = util.cos_sim(ANCHOR_VECTOR, abstract_vector).item()
+    return round(score, 3)
 
 
 # --- Database & LLM Logic ---
@@ -86,7 +76,6 @@ def generate_markdown(papers, file_prefix):
     if not papers:
         return
 
-    # Sort papers by relevance score in descending order
     papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
 
     date_str = NOW.strftime("%Y-%m-%d")
@@ -95,7 +84,6 @@ def generate_markdown(papers, file_prefix):
     content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} papers in this category.\n\n"
     for idx, p in enumerate(papers, 1):
         content += f"## {idx}. {p['title']}\n"
-        # Print the relevance score directly in the digest
         content += f"**Source:** {p['source']} | **Date:** {p['date']} | **Relevance Score:** {p.get('relevance_score', 0.0)}\n"
         content += f"**Tags:** {', '.join(p['tags'])}\n\n"
         content += f"**Authors:** {p['authors']}\n\n"
@@ -110,36 +98,51 @@ def generate_markdown(papers, file_prefix):
 
 def save_to_database(papers):
     if not papers:
+        print("No new relevant papers to save.")
         return
 
     conn = sqlite3.connect('literature_archive.db')
     cursor = conn.cursor()
 
-    # Added relevance_score to the schema
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS papers (
-            id TEXT PRIMARY KEY,
-            source TEXT,
-            title TEXT,
-            authors TEXT,
-            abstract TEXT,
-            url TEXT,
-            date_published TEXT,
-            tags TEXT,
-            relevance_score REAL
-        )
-    ''')
+                   CREATE TABLE IF NOT EXISTS papers
+                   (
+                       id
+                       TEXT
+                       PRIMARY
+                       KEY,
+                       source
+                       TEXT,
+                       title
+                       TEXT,
+                       authors
+                       TEXT,
+                       abstract
+                       TEXT,
+                       url
+                       TEXT,
+                       date_published
+                       TEXT,
+                       tags
+                       TEXT,
+                       relevance_score
+                       REAL
+                   )
+                   ''')
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
+        # Utilizing .get() guarantees the script will not crash if the key is missing
         cursor.execute('''
-            INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score)
+                       INSERT
+                       OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'], tag_string, p['relevance_score']))
+                       ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
+                             tag_string, p.get('relevance_score', 0.0)))
 
     conn.commit()
     conn.close()
-    print(f"Successfully committed {len(papers)} papers to database.")
+    print(f"Successfully committed {len(papers)} papers to literature_archive.db")
 
 
 def extract_categories_with_llm(text_to_evaluate):
@@ -171,7 +174,10 @@ def extract_categories_with_llm(text_to_evaluate):
             raw_output = raw_output[:-3]
 
         data = json.loads(raw_output.strip())
-        return [key for key, value in data.items() if value is True]
+
+        # Extract only boolean True values, ignoring the text-based 'reasoning' key
+        matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
+        return matched_tags
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
         print(f"LLM Error: {e}")
@@ -214,24 +220,22 @@ def fetch_arxiv():
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
-                # Strip hallucinated tags if not educational
                 if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
 
-                # --- NEW LINE ---
                 score = calculate_relevance(abstract)
 
+                authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
                 papers.append({
-                    'source': 'arXiv',  # or source_name in crossref
+                    'source': 'arXiv',
                     'title': title,
-                    'authors': author_string,
-                    'link': link,
+                    'authors': ", ".join(authors),
+                    'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
                     'abstract': abstract,
                     'date': pub_date.strftime("%Y-%m-%d"),
                     'tags': tags,
-                    'relevance_score': score  # --- NEW LINE ---
+                    'relevance_score': score
                 })
-                
     except Exception as e:
         print(f"arXiv Fetch Error: {e}")
     return papers
@@ -271,9 +275,10 @@ def fetch_crossref_api():
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
-                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
                 if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
+
+                score = calculate_relevance(abstract)
 
                 papers.append({
                     'source': source_name,
@@ -282,13 +287,15 @@ def fetch_crossref_api():
                     'link': link,
                     'abstract': abstract or "Abstract not deposited with Crossref.",
                     'date': NOW.strftime("%Y-%m-%d"),
-                    'tags': tags
+                    'tags': tags,
+                    'relevance_score': score
                 })
 
         except requests.exceptions.RequestException as e:
             print(f"Crossref API Error for {source_name}: {e}")
 
     return papers
+
 
 # --- Orchestration ---
 
@@ -299,14 +306,11 @@ if __name__ == "__main__":
     crossref_results = fetch_crossref_api()
     all_papers = arxiv_results + crossref_results
 
-    # 1. Save all ingested literature to the unified database
     save_to_database(all_papers)
 
-    # 2. Bifurcate the data structurally using the explicit Gating Tag
     educational_papers = [p for p in all_papers if "Educational Focus" in p['tags']]
     technical_papers = [p for p in all_papers if "Technical / Pure Physics" in p['tags']]
 
-    # 3. Generate two independent markdown digests
     generate_markdown(educational_papers, "digest_education")
     generate_markdown(technical_papers, "digest_technical")
 
