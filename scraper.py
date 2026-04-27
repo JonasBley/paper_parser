@@ -149,14 +149,21 @@ def extract_categories_with_llm(text_to_evaluate):
     if not text_to_evaluate or len(text_to_evaluate) < 50:
         return []
 
-    url = "http://localhost:1234/v1/chat/completions"
+    # 1. Updated URL to use the explicit loopback IP
+    url = "http://127.0.0.1:1234/v1/chat/completions"
+
     payload = {
         "model": "local-model",
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT_JSON},
             {"role": "user", "content": text_to_evaluate}
         ],
-        "temperature": 0.0,
+        # Gemma 4 optimal sampling parameters
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        # 3. Explicitly defined max_tokens to prevent backend rejections
+        "max_tokens": 200,
         "stream": False
     }
 
@@ -175,7 +182,6 @@ def extract_categories_with_llm(text_to_evaluate):
 
         data = json.loads(raw_output.strip())
 
-        # Extract only boolean True values, ignoring the text-based 'reasoning' key
         matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
         return matched_tags
 
