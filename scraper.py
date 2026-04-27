@@ -158,12 +158,11 @@ def extract_categories_with_llm(text_to_evaluate):
             {"role": "system", "content": SYSTEM_PROMPT_JSON},
             {"role": "user", "content": text_to_evaluate}
         ],
-        # Gemma 4 optimal sampling parameters
         "temperature": 1.0,
         "top_p": 0.95,
         "top_k": 64,
-        # 3. Explicitly defined max_tokens to prevent backend rejections
-        "max_tokens": 200,
+        # Increased to prevent truncation of the reasoning string
+        "max_tokens": 800,
         "stream": False
     }
 
