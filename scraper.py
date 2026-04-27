@@ -149,43 +149,51 @@ def extract_categories_with_llm(text_to_evaluate):
     if not text_to_evaluate or len(text_to_evaluate) < 50:
         return []
 
-    # 1. Updated URL to use the explicit loopback IP
-    url = "http://127.0.0.1:1234/v1/chat/completions"
+    # 1. Truncate massively long abstracts to prevent LLM context window overflow
+    # 4000 characters is plenty for an LLM to judge an abstract
+    text_to_evaluate = text_to_evaluate[:4000]
 
+    url = "http://localhost:1234/v1/chat/completions"
     payload = {
         "model": "local-model",
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT_JSON},
             {"role": "user", "content": text_to_evaluate}
         ],
-        "temperature": 1.0,
-        "top_p": 0.95,
-        "top_k": 64,
-        # Increased to prevent truncation of the reasoning string
-        "max_tokens": 800,
+        "temperature": 0.0,
         "stream": False
     }
 
+    raw_output = ""
     try:
         response = requests.post(url, json=payload)
         response.raise_for_status()
 
         raw_output = response.json()['choices'][0]['message']['content'].strip()
 
-        if raw_output.startswith('```json'):
-            raw_output = raw_output[7:]
-        if raw_output.startswith('```'):
-            raw_output = raw_output[3:]
-        if raw_output.endswith('```'):
-            raw_output = raw_output[:-3]
+        # 2. BULLETPROOF PARSING: Use Regex to find the JSON block.
+        # This completely ignores any conversational filler like "Here is the JSON:"
+        match = re.search(r'\{.*?\}', raw_output, re.DOTALL)
 
-        data = json.loads(raw_output.strip())
+        if not match:
+            # If the LLM completely failed to output curly braces, we log what it actually said and skip it
+            print(f"LLM Error: No JSON structure found. Model output: {raw_output}")
+            return []
 
+        # Extract just the JSON string from the regex match
+        json_string = match.group(0)
+
+        # Parse the sanitized string
+        data = json.loads(json_string)
+
+        # Extract the True boolean values (ignoring the "reasoning" string)
         matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
         return matched_tags
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
-        print(f"LLM Error: {e}")
+        # Improved error logging to show exactly what broke the parser
+        error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
+        print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
         return []
 
 
