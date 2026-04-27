@@ -11,7 +11,7 @@ import torch
 
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=7)
+SEVEN_DAYS_AGO = NOW - timedelta(days=70)
 DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "your_email@example.com"
@@ -57,7 +57,7 @@ Output ONLY the JSON object. Do not include markdown formatting like ```json or 
 print("Loading embedding model...")
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
-ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
+ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. It utilizes novel teaching techniques like augmented or virtual reality or interactive environments. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
 
 ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
 
