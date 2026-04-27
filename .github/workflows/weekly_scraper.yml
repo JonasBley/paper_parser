@@ -25,7 +25,7 @@ jobs:
       - name: Checkout Public Repo
         uses: actions/checkout@v4
         with:
-          repository: 'YourUsername/YourPublicRepoName' # CHANGE THIS to your actual username/repo
+          repository: 'JonasBley/public_paper_parser'
           token: ${{ secrets.PUBLIC_REPO_TOKEN }}
           path: 'public-digest'
 
