@@ -40,16 +40,21 @@ CROSSREF_JOURNALS = {
     "Journal of Engineering Education": "1069-4730"
 }
 
-SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these six distinct criteria:
-1. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
-2. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
-3. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
-4. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
-5. Workforce: Quantum workforce development and competences.
-6. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
+SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the following abstract against these distinct criteria.
+
+CRITICAL GATING CRITERION:
+1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy? (If the paper is purely technical/scientific physics research with no focus on education, this MUST be false).
+
+SPECIFIC SUB-CRITERIA (Only evaluate as true if 'Educational Focus' is also true):
+2. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity) or Cognitive Load Theory.
+3. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
+4. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
+5. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
+6. Workforce: Quantum workforce development and competences.
+7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
 
 Analyze the text and output a valid JSON object where the keys are the criteria names and the values are boolean (true/false) indicating a match.
-Example: {"Cognitive Frameworks": false, "Multimedia & Representations": true, "STEM educational research methodology": true, "Visual Attention": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Emerging Tech": false}
+Example: {"Educational Focus": true, "Cognitive Frameworks": false, "Multimedia & Representations": true, "STEM educational research methodology": true, "Quantum/Modern Curriculum": false, "Workforce": false, "Emerging Tech": false}
 Output ONLY the JSON object. Do not include markdown formatting, preambles, or explanations."""
 
 
@@ -89,32 +94,21 @@ def save_to_database(papers):
     cursor.execute('''
                    CREATE TABLE IF NOT EXISTS papers
                    (
-                       id
-                       TEXT
-                       PRIMARY
-                       KEY,
-                       source
-                       TEXT,
-                       title
-                       TEXT,
-                       authors
-                       TEXT,
-                       abstract
-                       TEXT,
-                       url
-                       TEXT,
-                       date_published
-                       TEXT,
-                       tags
-                       TEXT
+                       id TEXT PRIMARY KEY,
+                       source TEXT,
+                       title TEXT,
+                       authors TEXT,
+                       abstract TEXT,
+                       url TEXT,
+                       date_published TEXT,
+                       tags TEXT
                    )
                    ''')
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
         cursor.execute('''
-                       INSERT
-                       OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags)
+                       INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags)
                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
                              tag_string))
@@ -196,7 +190,8 @@ def fetch_arxiv():
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
-                if not tags:
+                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
+                if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
 
                 authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
@@ -248,7 +243,8 @@ def fetch_crossref_api():
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
-                if not tags:
+                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
+                if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
 
                 papers.append({
@@ -266,7 +262,6 @@ def fetch_crossref_api():
 
     return papers
 
-
 # --- Orchestration ---
 
 if __name__ == "__main__":
@@ -279,8 +274,8 @@ if __name__ == "__main__":
     # 1. Save all ingested literature to the unified database
     save_to_database(all_papers)
 
-    # 2. Bifurcate the data structurally
-    educational_papers = [p for p in all_papers if "Technical / Pure Physics" not in p['tags']]
+    # 2. Bifurcate the data structurally using the explicit Gating Tag
+    educational_papers = [p for p in all_papers if "Educational Focus" in p['tags']]
     technical_papers = [p for p in all_papers if "Technical / Pure Physics" in p['tags']]
 
     # 3. Generate two independent markdown digests
