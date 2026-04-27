@@ -6,6 +6,28 @@ import requests
 import json
 import sqlite3
 import re
+from sentence_transformers import SentenceTransformer, util
+import torch
+
+# Initialize the embedding model globally so it only loads into VRAM once
+print("Loading embedding model...")
+embedder = SentenceTransformer('all-MiniLM-L6-v2')
+
+# The profile defining your group's exact research focus
+ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
+
+# Pre-calculate the anchor vector
+ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
+
+
+def calculate_relevance(abstract):
+    """Calculates cosine similarity between the abstract and the group's research anchor."""
+    if not abstract:
+        return 0.0
+
+    abstract_vector = embedder.encode(abstract, convert_to_tensor=True)
+    score = util.cos_sim(ANCHOR_VECTOR, abstract_vector).item()
+    return round(score, 3)
 
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
@@ -61,9 +83,11 @@ Output ONLY the JSON object. Do not include markdown formatting, preambles, or e
 # --- Database & LLM Logic ---
 
 def generate_markdown(papers, file_prefix):
-    """Generates a markdown file for a specific subset of papers."""
     if not papers:
         return
+
+    # Sort papers by relevance score in descending order
+    papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
 
     date_str = NOW.strftime("%Y-%m-%d")
     filename = f"{file_prefix}_{date_str}.md"
@@ -71,7 +95,8 @@ def generate_markdown(papers, file_prefix):
     content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} papers in this category.\n\n"
     for idx, p in enumerate(papers, 1):
         content += f"## {idx}. {p['title']}\n"
-        content += f"**Source:** {p['source']} | **Date:** {p['date']}\n"
+        # Print the relevance score directly in the digest
+        content += f"**Source:** {p['source']} | **Date:** {p['date']} | **Relevance Score:** {p.get('relevance_score', 0.0)}\n"
         content += f"**Tags:** {', '.join(p['tags'])}\n\n"
         content += f"**Authors:** {p['authors']}\n\n"
         content += f"**Abstract:** {p['abstract']}\n\n"
@@ -85,37 +110,36 @@ def generate_markdown(papers, file_prefix):
 
 def save_to_database(papers):
     if not papers:
-        print("No new relevant papers to save.")
         return
 
     conn = sqlite3.connect('literature_archive.db')
     cursor = conn.cursor()
 
+    # Added relevance_score to the schema
     cursor.execute('''
-                   CREATE TABLE IF NOT EXISTS papers
-                   (
-                       id TEXT PRIMARY KEY,
-                       source TEXT,
-                       title TEXT,
-                       authors TEXT,
-                       abstract TEXT,
-                       url TEXT,
-                       date_published TEXT,
-                       tags TEXT
-                   )
-                   ''')
+        CREATE TABLE IF NOT EXISTS papers (
+            id TEXT PRIMARY KEY,
+            source TEXT,
+            title TEXT,
+            authors TEXT,
+            abstract TEXT,
+            url TEXT,
+            date_published TEXT,
+            tags TEXT,
+            relevance_score REAL
+        )
+    ''')
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
         cursor.execute('''
-                       INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                       ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
-                             tag_string))
+            INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'], tag_string, p['relevance_score']))
 
     conn.commit()
     conn.close()
-    print(f"Successfully committed {len(papers)} papers to literature_archive.db")
+    print(f"Successfully committed {len(papers)} papers to database.")
 
 
 def extract_categories_with_llm(text_to_evaluate):
@@ -190,20 +214,24 @@ def fetch_arxiv():
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
-                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
+                # Strip hallucinated tags if not educational
                 if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
 
-                authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
+                # --- NEW LINE ---
+                score = calculate_relevance(abstract)
+
                 papers.append({
-                    'source': 'arXiv',
+                    'source': 'arXiv',  # or source_name in crossref
                     'title': title,
-                    'authors': ", ".join(authors),
-                    'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
+                    'authors': author_string,
+                    'link': link,
                     'abstract': abstract,
                     'date': pub_date.strftime("%Y-%m-%d"),
-                    'tags': tags
+                    'tags': tags,
+                    'relevance_score': score  # --- NEW LINE ---
                 })
+                
     except Exception as e:
         print(f"arXiv Fetch Error: {e}")
     return papers

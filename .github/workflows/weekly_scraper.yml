@@ -1,35 +1,54 @@
-name: Weekly Literature Scraper (LLM Evaluator)
+name: Weekly Literature Scraper & Publisher
 
 on:
   schedule:
     - cron: '0 8 * * 1'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  scrape-and-commit:
-    # CRITICAL CHANGE: Target your local machine
+  scrape-and-publish:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Repository
+      # 1. Download the Private Repository into a folder named "private-code"
+      - name: Checkout Private Repo
         uses: actions/checkout@v4
+        with:
+          path: 'private-code'
 
-      # Note: 'setup-python' is often unnecessary on a self-hosted runner
-      # if Python is already installed globally on your machine.
-      # You may need to run `pip install requests feedparser` locally once.
-
-      - name: Run Scraper Script with Local LLM
+      # 2. Run the Scraper locally inside the "private-code" folder
+      - name: Run Scraper Script
+        working-directory: ./private-code
         run: python scraper.py
 
-      - name: Commit and Push Changes
-        shell: cmd
+      # 3. Download the Public Repository into a folder named "public-digest"
+      - name: Checkout Public Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'YourUsername/YourPublicRepoName' # CHANGE THIS to your actual username/repo
+          token: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          path: 'public-digest'
+
+      # 4. Copy the generated files and push them to the public repository
+      - name: Push to Public Repo
+        working-directory: ./public-digest
         run: |
+          # Copy the database and markdown files from the private folder to the public folder
+          Copy-Item -Path "..\private-code\literature_archive.db" -Destination ".\" -Force
+          Copy-Item -Path "..\private-code\digest_*.md" -Destination ".\" -Force
+          
+          # Configure Git credentials
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          
+          # Stage the copied files
           git add literature_archive.db
           git add digest_*.md
-          git diff-index --quiet HEAD || git commit -m "Update literature database and markdown digest"
-          git push
+          
+          # Commit and Push using native PowerShell logic
+          if (git status --porcelain) {
+              git commit -m "Automated weekly literature digest update"
+              git push
+          } else {
+              Write-Host "No new papers found; nothing to commit to the public repository."
+          }
