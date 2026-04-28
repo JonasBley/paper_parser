@@ -244,7 +244,7 @@ def fetch_arxiv():
                     score = calculate_relevance(abstract)
 
                     # 2. Pre-filter logic: If score is very low AND it's not officially an education paper, skip LLM
-                    if score < 0.15 and not is_explicit_education:
+                    if score < 0.1 and not is_explicit_education:
                         tags = ["Technical / Pure Physics"]
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
@@ -333,7 +333,7 @@ def fetch_crossref_api():
                     score = calculate_relevance(abstract)
 
                     # 2. Pre-filter logic to save LLM compute
-                    if score < 0.15:
+                    if score < 0.1:
                         tags = ["Technical / Pure Physics"]
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
