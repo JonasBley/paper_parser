@@ -49,6 +49,7 @@ SPECIFIC SUB-CRITERIA (Only evaluate as true if 'Educational Focus' is also true
 5. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
 6. Workforce: Quantum workforce development and competences.
 7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
+8. Climate Change and Sustainability: Research on Climate Change and Sustainability in STEM educaitonal settings.
 
 Output a valid JSON object with the following exact structure:
 {
@@ -59,7 +60,8 @@ Output a valid JSON object with the following exact structure:
   "STEM educational research methodology": false,
   "Quantum/Modern Curriculum": false,
   "Workforce": false,
-  "Emerging Tech": false
+  "Emerging Tech": false,
+  "Climate Change and Sustainability": false
 }
 
 Output ONLY the JSON object. Do not include markdown formatting like ```json or explanations outside the JSON."""
