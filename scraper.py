@@ -39,7 +39,18 @@ CROSSREF_JOURNALS = {
 
 SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
 
-CRITICAL INSTRUCTION: You must first evaluate if the paper is educational. Pure physics/technical research without pedagogical application MUST be rejected.
+You are an expert academic screener. Evaluate the following abstract against these distinct criteria.
+
+CRITICAL GATING CRITERION:
+1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy? (If the paper is purely technical/scientific physics research with no focus on education, this MUST be false).
+
+SPECIFIC SUB-CRITERIA (Only evaluate as true if 'Educational Focus' is also true):
+2. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity), spatial reasoning, or Cognitive Load Theory.
+3. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
+4. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
+5. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
+6. Workforce: Quantum workforce development and competences.
+7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
 
 Output a valid JSON object with the following exact structure:
 {
@@ -59,7 +70,7 @@ Output ONLY the JSON object. Do not include markdown formatting like ```json or 
 print("Loading embedding model...")
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
-ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. It utilizes novel teaching techniques like augmented or virtual reality or interactive environments. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
+ANCHOR_TEXT = """This research investigates educational frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. It utilizes novel teaching techniques like augmented/virtual reality, (generative) artificial intelligence, or interactive environments. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
 ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
 
 
