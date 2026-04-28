@@ -229,22 +229,31 @@ def fetch_arxiv():
                     pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
                     # Because arXiv sorts descending, if we hit an old paper, the rest are also old
-                    if pub_date < SEVEN_DAYS_AGO:
+                    if pub_date < START_DATE:
                         oldest_reached = True
                         continue
 
                     title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
                     abstract = clean_html(entry.find('atom:summary', ns).text)
 
+                    # --- NEW LOGIC: Check official arXiv categories ---
+                    categories = [c.attrib['term'] for c in entry.findall('atom:category', ns)]
+                    is_explicit_education = 'physics.ed-ph' in categories
+
                     # 1. Score the paper semantically FIRST
                     score = calculate_relevance(abstract)
 
-                    # 2. Pre-filter logic: If score is very low, skip LLM inference
-                    if score < 0.15:
+                    # 2. Pre-filter logic: If score is very low AND it's not officially an education paper, skip LLM
+                    if score < 0.15 and not is_explicit_education:
                         tags = ["Technical / Pure Physics"]
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                         tags = extract_categories_with_llm(evaluation_text)
+
+                        # --- NEW LOGIC: Override the LLM gatekeeper if officially categorized as education ---
+                        if is_explicit_education and "Educational Focus" not in tags:
+                            tags.append("Educational Focus")
+
                         if "Educational Focus" not in tags:
                             tags = ["Technical / Pure Physics"]
 
