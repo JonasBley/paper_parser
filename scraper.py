@@ -39,8 +39,6 @@ CROSSREF_JOURNALS = {
 
 SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
 
-You are an expert academic screener. Evaluate the following abstract against these distinct criteria.
-
 CRITICAL GATING CRITERION:
 1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy? (If the paper is purely technical/scientific physics research with no focus on education, this MUST be false).
 
@@ -87,7 +85,9 @@ def calculate_relevance(abstract):
 def generate_markdown(papers, file_prefix):
     if not papers:
         return
+
     papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
+
     date_str = NOW.strftime("%Y-%m-%d")
     filename = f"{file_prefix}_{date_str}.md"
 
@@ -96,6 +96,8 @@ def generate_markdown(papers, file_prefix):
         content += f"## {idx}. {p['title']}\n"
         content += f"**Source:** {p['source']} | **Date:** {p['date']} | **Relevance Score:** {p.get('relevance_score', 0.0)}\n"
         content += f"**Tags:** {', '.join(p['tags'])}\n\n"
+        # --- ADDED REASONING TO MARKDOWN ---
+        content += f"**LLM Reasoning:** {p.get('reasoning', 'Filtered out by semantic threshold.')}\n\n"
         content += f"**Authors:** {p['authors']}\n\n"
         content += f"**Abstract:** {p['abstract']}\n\n"
         content += f"[Read Paper]({p['link']})\n\n"
@@ -114,40 +116,30 @@ def save_to_database(papers):
     conn = sqlite3.connect('literature_archive.db')
     cursor = conn.cursor()
 
+    # --- ADDED REASONING COLUMN TO SCHEMA ---
     cursor.execute('''
-                   CREATE TABLE IF NOT EXISTS papers
-                   (
-                       id
-                       TEXT
-                       PRIMARY
-                       KEY,
-                       source
-                       TEXT,
-                       title
-                       TEXT,
-                       authors
-                       TEXT,
-                       abstract
-                       TEXT,
-                       url
-                       TEXT,
-                       date_published
-                       TEXT,
-                       tags
-                       TEXT,
-                       relevance_score
-                       REAL
-                   )
-                   ''')
+        CREATE TABLE IF NOT EXISTS papers (
+            id TEXT PRIMARY KEY,
+            source TEXT,
+            title TEXT,
+            authors TEXT,
+            abstract TEXT,
+            url TEXT,
+            date_published TEXT,
+            tags TEXT,
+            relevance_score REAL,
+            reasoning TEXT
+        )
+    ''')
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
+        # --- ADDED REASONING VALUE TO INSERT COMMAND ---
         cursor.execute('''
-                       INSERT
-                       OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                       ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
-                             tag_string, p.get('relevance_score', 0.0)))
+            INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score, reasoning)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
+              tag_string, p.get('relevance_score', 0.0), p.get('reasoning', '')))
 
     conn.commit()
     conn.close()
@@ -195,14 +187,25 @@ def extract_categories_with_llm(text_to_evaluate):
             print(f"LLM Error: No JSON structure found. Model output: {raw_output}")
             return []
 
+        # ... (previous API call logic remains the same)
         json_string = match.group(0)
+
+        # Parse the sanitized string
         data = json.loads(json_string)
-        return [key for key, value in data.items() if value is True and isinstance(value, bool)]
+
+        # Extract the True boolean values
+        matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
+
+        # --- NEW: Extract the reasoning string ---
+        reasoning = data.get("reasoning", "No reasoning provided.")
+
+        # Return both as a tuple
+        return matched_tags, reasoning
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
         error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
         print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
-        return []
+        return [], "LLM Parsing Error."
 
 
 # --- Data Ingestion Logic ---
@@ -258,7 +261,7 @@ def fetch_arxiv():
                     score = calculate_relevance(abstract)
 
                     # 2. Pre-filter logic: If score is very low AND it's not officially an education paper, skip LLM
-                    if score < 0.1 and not is_explicit_education:
+                    if score < 0.15 and not is_explicit_education:
                         tags = ["Technical / Pure Physics"]
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
@@ -347,23 +350,30 @@ def fetch_crossref_api():
                     score = calculate_relevance(abstract)
 
                     # 2. Pre-filter logic to save LLM compute
-                    if score < 0.1:
+                    # Example logic for your loops:
+                    if score < 0.15:
                         tags = ["Technical / Pure Physics"]
+                        reasoning = "Bypassed LLM (Semantic score below 0.15 threshold)."
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                        tags = extract_categories_with_llm(evaluation_text)
+                        # --- NEW: Unpack the tuple ---
+                        tags, reasoning = extract_categories_with_llm(evaluation_text)
+
                         if "Educational Focus" not in tags:
                             tags = ["Technical / Pure Physics"]
 
+                    # ...
+
                     papers.append({
-                        'source': source_name,
+                        'source': 'arXiv',  # or source_name
                         'title': title,
                         'authors': author_string,
                         'link': link,
-                        'abstract': abstract or "Abstract not deposited with Crossref.",
+                        'abstract': abstract,
                         'date': pub_date_str,
                         'tags': tags,
-                        'relevance_score': score
+                        'relevance_score': score,
+                        'reasoning': reasoning  # --- NEW: Append reasoning to the dictionary ---
                     })
 
                 # Retrieve the next cursor for pagination. If it matches the current one, stop.
