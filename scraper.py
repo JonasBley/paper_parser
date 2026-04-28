@@ -6,17 +6,19 @@ import requests
 import json
 import sqlite3
 import re
+import time
 from sentence_transformers import SentenceTransformer, util
 import torch
 
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=700)
-DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
-CONTACT_EMAIL = "your_email@example.com"
+# 5 Year Backlog (approx 1825 days)
+START_DATE = NOW - timedelta(days=1825)
+DATE_FILTER = START_DATE.strftime("%Y-%m-%d")
 
-# Target Journals by their unique ISSN (Print or Electronic)
+CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
+
 CROSSREF_JOURNALS = {
     "APS PRPER": "2469-9896",
     "American Journal of Physics": "1943-2909",
@@ -58,7 +60,6 @@ print("Loading embedding model...")
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
 ANCHOR_TEXT = """This research investigates pedagogical frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. It utilizes novel teaching techniques like augmented or virtual reality or interactive environments. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of abstract phenomena such as quantum entanglement, linear light polarization, and quantum measurement. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
-
 ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
 
 
@@ -75,9 +76,7 @@ def calculate_relevance(abstract):
 def generate_markdown(papers, file_prefix):
     if not papers:
         return
-
     papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
-
     date_str = NOW.strftime("%Y-%m-%d")
     filename = f"{file_prefix}_{date_str}.md"
 
@@ -132,7 +131,6 @@ def save_to_database(papers):
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
-        # Utilizing .get() guarantees the script will not crash if the key is missing
         cursor.execute('''
                        INSERT
                        OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score)
@@ -149,10 +147,7 @@ def extract_categories_with_llm(text_to_evaluate):
     if not text_to_evaluate or len(text_to_evaluate) < 50:
         return []
 
-    # 1. Truncate massively long abstracts to prevent LLM context window overflow
-    # 4000 characters is plenty for an LLM to judge an abstract
     text_to_evaluate = text_to_evaluate[:4000]
-
     url = "http://localhost:1234/v1/chat/completions"
     payload = {
         "model": "local-model",
@@ -168,30 +163,18 @@ def extract_categories_with_llm(text_to_evaluate):
     try:
         response = requests.post(url, json=payload)
         response.raise_for_status()
-
         raw_output = response.json()['choices'][0]['message']['content'].strip()
 
-        # 2. BULLETPROOF PARSING: Use Regex to find the JSON block.
-        # This completely ignores any conversational filler like "Here is the JSON:"
         match = re.search(r'\{.*?\}', raw_output, re.DOTALL)
-
         if not match:
-            # If the LLM completely failed to output curly braces, we log what it actually said and skip it
             print(f"LLM Error: No JSON structure found. Model output: {raw_output}")
             return []
 
-        # Extract just the JSON string from the regex match
         json_string = match.group(0)
-
-        # Parse the sanitized string
         data = json.loads(json_string)
-
-        # Extract the True boolean values (ignoring the "reasoning" string)
-        matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
-        return matched_tags
+        return [key for key, value in data.items() if value is True and isinstance(value, bool)]
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
-        # Improved error logging to show exactly what broke the parser
         error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
         print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
         return []
@@ -207,118 +190,157 @@ def clean_html(raw_html):
 
 
 def fetch_arxiv():
-    print("Fetching arXiv (physics.ed-ph, quant-ph)...")
+    print("Fetching arXiv with pagination...")
     papers = []
-    query = "cat:physics.ed-ph OR cat:quant-ph"
-
+    query = "cat:physics.ed-ph OR cat:quant-ph OR cat:physics.gen-ph"
     protocol = "http" + "://"
     domain = "export.arxiv.org/api/query"
-    url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&max_results=200"
 
-    try:
-        with urllib.request.urlopen(url) as response:
-            root = ET.fromstring(response.read())
-            ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
+    start = 0
+    max_results = 1000  # arXiv maximum per request
 
-            for entry in root.findall('atom:entry', ns):
-                pub_date_str = entry.find('atom:published', ns).text
-                pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    while True:
+        print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
+        url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&start={start}&max_results={max_results}"
 
-                if pub_date < SEVEN_DAYS_AGO:
-                    continue
+        try:
+            with urllib.request.urlopen(url) as response:
+                root = ET.fromstring(response.read())
+                ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
+                entries = root.findall('atom:entry', ns)
 
-                title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
-                abstract = clean_html(entry.find('atom:summary', ns).text)
+                if not entries:
+                    break  # Exhausted all results
 
-                evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                tags = extract_categories_with_llm(evaluation_text)
+                oldest_reached = False
+                for entry in entries:
+                    pub_date_str = entry.find('atom:published', ns).text
+                    pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
-                if "Educational Focus" not in tags:
-                    tags = ["Technical / Pure Physics"]
+                    # Because arXiv sorts descending, if we hit an old paper, the rest are also old
+                    if pub_date < SEVEN_DAYS_AGO:
+                        oldest_reached = True
+                        continue
 
-                score = calculate_relevance(abstract)
+                    title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
+                    abstract = clean_html(entry.find('atom:summary', ns).text)
 
-                authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
-                papers.append({
-                    'source': 'arXiv',
-                    'title': title,
-                    'authors': ", ".join(authors),
-                    'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
-                    'abstract': abstract,
-                    'date': pub_date.strftime("%Y-%m-%d"),
-                    'tags': tags,
-                    'relevance_score': score
-                })
-    except Exception as e:
-        print(f"arXiv Fetch Error: {e}")
+                    # 1. Score the paper semantically FIRST
+                    score = calculate_relevance(abstract)
+
+                    # 2. Pre-filter logic: If score is very low, skip LLM inference
+                    if score < 0.15:
+                        tags = ["Technical / Pure Physics"]
+                    else:
+                        evaluation_text = f"Title: {title}\nAbstract: {abstract}"
+                        tags = extract_categories_with_llm(evaluation_text)
+                        if "Educational Focus" not in tags:
+                            tags = ["Technical / Pure Physics"]
+
+                    authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
+                    papers.append({
+                        'source': 'arXiv',
+                        'title': title,
+                        'authors': ", ".join(authors),
+                        'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
+                        'abstract': abstract,
+                        'date': pub_date.strftime("%Y-%m-%d"),
+                        'tags': tags,
+                        'relevance_score': score
+                    })
+
+                if oldest_reached:
+                    break  # Safely exit the pagination loop
+
+                start += max_results
+                time.sleep(3)  # arXiv API compliance rate limit
+
+        except Exception as e:
+            print(f"arXiv Fetch Error: {e}")
+            break
+
     return papers
 
 
 def fetch_crossref_api():
-    print("Fetching publisher APIs via Crossref...")
+    print("Fetching publisher APIs via Crossref with cursor pagination...")
     papers = []
-    headers = {
-        "User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})"
-    }
+    headers = {"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})"}
 
     for source_name, issn in CROSSREF_JOURNALS.items():
+        print(f" -> Fetching {source_name}...")
         protocol = "https" + "://"
         domain = f"api.crossref.org/journals/{issn}/works"
-        url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows=50"
 
-        try:
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()
-            data = response.json()
+        cursor = "*"  # Crossref's native pagination token
+        rows = 1000
 
-            items = data.get('message', {}).get('items', [])
+        while cursor:
+            # We must quote the cursor because it often contains special URL characters
+            url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows={rows}&cursor={urllib.parse.quote(cursor)}"
 
-            for item in items:
-                title_list = item.get('title', [])
-                title = title_list[0] if title_list else "Unknown Title"
-                link = item.get('URL', '')
+            try:
+                response = requests.get(url, headers=headers)
+                response.raise_for_status()
+                data = response.json()
 
-                author_list = item.get('author', [])
-                authors = [f"{a.get('given', '')} {a.get('family', '')}".strip() for a in author_list]
-                author_string = ", ".join(authors) if authors else "Unknown Authors"
+                items = data.get('message', {}).get('items', [])
+                if not items:
+                    break  # Journal exhausted
 
-                abstract_raw = item.get('abstract', '')
-                abstract = clean_html(abstract_raw)
+                for item in items:
+                    title_list = item.get('title', [])
+                    title = title_list[0] if title_list else "Unknown Title"
+                    link = item.get('URL', '')
 
-                # --- NEW DATE EXTRACTION LOGIC ---
-                # Crossref stores publication dates as an array: [YYYY, MM, DD]
-                issued_parts = item.get('issued', {}).get('date-parts', [[None]])[0]
-                if issued_parts[0] is not None:
-                    year = issued_parts[0]
-                    # Default to January 1st if month or day are missing (common for older journals)
-                    month = issued_parts[1] if len(issued_parts) > 1 else 1
-                    day = issued_parts[2] if len(issued_parts) > 2 else 1
-                    pub_date_str = f"{year}-{month:02d}-{day:02d}"
-                else:
-                    pub_date_str = "Unknown Date"
+                    author_list = item.get('author', [])
+                    authors = [f"{a.get('given', '')} {a.get('family', '')}".strip() for a in author_list]
+                    author_string = ", ".join(authors) if authors else "Unknown Authors"
 
-                evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                tags = extract_categories_with_llm(evaluation_text)
+                    abstract_raw = item.get('abstract', '')
+                    abstract = clean_html(abstract_raw)
 
-                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
-                if "Educational Focus" not in tags:
-                    tags = ["Technical / Pure Physics"]
+                    issued_parts = item.get('issued', {}).get('date-parts', [[None]])[0]
+                    if issued_parts[0] is not None:
+                        year = issued_parts[0]
+                        month = issued_parts[1] if len(issued_parts) > 1 else 1
+                        day = issued_parts[2] if len(issued_parts) > 2 else 1
+                        pub_date_str = f"{year}-{month:02d}-{day:02d}"
+                    else:
+                        pub_date_str = "Unknown Date"
 
-                score = calculate_relevance(abstract)
+                    # 1. Score the paper semantically FIRST
+                    score = calculate_relevance(abstract)
 
-                papers.append({
-                    'source': source_name,
-                    'title': title,
-                    'authors': author_string,
-                    'link': link,
-                    'abstract': abstract or "Abstract not deposited with Crossref.",
-                    'date': pub_date_str, # Now uses the actual publication date
-                    'tags': tags,
-                    'relevance_score': score
-                })
+                    # 2. Pre-filter logic to save LLM compute
+                    if score < 0.15:
+                        tags = ["Technical / Pure Physics"]
+                    else:
+                        evaluation_text = f"Title: {title}\nAbstract: {abstract}"
+                        tags = extract_categories_with_llm(evaluation_text)
+                        if "Educational Focus" not in tags:
+                            tags = ["Technical / Pure Physics"]
 
-        except requests.exceptions.RequestException as e:
-            print(f"Crossref API Error for {source_name}: {e}")
+                    papers.append({
+                        'source': source_name,
+                        'title': title,
+                        'authors': author_string,
+                        'link': link,
+                        'abstract': abstract or "Abstract not deposited with Crossref.",
+                        'date': pub_date_str,
+                        'tags': tags,
+                        'relevance_score': score
+                    })
+
+                # Retrieve the next cursor for pagination. If it matches the current one, stop.
+                next_cursor = data.get('message', {}).get('next-cursor')
+                if not next_cursor or next_cursor == cursor:
+                    break
+                cursor = next_cursor
+
+            except requests.exceptions.RequestException as e:
+                print(f"Crossref API Error for {source_name}: {e}")
+                break
 
     return papers
 
@@ -326,7 +348,7 @@ def fetch_crossref_api():
 # --- Orchestration ---
 
 if __name__ == "__main__":
-    print(f"Starting pipeline execution for period since {DATE_FILTER}...")
+    print(f"Starting extended pipeline execution for period since {DATE_FILTER}...")
 
     arxiv_results = fetch_arxiv()
     crossref_results = fetch_crossref_api()
