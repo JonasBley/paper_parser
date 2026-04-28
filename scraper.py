@@ -162,7 +162,7 @@ def extract_categories_with_llm(text_to_evaluate):
         ],
         "temperature": 0.0,
         "stream": False,
-        "max_tokens": 500,
+        "max_tokens": 1500,
         "top_p": 1.0
     }
 
