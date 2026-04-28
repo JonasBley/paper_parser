@@ -265,9 +265,8 @@ def fetch_arxiv():
                         tags = ["Technical / Pure Physics"]
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                        tags = extract_categories_with_llm(evaluation_text)
+                        tags, reasoning = extract_categories_with_llm(evaluation_text)
 
-                        # --- NEW LOGIC: Override the LLM gatekeeper if officially categorized as education ---
                         if is_explicit_education and "Educational Focus" not in tags:
                             tags.append("Educational Focus")
 
@@ -275,15 +274,17 @@ def fetch_arxiv():
                             tags = ["Technical / Pure Physics"]
 
                     authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
+
                     papers.append({
-                        'source': 'arXiv',
+                        'source': 'arXiv',  # or source_name
                         'title': title,
                         'authors': ", ".join(authors),
                         'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
                         'abstract': abstract,
-                        'date': pub_date.strftime("%Y-%m-%d"),
+                        'date': pub_date_str,
                         'tags': tags,
-                        'relevance_score': score
+                        'relevance_score': score,
+                        'reasoning': reasoning  # --- NEW: Append reasoning to the dictionary ---
                     })
 
                 if oldest_reached:
@@ -356,7 +357,6 @@ def fetch_crossref_api():
                         reasoning = "Bypassed LLM (Semantic score below 0.15 threshold)."
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                        # --- NEW: Unpack the tuple ---
                         tags, reasoning = extract_categories_with_llm(evaluation_text)
 
                         if "Educational Focus" not in tags:
@@ -365,7 +365,7 @@ def fetch_crossref_api():
                     # ...
 
                     papers.append({
-                        'source': 'arXiv',  # or source_name
+                        'source': source_name,
                         'title': title,
                         'authors': author_string,
                         'link': link,
