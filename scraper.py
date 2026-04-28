@@ -162,20 +162,8 @@ def extract_categories_with_llm(text_to_evaluate):
         ],
         "temperature": 0.0,
         "stream": False,
-
-        # --- RECOMMENDED ADDITIONS FOR GEMMA / JSON EXTRACTION ---
-
         "max_tokens": 500,
-        # Safety net. You only need a short JSON object. If the model glitches and starts
-        # writing an essay, this cuts it off after 500 tokens, saving your GPU from hanging.
-
-        "response_format": {"type": "json_object"},
-        # Feature available in LM Studio/Ollama. This forces the model's output layer to ONLY
-        # generate valid JSON strings, practically eliminating parsing errors.
-
         "top_p": 1.0
-        # Standard practice when temperature is 0.0 to ensure the probability distribution
-        # isn't artificially clipped before the greedy selection.
     }
 
     raw_output = ""
@@ -265,6 +253,7 @@ def fetch_arxiv():
                     # 2. Pre-filter logic: If score is very low AND it's not officially an education paper, skip LLM
                     if score < 0.15 and not is_explicit_education:
                         tags = ["Technical / Pure Physics"]
+                        reasoning = "Bypassed LLM (Semantic score below 0.15 threshold and not categorized as education)."
                     else:
                         evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                         tags, reasoning = extract_categories_with_llm(evaluation_text)
@@ -284,7 +273,8 @@ def fetch_arxiv():
                         'authors': author_string,
                         'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
                         'abstract': abstract,
-                        'date': pub_date_str,
+                        # --- FIX: Format the date correctly for the final output ---
+                        'date': pub_date.strftime("%Y-%m-%d"),
                         'tags': tags,
                         'relevance_score': score,
                         'reasoning': reasoning
