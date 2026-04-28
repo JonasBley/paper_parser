@@ -285,9 +285,22 @@ def fetch_crossref_api():
                 abstract_raw = item.get('abstract', '')
                 abstract = clean_html(abstract_raw)
 
+                # --- NEW DATE EXTRACTION LOGIC ---
+                # Crossref stores publication dates as an array: [YYYY, MM, DD]
+                issued_parts = item.get('issued', {}).get('date-parts', [[None]])[0]
+                if issued_parts[0] is not None:
+                    year = issued_parts[0]
+                    # Default to January 1st if month or day are missing (common for older journals)
+                    month = issued_parts[1] if len(issued_parts) > 1 else 1
+                    day = issued_parts[2] if len(issued_parts) > 2 else 1
+                    pub_date_str = f"{year}-{month:02d}-{day:02d}"
+                else:
+                    pub_date_str = "Unknown Date"
+
                 evaluation_text = f"Title: {title}\nAbstract: {abstract}"
                 tags = extract_categories_with_llm(evaluation_text)
 
+                # Strict Sanitization: If it lacks Educational Focus, strip any hallucinated tags
                 if "Educational Focus" not in tags:
                     tags = ["Technical / Pure Physics"]
 
@@ -299,7 +312,7 @@ def fetch_crossref_api():
                     'authors': author_string,
                     'link': link,
                     'abstract': abstract or "Abstract not deposited with Crossref.",
-                    'date': NOW.strftime("%Y-%m-%d"),
+                    'date': pub_date_str, # Now uses the actual publication date
                     'tags': tags,
                     'relevance_score': score
                 })
