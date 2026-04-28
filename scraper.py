@@ -11,7 +11,7 @@ import torch
 
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
-SEVEN_DAYS_AGO = NOW - timedelta(days=70)
+SEVEN_DAYS_AGO = NOW - timedelta(days=700)
 DATE_FILTER = SEVEN_DAYS_AGO.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "your_email@example.com"
