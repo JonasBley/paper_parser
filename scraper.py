@@ -274,17 +274,18 @@ def fetch_arxiv():
                             tags = ["Technical / Pure Physics"]
 
                     authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
+                    author_string = ", ".join(authors) if authors else "Unknown Authors"
 
                     papers.append({
-                        'source': 'arXiv',  # or source_name
+                        'source': 'arXiv',
                         'title': title,
-                        'authors': ", ".join(authors),
+                        'authors': author_string,
                         'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
                         'abstract': abstract,
                         'date': pub_date_str,
                         'tags': tags,
                         'relevance_score': score,
-                        'reasoning': reasoning  # --- NEW: Append reasoning to the dictionary ---
+                        'reasoning': reasoning
                     })
 
                 if oldest_reached:
@@ -362,7 +363,6 @@ def fetch_crossref_api():
                         if "Educational Focus" not in tags:
                             tags = ["Technical / Pure Physics"]
 
-                    # ...
 
                     papers.append({
                         'source': source_name,
@@ -373,7 +373,7 @@ def fetch_crossref_api():
                         'date': pub_date_str,
                         'tags': tags,
                         'relevance_score': score,
-                        'reasoning': reasoning  # --- NEW: Append reasoning to the dictionary ---
+                        'reasoning': reasoning
                     })
 
                 # Retrieve the next cursor for pagination. If it matches the current one, stop.
