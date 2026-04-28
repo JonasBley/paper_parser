@@ -150,7 +150,7 @@ def save_to_database(papers):
 
 def extract_categories_with_llm(text_to_evaluate):
     if not text_to_evaluate or len(text_to_evaluate) < 50:
-        return []
+        return [], "Abstract too short for evaluation."
 
     text_to_evaluate = text_to_evaluate[:4000]
     url = "http://localhost:1234/v1/chat/completions"
@@ -175,18 +175,17 @@ def extract_categories_with_llm(text_to_evaluate):
         match = re.search(r'\{.*?\}', raw_output, re.DOTALL)
         if not match:
             print(f"LLM Error: No JSON structure found. Model output: {raw_output}")
-            return []
-
-        # ... (previous API call logic remains the same)
-        json_string = match.group(0)
+            # --- FIX 2: Return a tuple here ---
+            return [], "LLM returned empty or invalid formatting."
 
         # Parse the sanitized string
+        json_string = match.group(0)
         data = json.loads(json_string)
 
         # Extract the True boolean values
         matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
 
-        # --- NEW: Extract the reasoning string ---
+        # Extract the reasoning string
         reasoning = data.get("reasoning", "No reasoning provided.")
 
         # Return both as a tuple
@@ -195,7 +194,8 @@ def extract_categories_with_llm(text_to_evaluate):
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
         error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
         print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
-        return [], "LLM Parsing Error."
+        # Ensure the final exception block also returns a tuple
+        return [], "LLM Parsing or Connection Error."
 
 
 # --- Data Ingestion Logic ---
