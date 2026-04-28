@@ -167,7 +167,21 @@ def extract_categories_with_llm(text_to_evaluate):
             {"role": "user", "content": text_to_evaluate}
         ],
         "temperature": 0.0,
-        "stream": False
+        "stream": False,
+
+        # --- RECOMMENDED ADDITIONS FOR GEMMA / JSON EXTRACTION ---
+
+        "max_tokens": 500,
+        # Safety net. You only need a short JSON object. If the model glitches and starts
+        # writing an essay, this cuts it off after 500 tokens, saving your GPU from hanging.
+
+        "response_format": {"type": "json_object"},
+        # Feature available in LM Studio/Ollama. This forces the model's output layer to ONLY
+        # generate valid JSON strings, practically eliminating parsing errors.
+
+        "top_p": 1.0
+        # Standard practice when temperature is 0.0 to ensure the probability distribution
+        # isn't artificially clipped before the greedy selection.
     }
 
     raw_output = ""
