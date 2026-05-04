@@ -13,13 +13,14 @@ import torch
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
 
-# 5 Year Backlog (approx 1825 days)
-START_DATE = NOW - timedelta(days=1825)
+# Maintenance Window: 14 days (Keeps runtime low since the LLM must now process everything)
+START_DATE = NOW - timedelta(days=14)
 DATE_FILTER = START_DATE.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
 
 CROSSREF_JOURNALS = {
+    # --- Existing Educational Journals ---
     "APS PRPER": "2469-9896",
     "American Journal of Physics": "1943-2909",
     "EPJ Quantum Technology": "2196-0763",
@@ -34,34 +35,58 @@ CROSSREF_JOURNALS = {
     "Cognition and Instruction": "1532-690X",
     "Computers & Education": "0360-1315",
     "IEEE Transactions on Education": "0018-9359",
-    "Journal of Engineering Education": "1069-4730"
+    "Journal of Engineering Education": "1069-4730",
+
+    # --- NEW: High-Impact & Quantum Tech Journals ---
+    "Nature": "1476-4687",
+    "Nature Physics": "1745-2481",
+    "Nature Communications": "2041-1723",
+    "npj Quantum Information": "2056-6387",
+    "Science": "1095-9203",
+    "Science Advances": "2375-2548",
+    "PRX Quantum": "2691-3399",  # Highly recommended addition from the APS family
+    "Physical Review Letters": "1079-7114"  # The standard for major physics breakthroughs
 }
 
 SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
 
 CRITICAL GATING CRITERION:
-1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy? (If the paper is purely technical/scientific physics research with no focus on education, this MUST be false).
+1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy?
 
-SPECIFIC SUB-CRITERIA (Only evaluate as true if 'Educational Focus' is also true):
-2. Cognitive Frameworks: Empirical STEM education focusing on cognitive models (e.g., Fidelity of Gestalt, Functional Fidelity), spatial reasoning, or Cognitive Load Theory.
-3. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or the implementation of multiple representations in STEM education.
-4. STEM educational research methodology: Studies including methods measuring gaze patterns or visual attention with eye-tracking, measurements of spatial reasoning ability, cognitive load measurements.
-5. Quantum/Modern Curriculum: Curriculum innovation in modern physics, quantum mechanics, or quantum optics and quantum computing education at the secondary/tertiary level.
-6. Workforce: Quantum workforce development and competences.
-7. Emerging Tech: Application or evaluation of Artificial Intelligence (AI), Generative AI, or Augmented/Virtual Reality (AR/VR) in physics/STEM education.
-8. Climate Change and Sustainability: Research on Climate Change and Sustainability in STEM educaitonal settings.
+UNIVERSAL CRITERION (Applies to all papers):
+2. Review Paper: Is this a systematic literature review, meta-analysis, or broad survey of a field?
+
+EDUCATIONAL SUB-CRITERIA (Evaluate carefully if 'Educational Focus' is true):
+3. Cognitive Frameworks: Empirical STEM education focusing on cognitive models, spatial reasoning, or Cognitive Load Theory.
+4. Multimedia & Representations: Research grounded in cognitive theories of multimedia learning or multiple representations.
+5. STEM educational research methodology: Studies measuring gaze patterns, spatial reasoning ability, or cognitive load.
+6. Quantum/Modern Curriculum: Curriculum innovation in modern physics or quantum mechanics education.
+7. Workforce: Quantum workforce development and competences.
+8. Emerging Tech: Application of AI, Generative AI, or AR/VR in STEM education.
+9. Climate Change and Sustainability: Research on climate change/sustainability in STEM educational settings.
+
+TECHNICAL SUB-CRITERIA (Evaluate carefully if 'Educational Focus' is false):
+10. Algorithmic & Theoretical Advances: Theoretical developments in quantum computing, quantum simulation, machine learning, or quantum information/communication theory.
+11. Experimental Advances: Real-world physical realization, laboratory experiments, or hardware advances in quantum communication, sensing, computing, or simulation.
+12. Quantum Foundations: Research into the fundamental nature of quantum mechanics, entanglement theory, Bell tests, or quantum interpretations.
+13. Quantum Materials & Solid State: Research focusing on condensed matter, superconductivity, topological insulators, or physical material properties.
 
 Output a valid JSON object with the following exact structure:
 {
-  "reasoning": "Write one sentence explaining if this paper focuses on teaching/learning/students or if it is purely technical physics.",
+  "reasoning": "Write one sentence explaining your categorization logic.",
   "Educational Focus": false,
+  "Review Paper": false,
   "Cognitive Frameworks": false,
   "Multimedia & Representations": false,
   "STEM educational research methodology": false,
   "Quantum/Modern Curriculum": false,
   "Workforce": false,
   "Emerging Tech": false,
-  "Climate Change and Sustainability": false
+  "Climate Change and Sustainability": false,
+  "Algorithmic & Theoretical Advances": false,
+  "Experimental Advances": false,
+  "Quantum Foundations": false,
+  "Quantum Materials & Solid State": false
 }
 
 Output ONLY the JSON object. Do not include markdown formatting like ```json or explanations outside the JSON."""
@@ -97,9 +122,12 @@ def generate_markdown(papers, file_prefix):
     for idx, p in enumerate(papers, 1):
         content += f"## {idx}. {p['title']}\n"
         content += f"**Source:** {p['source']} | **Date:** {p['date']} | **Relevance Score:** {p.get('relevance_score', 0.0)}\n"
-        content += f"**Tags:** {', '.join(p['tags'])}\n\n"
-        # --- ADDED REASONING TO MARKDOWN ---
-        content += f"**LLM Reasoning:** {p.get('reasoning', 'Filtered out by semantic threshold.')}\n\n"
+
+        # Format tags to stand out if they are empty
+        display_tags = ', '.join(p['tags']) if p['tags'] else "Uncategorized Technical Paper"
+        content += f"**Tags:** {display_tags}\n\n"
+
+        content += f"**LLM Reasoning:** {p.get('reasoning', 'No reasoning provided.')}\n\n"
         content += f"**Authors:** {p['authors']}\n\n"
         content += f"**Abstract:** {p['abstract']}\n\n"
         content += f"[Read Paper]({p['link']})\n\n"
@@ -118,30 +146,42 @@ def save_to_database(papers):
     conn = sqlite3.connect('literature_archive.db')
     cursor = conn.cursor()
 
-    # --- ADDED REASONING COLUMN TO SCHEMA ---
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS papers (
-            id TEXT PRIMARY KEY,
-            source TEXT,
-            title TEXT,
-            authors TEXT,
-            abstract TEXT,
-            url TEXT,
-            date_published TEXT,
-            tags TEXT,
-            relevance_score REAL,
-            reasoning TEXT
-        )
-    ''')
+                   CREATE TABLE IF NOT EXISTS papers
+                   (
+                       id
+                       TEXT
+                       PRIMARY
+                       KEY,
+                       source
+                       TEXT,
+                       title
+                       TEXT,
+                       authors
+                       TEXT,
+                       abstract
+                       TEXT,
+                       url
+                       TEXT,
+                       date_published
+                       TEXT,
+                       tags
+                       TEXT,
+                       relevance_score
+                       REAL,
+                       reasoning
+                       TEXT
+                   )
+                   ''')
 
     for p in papers:
         tag_string = ", ".join(p['tags'])
-        # --- ADDED REASONING VALUE TO INSERT COMMAND ---
         cursor.execute('''
-            INSERT OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score, reasoning)
+                       INSERT
+                       OR IGNORE INTO papers (id, source, title, authors, abstract, url, date_published, tags, relevance_score, reasoning)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
-              tag_string, p.get('relevance_score', 0.0), p.get('reasoning', '')))
+                       ''', (p['link'], p['source'], p['title'], p['authors'], p['abstract'], p['link'], p['date'],
+                             tag_string, p.get('relevance_score', 0.0), p.get('reasoning', '')))
 
     conn.commit()
     conn.close()
@@ -175,26 +215,19 @@ def extract_categories_with_llm(text_to_evaluate):
         match = re.search(r'\{.*?\}', raw_output, re.DOTALL)
         if not match:
             print(f"LLM Error: No JSON structure found. Model output: {raw_output}")
-            # --- FIX 2: Return a tuple here ---
             return [], "LLM returned empty or invalid formatting."
 
-        # Parse the sanitized string
         json_string = match.group(0)
         data = json.loads(json_string)
 
-        # Extract the True boolean values
         matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
-
-        # Extract the reasoning string
         reasoning = data.get("reasoning", "No reasoning provided.")
 
-        # Return both as a tuple
         return matched_tags, reasoning
 
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
         error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
         print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
-        # Ensure the final exception block also returns a tuple
         return [], "LLM Parsing or Connection Error."
 
 
@@ -215,7 +248,7 @@ def fetch_arxiv():
     domain = "export.arxiv.org/api/query"
 
     start = 0
-    max_results = 1000  # arXiv maximum per request
+    max_results = 1000
 
     while True:
         print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
@@ -228,14 +261,13 @@ def fetch_arxiv():
                 entries = root.findall('atom:entry', ns)
 
                 if not entries:
-                    break  # Exhausted all results
+                    break
 
                 oldest_reached = False
                 for entry in entries:
                     pub_date_str = entry.find('atom:published', ns).text
                     pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
-                    # Because arXiv sorts descending, if we hit an old paper, the rest are also old
                     if pub_date < START_DATE:
                         oldest_reached = True
                         continue
@@ -243,26 +275,19 @@ def fetch_arxiv():
                     title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
                     abstract = clean_html(entry.find('atom:summary', ns).text)
 
-                    # --- NEW LOGIC: Check official arXiv categories ---
                     categories = [c.attrib['term'] for c in entry.findall('atom:category', ns)]
                     is_explicit_education = 'physics.ed-ph' in categories
 
-                    # 1. Score the paper semantically FIRST
+                    # Calculate semantic relevance
                     score = calculate_relevance(abstract)
 
-                    # 2. Pre-filter logic: If score is very low AND it's not officially an education paper, skip LLM
-                    if score < 0.15 and not is_explicit_education:
-                        tags = ["Technical / Pure Physics"]
-                        reasoning = "Bypassed LLM (Semantic score below 0.15 threshold and not categorized as education)."
-                    else:
-                        evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                        tags, reasoning = extract_categories_with_llm(evaluation_text)
+                    # --- REMOVED SEMANTIC BYPASS: All papers are now evaluated by the LLM ---
+                    evaluation_text = f"Title: {title}\nAbstract: {abstract}"
+                    tags, reasoning = extract_categories_with_llm(evaluation_text)
 
-                        if is_explicit_education and "Educational Focus" not in tags:
-                            tags.append("Educational Focus")
-
-                        if "Educational Focus" not in tags:
-                            tags = ["Technical / Pure Physics"]
+                    # Ensure physics.ed-ph papers maintain the educational tag regardless of LLM hallucination
+                    if is_explicit_education and "Educational Focus" not in tags:
+                        tags.append("Educational Focus")
 
                     authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
                     author_string = ", ".join(authors) if authors else "Unknown Authors"
@@ -273,7 +298,6 @@ def fetch_arxiv():
                         'authors': author_string,
                         'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
                         'abstract': abstract,
-                        # --- FIX: Format the date correctly for the final output ---
                         'date': pub_date.strftime("%Y-%m-%d"),
                         'tags': tags,
                         'relevance_score': score,
@@ -281,10 +305,10 @@ def fetch_arxiv():
                     })
 
                 if oldest_reached:
-                    break  # Safely exit the pagination loop
+                    break
 
                 start += max_results
-                time.sleep(3)  # arXiv API compliance rate limit
+                time.sleep(3)
 
         except Exception as e:
             print(f"arXiv Fetch Error: {e}")
@@ -303,11 +327,10 @@ def fetch_crossref_api():
         protocol = "https" + "://"
         domain = f"api.crossref.org/journals/{issn}/works"
 
-        cursor = "*"  # Crossref's native pagination token
+        cursor = "*"
         rows = 1000
 
         while cursor:
-            # We must quote the cursor because it often contains special URL characters
             url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows={rows}&cursor={urllib.parse.quote(cursor)}"
 
             try:
@@ -317,7 +340,7 @@ def fetch_crossref_api():
 
                 items = data.get('message', {}).get('items', [])
                 if not items:
-                    break  # Journal exhausted
+                    break
 
                 for item in items:
                     title_list = item.get('title', [])
@@ -340,21 +363,11 @@ def fetch_crossref_api():
                     else:
                         pub_date_str = "Unknown Date"
 
-                    # 1. Score the paper semantically FIRST
                     score = calculate_relevance(abstract)
 
-                    # 2. Pre-filter logic to save LLM compute
-                    # Example logic for your loops:
-                    if score < 0.15:
-                        tags = ["Technical / Pure Physics"]
-                        reasoning = "Bypassed LLM (Semantic score below 0.15 threshold)."
-                    else:
-                        evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                        tags, reasoning = extract_categories_with_llm(evaluation_text)
-
-                        if "Educational Focus" not in tags:
-                            tags = ["Technical / Pure Physics"]
-
+                    # --- REMOVED SEMANTIC BYPASS: All papers are now evaluated by the LLM ---
+                    evaluation_text = f"Title: {title}\nAbstract: {abstract}"
+                    tags, reasoning = extract_categories_with_llm(evaluation_text)
 
                     papers.append({
                         'source': source_name,
@@ -368,7 +381,6 @@ def fetch_crossref_api():
                         'reasoning': reasoning
                     })
 
-                # Retrieve the next cursor for pagination. If it matches the current one, stop.
                 next_cursor = data.get('message', {}).get('next-cursor')
                 if not next_cursor or next_cursor == cursor:
                     break
@@ -392,8 +404,9 @@ if __name__ == "__main__":
 
     save_to_database(all_papers)
 
+    # Automatically bifurcate based on the LLM's decision regarding Educational Focus
     educational_papers = [p for p in all_papers if "Educational Focus" in p['tags']]
-    technical_papers = [p for p in all_papers if "Technical / Pure Physics" in p['tags']]
+    technical_papers = [p for p in all_papers if "Educational Focus" not in p['tags']]
 
     generate_markdown(educational_papers, "digest_education")
     generate_markdown(technical_papers, "digest_technical")
