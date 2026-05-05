@@ -258,13 +258,13 @@ def fetch_arxiv():
     domain = "export.arxiv.org/api/query"
 
     start = 0
-    max_results = 1000
+    max_results = 200  # LOWERED: 200 prevents arXiv's backend from timing out on deep queries
 
     while True:
         print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
         url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&start={start}&max_results={max_results}"
 
-        max_retries = 3
+        max_retries = 5  # Increased retries
         retry_count = 0
         success = False
 
@@ -276,7 +276,8 @@ def fetch_arxiv():
                     entries = root.findall('atom:entry', ns)
 
                     if not entries:
-                        return papers  # Exhausted all results completely
+                        success = True  # cleanly break out if no more entries
+                        break
 
                     oldest_reached = False
                     for entry in entries:
@@ -296,7 +297,6 @@ def fetch_arxiv():
                         authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
                         author_string = ", ".join(authors) if authors else "Unknown Authors"
 
-                        # Only save the raw data, DO NOT call the LLM here
                         papers.append({
                             'source': 'arXiv',
                             'title': title,
@@ -307,29 +307,38 @@ def fetch_arxiv():
                             'is_explicit_education': is_explicit_education
                         })
 
-                if oldest_reached:
-                    return papers
+                    if oldest_reached:
+                        return papers  # Return immediately if we hit the 5-year mark
 
-                start += max_results
-                time.sleep(5)  # Increased sleep to 5 seconds to be safer with arXiv
-                success = True  # Break out of the retry loop and move to the next batch
+                    start += max_results
+                    time.sleep(4)  # 4 seconds is safe for 200 results
+                    success = True
 
             except urllib.error.HTTPError as e:
-                if e.code == 429:
+                # Catch rate limits AND internal server timeouts
+                if e.code in [429, 500, 502, 503, 504]:
                     retry_count += 1
+                    # Progressive backoff: 30s, 60s, 90s, etc.
+                    sleep_time = 30 * retry_count
                     print(
-                        f"    [!] arXiv Rate Limit Hit (429). Pausing for 30 seconds before retry {retry_count}/{max_retries}...")
-                    time.sleep(30)
+                        f"    [!] arXiv Server Error ({e.code}). Pausing for {sleep_time} seconds before retry {retry_count}/{max_retries}...")
+                    time.sleep(sleep_time)
                 else:
                     print(f"arXiv HTTP Error: {e}")
-                    break  # Break retry loop on non-429 errors
+                    break
+            except urllib.error.URLError as e:
+                # Catch general connection drops
+                retry_count += 1
+                print(
+                    f"    [!] Network Error ({e.reason}). Pausing for 30 seconds before retry {retry_count}/{max_retries}...")
+                time.sleep(30)
             except Exception as e:
                 print(f"arXiv Fetch Error: {e}")
-                break  # Break retry loop on other exceptions
-
-            if not success:
-                print("Failed to fetch arXiv batch after max retries. Moving on.")
                 break
+
+        if not success:
+            print("Failed to fetch arXiv batch after max retries. Moving on to Crossref.")
+            break
 
 
 def fetch_crossref_api():
