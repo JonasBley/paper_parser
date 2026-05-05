@@ -283,41 +283,29 @@ def fetch_arxiv():
                         pub_date_str = entry.find('atom:published', ns).text
                         pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
-                    if pub_date < START_DATE:
-                        oldest_reached = True
-                        continue
+                        if pub_date < START_DATE:
+                            oldest_reached = True
+                            continue
 
-                    title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
-                    abstract = clean_html(entry.find('atom:summary', ns).text)
+                        title = entry.find('atom:title', ns).text.replace('\n', ' ').strip()
+                        abstract = clean_html(entry.find('atom:summary', ns).text)
 
-                    categories = [c.attrib['term'] for c in entry.findall('atom:category', ns)]
-                    is_explicit_education = 'physics.ed-ph' in categories
+                        categories = [c.attrib['term'] for c in entry.findall('atom:category', ns)]
+                        is_explicit_education = 'physics.ed-ph' in categories
 
-                    # Calculate semantic relevance
-                    score = calculate_relevance(abstract)
+                        authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
+                        author_string = ", ".join(authors) if authors else "Unknown Authors"
 
-                    # --- REMOVED SEMANTIC BYPASS: All papers are now evaluated by the LLM ---
-                    evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                    tags, reasoning = extract_categories_with_llm(evaluation_text)
-
-                    # Ensure physics.ed-ph papers maintain the educational tag regardless of LLM hallucination
-                    if is_explicit_education and "Educational Focus" not in tags:
-                        tags.append("Educational Focus")
-
-                    authors = [a.find('atom:name', ns).text for a in entry.findall('atom:author', ns)]
-                    author_string = ", ".join(authors) if authors else "Unknown Authors"
-
-                    papers.append({
-                        'source': 'arXiv',
-                        'title': title,
-                        'authors': author_string,
-                        'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
-                        'abstract': abstract,
-                        'date': pub_date.strftime("%Y-%m-%d"),
-                        'tags': tags,
-                        'relevance_score': score,
-                        'reasoning': reasoning
-                    })
+                        # Only save the raw data, DO NOT call the LLM here
+                        papers.append({
+                            'source': 'arXiv',
+                            'title': title,
+                            'authors': author_string,
+                            'link': entry.find("atom:link[@rel='alternate']", ns).attrib['href'],
+                            'abstract': abstract,
+                            'date': pub_date.strftime("%Y-%m-%d"),
+                            'is_explicit_education': is_explicit_education
+                        })
 
                 if oldest_reached:
                     return papers
@@ -346,7 +334,7 @@ def fetch_arxiv():
 
 def fetch_crossref_api():
     print("Fetching publisher APIs via Crossref with cursor pagination...")
-    papers = []
+    raw_papers = []
     headers = {"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})"}
 
     for source_name, issn in CROSSREF_JOURNALS.items():
@@ -390,22 +378,15 @@ def fetch_crossref_api():
                     else:
                         pub_date_str = "Unknown Date"
 
-                    score = calculate_relevance(abstract)
-
-                    # --- REMOVED SEMANTIC BYPASS: All papers are now evaluated by the LLM ---
-                    evaluation_text = f"Title: {title}\nAbstract: {abstract}"
-                    tags, reasoning = extract_categories_with_llm(evaluation_text)
-
-                    papers.append({
+                    # Only save the raw data, DO NOT call the LLM here
+                    raw_papers.append({
                         'source': source_name,
                         'title': title,
                         'authors': author_string,
                         'link': link,
                         'abstract': abstract,
                         'date': pub_date_str,
-                        'tags': tags,
-                        'relevance_score': score,
-                        'reasoning': reasoning
+                        'is_explicit_education': False # Crossref doesn't have arXiv's strict category tags
                     })
 
                 next_cursor = data.get('message', {}).get('next-cursor')
@@ -417,23 +398,65 @@ def fetch_crossref_api():
                 print(f"Crossref API Error for {source_name}: {e}")
                 break
 
-    return papers
+    return raw_papers
 
+
+def process_and_evaluate_papers(raw_papers):
+    print(f"\nBeginning semantic and LLM evaluation for {len(raw_papers)} papers...")
+    processed_papers = []
+
+    for i, p in enumerate(raw_papers):
+        print(f"Evaluating paper {i + 1}/{len(raw_papers)}...")
+
+        # 1. Calculate Semantic Score
+        score = calculate_relevance(p['abstract'])
+
+        # 2. Extract Categories via LLM
+        evaluation_text = f"Title: {p['title']}\nAbstract: {p['abstract']}"
+
+        # Determine if we should bypass the LLM (using your old bypass logic)
+        if score < 0.15 and not p['is_explicit_education']:
+            tags = ["Technical / Pure Physics"]
+            reasoning = "Bypassed LLM (Semantic score below 0.15 threshold and not categorized as education)."
+        else:
+            tags, reasoning = extract_categories_with_llm(evaluation_text)
+
+            if p['is_explicit_education'] and "Educational Focus" not in tags:
+                tags.append("Educational Focus")
+
+            if "Educational Focus" not in tags:
+                tags = ["Technical / Pure Physics"]
+
+        # Append the evaluated data to the paper dictionary
+        p['tags'] = tags
+        p['relevance_score'] = score
+        p['reasoning'] = reasoning
+
+        # Remove the temporary flag before saving
+        del p['is_explicit_education']
+
+        processed_papers.append(p)
+
+    return processed_papers
 
 # --- Orchestration ---
 
 if __name__ == "__main__":
     print(f"Starting extended pipeline execution for period since {DATE_FILTER}...")
 
+    # Phase 1: Rapid Download
     arxiv_results = fetch_arxiv()
     crossref_results = fetch_crossref_api()
-    all_papers = arxiv_results + crossref_results
+    all_raw_papers = arxiv_results + crossref_results
 
-    save_to_database(all_papers)
+    # Phase 2: Offline Evaluation
+    final_evaluated_papers = process_and_evaluate_papers(all_raw_papers)
 
-    # Automatically bifurcate based on the LLM's decision regarding Educational Focus
-    educational_papers = [p for p in all_papers if "Educational Focus" in p['tags']]
-    technical_papers = [p for p in all_papers if "Educational Focus" not in p['tags']]
+    # Phase 3: Save and Generate Markdown
+    save_to_database(final_evaluated_papers)
+
+    educational_papers = [p for p in final_evaluated_papers if "Educational Focus" in p['tags']]
+    technical_papers = [p for p in final_evaluated_papers if "Technical / Pure Physics" in p['tags']]
 
     generate_markdown(educational_papers, "digest_education")
     generate_markdown(technical_papers, "digest_technical")
