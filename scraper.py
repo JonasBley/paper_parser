@@ -1,5 +1,6 @@
 import urllib.request
 import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 import requests
@@ -10,11 +11,12 @@ import time
 from sentence_transformers import SentenceTransformer, util
 import torch
 
+
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
 
 # Maintenance Window: 14 days (Keeps runtime low since the LLM must now process everything)
-START_DATE = NOW - timedelta(days=14)
+START_DATE = NOW - timedelta(days=1825)
 DATE_FILTER = START_DATE.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
@@ -73,7 +75,7 @@ TECHNICAL SUB-CRITERIA (Evaluate carefully if 'Educational Focus' is false):
 
 Output a valid JSON object with the following exact structure:
 {
-  "reasoning": "Write one sentence explaining your categorization logic.",
+  "reasoning": "Write one sentence explaining your categorization logic. DO NOT use quotation marks, backslashes, or LaTeX symbols in this sentence.",
   "Educational Focus": false,
   "Review Paper": false,
   "Cognitive Frameworks": false,
@@ -218,7 +220,15 @@ def extract_categories_with_llm(text_to_evaluate):
             return [], "LLM returned empty or invalid formatting."
 
         json_string = match.group(0)
-        data = json.loads(json_string)
+
+        # Escape any stray backslashes from LaTeX to prevent JSONDecodeError
+        json_string = json_string.replace('\\', '\\\\')
+
+        try:
+            data = json.loads(json_string)
+        except json.JSONDecodeError as e:
+            print(f"Failed to parse sanitized JSON: {e}")
+            return [], "LLM produced unparseable JSON despite sanitization."
 
         matched_tags = [key for key, value in data.items() if value is True and isinstance(value, bool)]
         reasoning = data.get("reasoning", "No reasoning provided.")
@@ -254,19 +264,24 @@ def fetch_arxiv():
         print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
         url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&start={start}&max_results={max_results}"
 
-        try:
-            with urllib.request.urlopen(url) as response:
-                root = ET.fromstring(response.read())
-                ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
-                entries = root.findall('atom:entry', ns)
+        max_retries = 3
+        retry_count = 0
+        success = False
 
-                if not entries:
-                    break
+        while retry_count < max_retries and not success:
+            try:
+                with urllib.request.urlopen(url) as response:
+                    root = ET.fromstring(response.read())
+                    ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
+                    entries = root.findall('atom:entry', ns)
 
-                oldest_reached = False
-                for entry in entries:
-                    pub_date_str = entry.find('atom:published', ns).text
-                    pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                    if not entries:
+                        return papers  # Exhausted all results completely
+
+                    oldest_reached = False
+                    for entry in entries:
+                        pub_date_str = entry.find('atom:published', ns).text
+                        pub_date = datetime.strptime(pub_date_str, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
                     if pub_date < START_DATE:
                         oldest_reached = True
@@ -305,16 +320,28 @@ def fetch_arxiv():
                     })
 
                 if oldest_reached:
-                    break
+                    return papers
 
                 start += max_results
-                time.sleep(3)
+                time.sleep(5)  # Increased sleep to 5 seconds to be safer with arXiv
+                success = True  # Break out of the retry loop and move to the next batch
 
-        except Exception as e:
-            print(f"arXiv Fetch Error: {e}")
-            break
+            except urllib.error.HTTPError as e:
+                if e.code == 429:
+                    retry_count += 1
+                    print(
+                        f"    [!] arXiv Rate Limit Hit (429). Pausing for 30 seconds before retry {retry_count}/{max_retries}...")
+                    time.sleep(30)
+                else:
+                    print(f"arXiv HTTP Error: {e}")
+                    break  # Break retry loop on non-429 errors
+            except Exception as e:
+                print(f"arXiv Fetch Error: {e}")
+                break  # Break retry loop on other exceptions
 
-    return papers
+            if not success:
+                print("Failed to fetch arXiv batch after max retries. Moving on.")
+                break
 
 
 def fetch_crossref_api():
