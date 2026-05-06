@@ -16,7 +16,7 @@ import torch
 NOW = datetime.now(timezone.utc)
 
 # Maintenance Window: 14 days (Keeps runtime low since the LLM must now process everything)
-START_DATE = NOW - timedelta(days=1825)
+START_DATE = NOW - timedelta(days=365)
 DATE_FILTER = START_DATE.strftime("%Y-%m-%d")
 
 CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
@@ -339,6 +339,8 @@ def fetch_arxiv():
         if not success:
             print("Failed to fetch arXiv batch after max retries. Moving on to Crossref.")
             break
+
+    return papers
 
 
 def fetch_crossref_api():
