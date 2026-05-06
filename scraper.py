@@ -15,9 +15,26 @@ import torch
 # --- Configuration ---
 NOW = datetime.now(timezone.utc)
 
-# Maintenance Window: 14 days (Keeps runtime low since the LLM must now process everything)
-START_DATE = NOW - timedelta(days=365)
-DATE_FILTER = START_DATE.strftime("%Y-%m-%d")
+# TARGET WINDOW CONTROL (Monthly Chunks):
+# 0 = The last 30 days
+# 1 = 1 to 2 months ago
+# 2 = 2 to 3 months ago
+# ...
+# 12 = 1 year ago, 60 = 5 years ago
+MONTHS_BACK = 0
+CHUNK_SIZE_DAYS = 90
+
+# Calculate exact date boundaries for the specific chunk
+END_DATE = NOW - timedelta(days=CHUNK_SIZE_DAYS * MONTHS_BACK)
+START_DATE = END_DATE - timedelta(days=CHUNK_SIZE_DAYS)
+
+# Formatting for specific APIs
+CROSSREF_FROM = START_DATE.strftime("%Y-%m-%d")
+CROSSREF_UNTIL = END_DATE.strftime("%Y-%m-%d")
+
+# arXiv requires exact YYYYMMDDHHMM timestamp formatting
+ARXIV_FROM = START_DATE.strftime("%Y%m%d%H%M")
+ARXIV_UNTIL = END_DATE.strftime("%Y%m%d%H%M")
 
 CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
 
@@ -251,14 +268,18 @@ def clean_html(raw_html):
 
 
 def fetch_arxiv():
-    print("Fetching arXiv with pagination...")
+    print(f"Fetching arXiv from {ARXIV_FROM} to {ARXIV_UNTIL}...")
     papers = []
-    query = "cat:physics.ed-ph OR cat:quant-ph OR cat:physics.gen-ph"
+
+    # --- Server-Side Date Query ---
+    base_categories = "cat:physics.ed-ph OR cat:quant-ph OR cat:physics.gen-ph"
+    query = f"({base_categories}) AND submittedDate:[{ARXIV_FROM} TO {ARXIV_UNTIL}]"
+
     protocol = "http" + "://"
     domain = "export.arxiv.org/api/query"
 
     start = 0
-    max_results = 200  # LOWERED: 200 prevents arXiv's backend from timing out on deep queries
+    max_results = 200  # Keep at 200 for stability
 
     while True:
         print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
@@ -357,9 +378,11 @@ def fetch_crossref_api():
         rows = 1000
 
         while cursor:
-            url = f"{protocol}{domain}?filter=from-pub-date:{DATE_FILTER}&rows={rows}&cursor={urllib.parse.quote(cursor)}"
+            # --- 'until-pub-date' filter ---
+            url = f"{protocol}{domain}?filter=from-pub-date:{CROSSREF_FROM},until-pub-date:{CROSSREF_UNTIL}&rows={rows}&cursor={urllib.parse.quote(cursor)}"
 
             try:
+                response = requests.get(url, headers=headers)
                 response = requests.get(url, headers=headers)
                 response.raise_for_status()
                 data = response.json()
