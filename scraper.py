@@ -476,7 +476,7 @@ def process_and_evaluate_papers(raw_papers):
 # --- Orchestration ---
 
 if __name__ == "__main__":
-    print(f"Starting extended pipeline execution for period since {DATE_FILTER}...")
+    print(f"Starting extended pipeline execution for period from {START_DATE} to {END_DATE}...")
 
     # Phase 1: Rapid Download
     arxiv_results = fetch_arxiv()
