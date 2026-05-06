@@ -17,10 +17,9 @@ NOW = datetime.now(timezone.utc)
 
 # TARGET WINDOW CONTROL (Monthly Chunks):
 # 0 = The last 30 days
-# 1 = 1 to 2 months ago
-# 2 = 2 to 3 months ago
+# 1 = 1 to 3 months ago
+# 2 = 3 to 6 months ago
 # ...
-# 12 = 1 year ago, 60 = 5 years ago
 MONTHS_BACK = 0
 CHUNK_SIZE_DAYS = 90
 
