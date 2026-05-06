@@ -285,9 +285,10 @@ def fetch_arxiv():
         print(f" -> Fetching arXiv batch: {start} to {start + max_results}")
         url = f"{protocol}{domain}?search_query={urllib.parse.quote(query)}&sortBy=submittedDate&sortOrder=descending&start={start}&max_results={max_results}"
 
-        max_retries = 5  # Increased retries
+        max_retries = 5
         retry_count = 0
         success = False
+        exhausted = False  # --- NEW: Flag to track if we've run out of papers ---
 
         while retry_count < max_retries and not success:
             try:
@@ -297,8 +298,9 @@ def fetch_arxiv():
                     entries = root.findall('atom:entry', ns)
 
                     if not entries:
-                        success = True  # cleanly break out if no more entries
-                        break
+                        exhausted = True  # Mark the chunk as completely finished
+                        success = True  # Treat the API call as successful so it doesn't trigger the error log
+                        break  # Break the inner retry loop
 
                     oldest_reached = False
                     for entry in entries:
@@ -329,17 +331,15 @@ def fetch_arxiv():
                         })
 
                     if oldest_reached:
-                        return papers  # Return immediately if we hit the 5-year mark
+                        return papers
 
                     start += max_results
-                    time.sleep(4)  # 4 seconds is safe for 200 results
+                    time.sleep(4)
                     success = True
 
             except urllib.error.HTTPError as e:
-                # Catch rate limits AND internal server timeouts
                 if e.code in [429, 500, 502, 503, 504]:
                     retry_count += 1
-                    # Progressive backoff: 30s, 60s, 90s, etc.
                     sleep_time = 30 * retry_count
                     print(
                         f"    [!] arXiv Server Error ({e.code}). Pausing for {sleep_time} seconds before retry {retry_count}/{max_retries}...")
@@ -348,7 +348,6 @@ def fetch_arxiv():
                     print(f"arXiv HTTP Error: {e}")
                     break
             except urllib.error.URLError as e:
-                # Catch general connection drops
                 retry_count += 1
                 print(
                     f"    [!] Network Error ({e.reason}). Pausing for 30 seconds before retry {retry_count}/{max_retries}...")
@@ -356,6 +355,10 @@ def fetch_arxiv():
             except Exception as e:
                 print(f"arXiv Fetch Error: {e}")
                 break
+
+        if exhausted:
+            print("Reached the end of the arXiv results for this chunk.")
+            break
 
         if not success:
             print("Failed to fetch arXiv batch after max retries. Moving on to Crossref.")
