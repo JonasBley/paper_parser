@@ -20,7 +20,7 @@ NOW = datetime.now(timezone.utc)
 # 1 = 1 to 3 months ago
 # 2 = 3 to 6 months ago
 # ...
-MONTHS_BACK = 0
+MONTHS_BACK = 1
 CHUNK_SIZE_DAYS = 30
 
 # Calculate exact date boundaries for the specific chunk
@@ -133,7 +133,7 @@ def generate_markdown(papers, file_prefix):
 
     papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
 
-    date_str = NOW.strftime("%Y-%m-%d")
+    date_str = END_DATE
     filename = f"{file_prefix}_{date_str}.md"
 
     content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} papers in this category.\n\n"
