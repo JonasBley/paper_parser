@@ -133,7 +133,8 @@ def generate_markdown(papers, file_prefix):
 
     papers.sort(key=lambda x: x.get('relevance_score', 0.0), reverse=True)
 
-    date_str = END_DATE
+    # Convert datetime to a safe, purely alphanumeric string
+    date_str = END_DATE.strftime("%Y-%m-%d")
     filename = f"{file_prefix}_{date_str}.md"
 
     content = f"# Literature Digest ({date_str})\n\nFound {len(papers)} papers in this category.\n\n"
