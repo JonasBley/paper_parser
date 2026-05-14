@@ -292,7 +292,11 @@ def fetch_arxiv():
 
         while retry_count < max_retries and not success:
             try:
-                with urllib.request.urlopen(url) as response:
+                req = urllib.request.Request(
+                    url,
+                    headers={"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})"}
+                )
+                with urllib.request.urlopen(req) as response:
                     root = ET.fromstring(response.read())
                     ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
                     entries = root.findall('atom:entry', ns)
