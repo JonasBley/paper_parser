@@ -21,7 +21,7 @@ NOW = datetime.now(timezone.utc)
 # 2 = 3 to 6 months ago
 # ...
 MONTHS_BACK = 0
-CHUNK_SIZE_DAYS = 15
+CHUNK_SIZE_DAYS = 10
 
 # Calculate exact date boundaries for the specific chunk
 END_DATE = NOW - timedelta(days=CHUNK_SIZE_DAYS * MONTHS_BACK)
