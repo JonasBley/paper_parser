@@ -66,7 +66,7 @@ CROSSREF_JOURNALS = {
     "Physical Review Letters": "1079-7114"  # The standard for major physics breakthroughs
 }
 
-SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
+SYSTEM_PROMPT_JSON = SYSTEM_PROMPT_JSON = """You are an expert academic screener. Evaluate the abstract against the following criteria.
 
 CRITICAL GATING CRITERION:
 1. Educational Focus: Is this paper primarily focused on education, teaching, learning, student understanding, curriculum development, or pedagogy?
@@ -88,6 +88,11 @@ TECHNICAL SUB-CRITERIA (Evaluate carefully if 'Educational Focus' is false):
 11. Experimental Advances: Real-world physical realization, laboratory experiments, or hardware advances in quantum communication, sensing, computing, or simulation.
 12. Quantum Foundations: Research into the fundamental nature of quantum mechanics, entanglement theory, Bell tests, or quantum interpretations.
 13. Quantum Materials & Solid State: Research focusing on condensed matter, superconductivity, topological insulators, or physical material properties.
+14. Architecture & Error Correction: Systems engineering for quantum computers, including logical qubits, surface codes, cryogenics, and control electronics.
+15. Quantum Metrology & Sensing: Application of quantum phenomena for high-precision measurement, such as NV centers, atom interferometry, or quantum radar.
+16. Interdisciplinary Applications: Application of quantum models or hardware to external domains like quantum biology, computational chemistry, or financial modeling.
+17. Policy, Security & Ethics: Research on post-quantum cryptography, export controls, intellectual property, or the societal impact of quantum technology.
+18. Replicability & Meta-Science: Studies focusing on replicating previous high-profile claims, publishing null results, or analyzing publication trends within the discipline.
 
 Output a valid JSON object with the following exact structure:
 {
@@ -104,7 +109,12 @@ Output a valid JSON object with the following exact structure:
   "Algorithmic & Theoretical Advances": false,
   "Experimental Advances": false,
   "Quantum Foundations": false,
-  "Quantum Materials & Solid State": false
+  "Quantum Materials & Solid State": false,
+  "Architecture & Error Correction": false,
+  "Quantum Metrology & Sensing": false,
+  "Interdisciplinary Applications": false,
+  "Policy, Security & Ethics": false,
+  "Replicability & Meta-Science": false
 }
 
 Output ONLY the JSON object. Do not include markdown formatting like ```json or explanations outside the JSON."""
@@ -455,9 +465,9 @@ def process_and_evaluate_papers(raw_papers):
         # 2. Extract Categories via LLM
         evaluation_text = f"Title: {p['title']}\nAbstract: {p['abstract']}"
 
-        # Determine if we should bypass the LLM (using your old bypass logic)
         if score < 0.15 and not p['is_explicit_education']:
-            tags = ["Technical / Pure Physics"]
+            # Apply base tags for bypassed papers
+            tags = ["Technical / Pure Physics", "Bypassed (Low Relevance)"]
             reasoning = "Bypassed LLM (Semantic score below 0.15 threshold and not categorized as education)."
         else:
             tags, reasoning = extract_categories_with_llm(evaluation_text)
@@ -465,17 +475,20 @@ def process_and_evaluate_papers(raw_papers):
             if p['is_explicit_education'] and "Educational Focus" not in tags:
                 tags.append("Educational Focus")
 
+            # CORRECTED LOGIC: Append the routing tag rather than overwriting the list.
+            # This preserves tags 10-13 from the LLM output.
             if "Educational Focus" not in tags:
-                tags = ["Technical / Pure Physics"]
+                if "Technical / Pure Physics" not in tags:
+                    tags.append("Technical / Pure Physics")
 
-        # Append the evaluated data to the paper dictionary
+            # Fallback for an empty LLM response
+            if not tags:
+                tags = ["Uncategorized", "Technical / Pure Physics"]
+
         p['tags'] = tags
         p['relevance_score'] = score
         p['reasoning'] = reasoning
-
-        # Remove the temporary flag before saving
         del p['is_explicit_education']
-
         processed_papers.append(p)
 
     return processed_papers
