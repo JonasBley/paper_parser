@@ -21,7 +21,7 @@ NOW = datetime.now(timezone.utc)
 # 2 = 3 to 6 months ago
 # ...
 MONTHS_BACK = 0
-CHUNK_SIZE_DAYS = 21
+CHUNK_SIZE_DAYS = 24
 
 # Calculate exact date boundaries for the specific chunk
 END_DATE = NOW - timedelta(days=CHUNK_SIZE_DAYS * MONTHS_BACK)
@@ -285,7 +285,7 @@ def fetch_arxiv():
     base_categories = "cat:physics.ed-ph OR cat:quant-ph OR cat:physics.gen-ph"
     query = f"({base_categories}) AND submittedDate:[{ARXIV_FROM} TO {ARXIV_UNTIL}]"
 
-    protocol = "http" + "://"
+    protocol = "https" + "://"
     domain = "export.arxiv.org/api/query"
 
     start = 0
@@ -304,9 +304,9 @@ def fetch_arxiv():
             try:
                 req = urllib.request.Request(
                     url,
-                    headers={"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})"}
+                    headers={"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})", "Accept": "application/atom+xml, application/xml;q=0.9, */*;q=0.8"}
                 )
-                with urllib.request.urlopen(req) as response:
+                with urllib.request.urlopen(req, timeout=60) as response:
                     root = ET.fromstring(response.read())
                     ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
                     entries = root.findall('atom:entry', ns)
@@ -360,6 +360,8 @@ def fetch_arxiv():
                     time.sleep(sleep_time)
                 else:
                     print(f"arXiv HTTP Error: {e}")
+                    print(f"Request URL: {url}")
+                    print("Response details:", e.read(2000).decode("utf-8", errors="replace"))
                     break
             except urllib.error.URLError as e:
                 retry_count += 1
@@ -375,7 +377,7 @@ def fetch_arxiv():
             break
 
         if not success:
-            print("Failed to fetch arXiv batch after max retries. Moving on to Crossref.")
+            print("arXiv batch failed; arXiv results may be incomplete. Moving on to Crossref.")
             break
 
     return papers
@@ -399,8 +401,7 @@ def fetch_crossref_api():
             url = f"{protocol}{domain}?filter=from-pub-date:{CROSSREF_FROM},until-pub-date:{CROSSREF_UNTIL}&rows={rows}&cursor={urllib.parse.quote(cursor)}"
 
             try:
-                response = requests.get(url, headers=headers)
-                response = requests.get(url, headers=headers)
+                response = requests.get(url, headers=headers, timeout=60)
                 response.raise_for_status()
                 data = response.json()
 
