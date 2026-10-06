@@ -20890,7 +20890,7 @@ Found 2149 papers in this category.
 
 ## 1466. The Smallest Lights in the Universe: A Memoir
                     <b>The Smallest Lights in the Universe: A Memoir,</b>
-                    <i>Sara Seager,  </i>
+                    <i>Sara Seager, </i>
                     Crown, 2021, 336 pp.
 **Source:** Science | **Date:** 2026-09-24 | **Relevance Score:** 0.0
 **Tags:** Technical / Pure Physics, Bypassed (Low Relevance)

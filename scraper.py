@@ -8,8 +8,9 @@ import json
 import sqlite3
 import re
 import time
+import os
+import ssl
 from sentence_transformers import SentenceTransformer, util
-import torch
 
 
 # --- Configuration ---
@@ -21,7 +22,7 @@ NOW = datetime.now(timezone.utc)
 # 2 = 3 to 6 months ago
 # ...
 MONTHS_BACK = 0
-CHUNK_SIZE_DAYS = 24
+CHUNK_SIZE_DAYS = 12
 
 # Calculate exact date boundaries for the specific chunk
 END_DATE = NOW - timedelta(days=CHUNK_SIZE_DAYS * MONTHS_BACK)
@@ -36,6 +37,13 @@ ARXIV_FROM = START_DATE.strftime("%Y%m%d%H%M")
 ARXIV_UNTIL = END_DATE.strftime("%Y%m%d%H%M")
 
 CONTACT_EMAIL = "jonas.bley@uni-leipzig.de"
+LLM_API_URL = os.environ.get(
+    "LLM_API_URL",
+    "https://chat-ai.academiccloud.de/v1/chat/completions",
+)
+LLM_API_KEY = os.environ.get("SAIA_API_KEY")
+LLM_MODEL = os.environ.get("LLM_MODEL", "qwen3-30b-a3b-instruct-2507")
+LLM_READ_TIMEOUT_SECONDS = float(os.environ.get("LLM_READ_TIMEOUT_SECONDS", "600"))
 
 CROSSREF_JOURNALS = {
     # --- Existing Educational Journals ---
@@ -121,11 +129,14 @@ Output ONLY the JSON object. Do not include markdown formatting like ```json or 
 
 # --- Semantic Ranking Setup ---
 print("Loading embedding model...")
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
+embedder = SentenceTransformer('all-mpnet-base-v2')
 
 ANCHOR_TEXT = """This research investigates educational frameworks and cognitive processes in advanced STEM education, with a primary focus on quantum physics and emerging quantum technologies. It utilizes novel teaching techniques like augmented/virtual reality, (generative) artificial intelligence, or interactive environments. Central to this work is the empirical analysis of learners' mental models—specifically utilizing the dual-dimension construct of 'Fidelity of Gestalt' and 'Functional Fidelity'—to understand conceptions of phenomena such as quantum entanglement and quantum processes, linear light polarization, and climate change and sustainability. The literature encompasses curriculum innovation, including the integration of two-state qubit systems and reduced Dirac notation at the secondary level, and extends to workforce competence modeling for the quantum industry."""
 ANCHOR_VECTOR = embedder.encode(ANCHOR_TEXT, convert_to_tensor=True)
 
+def log(message):
+    timestamp = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] {message}", flush=True)
 
 def calculate_relevance(abstract):
     if not abstract:
@@ -221,10 +232,16 @@ def extract_categories_with_llm(text_to_evaluate):
     if not text_to_evaluate or len(text_to_evaluate) < 50:
         return [], "Abstract too short for evaluation."
 
+    if not LLM_API_KEY:
+        raise RuntimeError(
+            "SAIA_API_KEY is not set. Request a SAIA API key from GWDG and set "
+            "it in the environment before running the pipeline."
+        )
+
     text_to_evaluate = text_to_evaluate[:4000]
-    url = "http://localhost:1234/v1/chat/completions"
+    url = LLM_API_URL
     payload = {
-        "model": "local-model",
+        "model": LLM_MODEL,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT_JSON},
             {"role": "user", "content": text_to_evaluate}
@@ -237,7 +254,12 @@ def extract_categories_with_llm(text_to_evaluate):
 
     raw_output = ""
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(
+            url,
+            json=payload,
+            headers={"Authorization": f"Bearer {LLM_API_KEY}"},
+            timeout=(5, LLM_READ_TIMEOUT_SECONDS),
+        )
         response.raise_for_status()
         raw_output = response.json()['choices'][0]['message']['content'].strip()
 
@@ -262,6 +284,18 @@ def extract_categories_with_llm(text_to_evaluate):
 
         return matched_tags, reasoning
 
+    except requests.exceptions.ConnectionError as e:
+        raise RuntimeError(
+            f"Could not connect to the LLM API at {url}. Start the local "
+            "OpenAI-compatible server or set LLM_API_URL to its chat-completions endpoint."
+        ) from e
+    except requests.exceptions.Timeout as e:
+        raise RuntimeError(
+            f"The LLM API at {url} did not respond within "
+            f"{LLM_READ_TIMEOUT_SECONDS:g} seconds. Increase "
+            "LLM_READ_TIMEOUT_SECONDS or check whether the local model server "
+            "is still generating."
+        ) from e
     except (requests.exceptions.RequestException, json.JSONDecodeError, KeyError) as e:
         error_preview = raw_output[:100].replace('\n', ' ') if raw_output else "Empty Response"
         print(f"LLM Parsing Error ({type(e).__name__}): {e} | Model output preview: '{error_preview}'")
@@ -280,6 +314,15 @@ def clean_html(raw_html):
 def fetch_arxiv():
     print(f"Fetching arXiv from {ARXIV_FROM} to {ARXIV_UNTIL}...")
     papers = []
+    ssl_context = ssl.create_default_context()
+    ca_bundle = os.environ.get("ARXIV_CA_BUNDLE")
+    if ca_bundle:
+        try:
+            ssl_context.load_verify_locations(cafile=ca_bundle)
+        except (OSError, ssl.SSLError) as e:
+            raise RuntimeError(
+                f"Could not load the ARXIV_CA_BUNDLE certificate file {ca_bundle!r}: {e}"
+            ) from e
 
     # --- Server-Side Date Query ---
     base_categories = "cat:physics.ed-ph OR cat:quant-ph OR cat:physics.gen-ph"
@@ -306,7 +349,7 @@ def fetch_arxiv():
                     url,
                     headers={"User-Agent": f"LiteratureScraper/1.0 (mailto:{CONTACT_EMAIL})", "Accept": "application/atom+xml, application/xml;q=0.9, */*;q=0.8"}
                 )
-                with urllib.request.urlopen(req, timeout=60) as response:
+                with urllib.request.urlopen(req, timeout=60, context=ssl_context) as response:
                     root = ET.fromstring(response.read())
                     ns = {'atom': 'http' + '://' + 'www.w3.org/2005/Atom'}
                     entries = root.findall('atom:entry', ns)
@@ -364,6 +407,14 @@ def fetch_arxiv():
                     print("Response details:", e.read(2000).decode("utf-8", errors="replace"))
                     break
             except urllib.error.URLError as e:
+                if isinstance(e.reason, ssl.SSLCertVerificationError):
+                    print(
+                        "    [!] TLS certificate verification failed. Check the system "
+                        "certificate store, or set ARXIV_CA_BUNDLE to a trusted PEM CA "
+                        "bundle. Certificate verification remains enabled."
+                    )
+                    print(f"Request URL: {url}")
+                    break
                 retry_count += 1
                 print(
                     f"    [!] Network Error ({e.reason}). Pausing for 30 seconds before retry {retry_count}/{max_retries}...")
@@ -458,7 +509,7 @@ def process_and_evaluate_papers(raw_papers):
     processed_papers = []
 
     for i, p in enumerate(raw_papers):
-        print(f"Evaluating paper {i + 1}/{len(raw_papers)}...")
+        log(f"Evaluating paper {i + 1}/{len(raw_papers)}...")
 
         # 1. Calculate Semantic Score
         score = calculate_relevance(p['abstract'])
