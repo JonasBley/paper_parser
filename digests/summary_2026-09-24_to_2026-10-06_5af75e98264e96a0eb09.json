@@ -1,0 +1,230 @@
+{
+  "run_id": "5af75e98264e96a0eb09",
+  "config": {
+    "mode": "backfill",
+    "start": "2026-09-24T00:00:00+00:00",
+    "end": "2026-10-06T00:00:00+00:00",
+    "sources": "all",
+    "journals": [
+      "APS PRPER",
+      "American Journal of Physics",
+      "EPJ Quantum Technology",
+      "European Journal of Physics",
+      "CBE—Life Sciences Education",
+      "International Journal of STEM Education",
+      "Journal of Research in Science Teaching",
+      "Science Education",
+      "International Journal of Science Education",
+      "Journal of Educational Psychology",
+      "Learning and Instruction",
+      "Cognition and Instruction",
+      "Computers & Education",
+      "IEEE Transactions on Education",
+      "Journal of Engineering Education",
+      "Nature",
+      "Nature Physics",
+      "Nature Communications",
+      "npj Quantum Information",
+      "Science",
+      "Science Advances",
+      "PRX Quantum",
+      "Physical Review Letters"
+    ],
+    "llm_model": "qwen3-30b-a3b-instruct-2507",
+    "embedding_model": "sentence-transformers/all-mpnet-base-v2",
+    "prompt_version": "2.0",
+    "profile_version": "2.0",
+    "evaluation_settings": {
+      "llm_model": "qwen3-30b-a3b-instruct-2507",
+      "embedding_model": "sentence-transformers/all-mpnet-base-v2",
+      "education_threshold": null,
+      "technical_threshold": null,
+      "prompt_version": "2.0",
+      "profile_version": "2.0"
+    }
+  },
+  "sources": {
+    "arXiv": {
+      "status": "complete",
+      "received": 1249,
+      "saved": 1249,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:APS PRPER": {
+      "status": "complete",
+      "received": 12,
+      "saved": 12,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:American Journal of Physics": {
+      "status": "complete",
+      "received": 19,
+      "saved": 19,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:EPJ Quantum Technology": {
+      "status": "complete",
+      "received": 6,
+      "saved": 6,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:European Journal of Physics": {
+      "status": "complete",
+      "received": 13,
+      "saved": 13,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:CBE—Life Sciences Education": {
+      "status": "complete",
+      "received": 0,
+      "saved": 0,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:International Journal of STEM Education": {
+      "status": "complete",
+      "received": 2,
+      "saved": 2,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Journal of Research in Science Teaching": {
+      "status": "complete",
+      "received": 3,
+      "saved": 3,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Science Education": {
+      "status": "complete",
+      "received": 0,
+      "saved": 0,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:International Journal of Science Education": {
+      "status": "complete",
+      "received": 2,
+      "saved": 2,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Journal of Educational Psychology": {
+      "status": "complete",
+      "received": 19,
+      "saved": 19,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Learning and Instruction": {
+      "status": "complete",
+      "received": 33,
+      "saved": 33,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Cognition and Instruction": {
+      "status": "complete",
+      "received": 0,
+      "saved": 0,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Computers & Education": {
+      "status": "complete",
+      "received": 24,
+      "saved": 24,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:IEEE Transactions on Education": {
+      "status": "complete",
+      "received": 0,
+      "saved": 0,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Journal of Engineering Education": {
+      "status": "complete",
+      "received": 2,
+      "saved": 2,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Nature": {
+      "status": "complete",
+      "received": 106,
+      "saved": 106,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Nature Physics": {
+      "status": "complete",
+      "received": 14,
+      "saved": 14,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Nature Communications": {
+      "status": "complete",
+      "received": 301,
+      "saved": 301,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:npj Quantum Information": {
+      "status": "complete",
+      "received": 8,
+      "saved": 8,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Science": {
+      "status": "complete",
+      "received": 89,
+      "saved": 89,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Science Advances": {
+      "status": "complete",
+      "received": 174,
+      "saved": 174,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:PRX Quantum": {
+      "status": "complete",
+      "received": 15,
+      "saved": 15,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    },
+    "Crossref:Physical Review Letters": {
+      "status": "complete",
+      "received": 158,
+      "saved": 158,
+      "window_start": "2026-09-24T00:00:00+00:00",
+      "window_end": "2026-10-06T00:00:00+00:00"
+    }
+  },
+  "unique_records": 2248,
+  "changes": {
+    "new": 0,
+    "updated": 2,
+    "unchanged": 2246
+  },
+  "evaluations": {
+    "classified": 0,
+    "needs_review": 0,
+    "failed": 2248,
+    "skipped": 0
+  },
+  "missing_abstracts": 551,
+  "cached_evaluations": 0
+}

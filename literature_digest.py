@@ -497,7 +497,8 @@ def rank_papers(papers: list[dict], db: Archive, model_name: str, batch_size: in
                 values = vector.tolist()
                 vectors[text] = values
                 db.conn.execute("INSERT OR REPLACE INTO embeddings VALUES (?, ?)", (key, json.dumps(values)))
-                truncated = len(model.tokenizer.encode(text, truncation=False)) > limit
+                token_count = len(model.tokenizer(text, truncation=False, verbose=False)["input_ids"])
+                truncated = token_count > limit
                 db.conn.execute("INSERT OR REPLACE INTO embedding_meta VALUES (?, ?)", (key, int(truncated)))
             db.conn.commit()
     anchors = np.asarray([vectors[t] for t in PROFILES.values()], dtype=float)
@@ -518,8 +519,11 @@ def classify(http: Http, paper: dict, args, api_key: str) -> dict:
     truncated = len(full) > args.max_input_chars
     evidence = "title_only" if not abstract else "short_abstract" if len(abstract) < args.min_abstract_chars else "title_and_abstract"
     common = {"model": args.llm_model, "prompt_version": PROMPT_VERSION, "input_truncated": truncated, "evidence": evidence}
-    if not api_key:
-        return {**common, "status": "failed", "reasoning": "SAIA_API_KEY is missing; evaluation can be resumed.", "labels": {}}
+    local_endpoint = urlparse(args.llm_url).hostname in {"localhost", "127.0.0.1", "::1"}
+    if not api_key and not local_endpoint:
+        return {**common, "status": "failed", "reasoning": "LLM_API_KEY or SAIA_API_KEY is missing; evaluation can be resumed.", "labels": {}}
+    if local_endpoint and not api_key:
+        api_key = "lm-studio"
     payload = {"model": args.llm_model, "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": full[:args.max_input_chars]}], "temperature": 0.0, "stream": False, "max_tokens": 1600}
     if args.json_mode:
@@ -555,7 +559,7 @@ def evaluate(db: Archive, run_id: str, args, http: Http) -> list[dict]:
     pending = [p for p in papers if args.force_evaluate or db.cached(p["id"], evaluation_key(p, args)) is None]
     scores = rank_papers(pending, db, args.embedding_model, args.batch_size)
     output = []
-    api_key = os.environ.get("SAIA_API_KEY", "")
+    api_key = os.environ.get("LLM_API_KEY") or os.environ.get("SAIA_API_KEY", "")
     for i, p in enumerate(papers, 1):
         key = evaluation_key(p, args)
         cached = None if args.force_evaluate else db.cached(p["id"], key)
@@ -725,8 +729,8 @@ def parser():
     p.add_argument("--chunk-days", type=int, default=12)
     p.add_argument("--overlap-days", type=int, default=3)
     p.add_argument("--contact-email", default=os.environ.get("CONTACT_EMAIL", ""))
-    p.add_argument("--llm-url", default=os.environ.get("LLM_API_URL", "https://chat-ai.academiccloud.de/v1/chat/completions"))
-    p.add_argument("--llm-model", default=os.environ.get("LLM_MODEL", "qwen3-30b-a3b-instruct-2507"))
+    p.add_argument("--llm-url", default=os.environ.get("LLM_API_URL", "http://127.0.0.1:1234/v1/chat/completions"))
+    p.add_argument("--llm-model", default=os.environ.get("LLM_MODEL", "qwen/qwen3.8-27b"))
     p.add_argument("--llm-timeout", type=float, default=float(os.environ.get("LLM_READ_TIMEOUT_SECONDS", "120")))
     p.add_argument("--embedding-model", default=EMBEDDING_MODEL)
     p.add_argument("--batch-size", type=int, default=32)

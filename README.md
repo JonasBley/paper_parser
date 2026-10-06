@@ -1,6 +1,6 @@
 # Literature digest tool, version 2
 
-A resumable literature monitor and historical backfill tool for arXiv and the original 23 journals in Crossref. Classifications use your AcademicCloud-compatible endpoint; embeddings run locally. No service calls occur when importing the module or displaying help.
+A resumable literature monitor and historical backfill tool for arXiv and the original 23 journals in Crossref. Classifications use LM Studio locally by default; embeddings also run locally. No service calls occur when importing the module or displaying help.
 
 ## Setup
 
@@ -10,11 +10,12 @@ Use Python 3.11 or 3.12 in a virtual environment for broad machine-learning pack
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-$env:SAIA_API_KEY = 'your-key'
 $env:CONTACT_EMAIL = 'your-contact-email'
 ```
 
-The original email is intentionally no longer embedded in the script. Existing `LLM_API_URL`, `LLM_MODEL`, `LLM_READ_TIMEOUT_SECONDS`, and `ARXIV_CA_BUNDLE` environment settings are supported. TLS verification remains enabled. Do not commit your API key.
+Start the LM Studio local server and load a chat model before running the script. The default OpenAI-compatible endpoint is `http://127.0.0.1:1234/v1/chat/completions`; the default model ID is `qwen/qwen3.8-27b`, which was listed by the local server during setup. If you load another model, set `LLM_MODEL` to the ID returned by LM Studio's `/v1/models` endpoint. Override the endpoint with `LLM_API_URL` or `--llm-url`.
+
+The original contact email is intentionally no longer embedded in the script. Existing `LLM_API_URL`, `LLM_MODEL`, `LLM_READ_TIMEOUT_SECONDS`, and `ARXIV_CA_BUNDLE` environment settings are supported. LM Studio does not require an API key by default. For a hosted endpoint, set `LLM_API_KEY` or `SAIA_API_KEY`; TLS verification remains enabled. Do not commit API keys.
 
 ## Retrieve and evaluate a date window
 
