@@ -17,6 +17,26 @@ Start the LM Studio local server and load a chat model before running the script
 
 The original contact email is intentionally no longer embedded in the script. Existing `LLM_API_URL`, `LLM_MODEL`, `LLM_READ_TIMEOUT_SECONDS`, and `ARXIV_CA_BUNDLE` environment settings are supported. LM Studio does not require an API key by default. For a hosted endpoint, set `LLM_API_KEY` or `SAIA_API_KEY`; TLS verification remains enabled. Do not commit API keys.
 
+### Use GWDG Academic Cloud (SAIA)
+
+The script can send classification requests to SAIA's OpenAI-compatible Chat AI API instead of LM Studio. Request a SAIA API key through the [KISSKI LLM Service](https://kisski.gwdg.de/en/leistungen/2-02-llm-service) booking page, using the email address associated with your Academic Cloud account. Keep the key private.
+
+In PowerShell, set the cloud endpoint, a model ID that is currently available to your account, and the key before running the script:
+
+```powershell
+$env:LLM_API_URL = 'https://chat-ai.academiccloud.de/v1/chat/completions'
+$env:LLM_MODEL = 'qwen3-30b-a3b-instruct-2507'
+$secureKey = Read-Host 'SAIA API key' -AsSecureString
+$env:SAIA_API_KEY = [System.Net.NetworkCredential]::new('', $secureKey).Password
+Remove-Variable secureKey
+
+python literature_digest.py --start 2026-09-01 --end 2026-10-01 --enrich-abstracts
+```
+
+The model ID above is one listed in the SAIA information provided to this project; model availability can change. Check the [current SAIA model list](https://docs.hpc.gwdg.de/services/ai-services/chat-ai/models/index.html) and use the exact API model ID. `--llm-url` and `--llm-model` can also be supplied on the command line. The API key is read from `SAIA_API_KEY` (or `LLM_API_KEY`) and sent as a bearer token. These environment settings apply to the current PowerShell session.
+
+SAIA's API documentation describes this API for interactive inference and recommends HPC batch inference for very large asynchronous workloads. Check your account's quota and rate-limit response headers (`x-ratelimit-limit-*`, `x-ratelimit-remaining-*`, and `ratelimit-reset`) before planning throughput. This script evaluates papers sequentially; it does not currently parallelize classification requests.
+
 ## Retrieve and evaluate a date window
 
 ```powershell
